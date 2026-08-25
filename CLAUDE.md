@@ -64,14 +64,17 @@ or lint will hard-fail with "typescript-eslint does not support TS 7.0."
 Colors are semantic design tokens defined once in `src/index.css`'s `@theme` block (the
 "ticket stub at dusk" palette — `background`/`foreground` for the page, `surface` for cards,
 `ink`/`ink-muted` for text on `surface`, `brand`/`secondary`/`accent` for brand accents,
-`difficulty-easy`/`-medium`/`-hard` as `border-*` colors on grid tiles, which otherwise stay a
-neutral `bg-surface`/`text-ink`) — never reach for a raw `bg-[#hex]` or `bg-[rgb(...)]`
-arbitrary value for anything that already has a semantic token; add a new token instead if
-none of the existing ones fit. `ink`, not `foreground`, is what has enough contrast against
-`secondary` (teal nav) — check contrast (WCAG AA: 4.5:1 normal text, 3:1 for large/bold like
-headings) before pairing a new *background fill* with a text color rather than assuming it'll
-work; this bit the difficulty tiles once already when they were solid-colored fills instead of
-neutral tiles with a colored border (`ink-muted` failed contrast on two of the three).
+`difficulty-easy`/`-medium`/`-hard` as a low-opacity `bg-*/10` tint on grid tiles, paired with
+a flat neutral `border-ink/20` — not a colored border — and `text-ink` throughout) — never
+reach for a raw `bg-[#hex]` or `bg-[rgb(...)]` arbitrary value for anything that already has a
+semantic token; add a new token instead if none of the existing ones fit. `ink`, not
+`foreground`, is what has enough contrast against `secondary` (teal nav) — check contrast
+(WCAG AA: 4.5:1 normal text, 3:1 for large/bold like headings) before pairing a new
+*background fill* with a text color rather than assuming it'll work; this bit the difficulty
+tiles once already when they were solid-colored fills (`ink-muted` failed contrast on two of
+the three) — the low-opacity tint sidesteps that entirely since `text-ink` reads fine over it
+regardless of difficulty. Colored borders/edge accents on the tiles were tried (full ring,
+gradient edges, gradient corners) and dropped — the flat neutral border read best.
 
 ## Conventions
 
