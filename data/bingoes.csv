@@ -1,0 +1,87 @@
+, ,,
+Category,difficulty,summary,description
+,,,
+travel,m,airport confiscate,Someone has something confiscated at security
+travel,m,airport pat down,Someone gets a pat down
+travel,e,flight delay,Flight is delayed
+travel,e,flight on time,Flight is on time
+travel,h,throw up,Someone throws up
+travel,e,no throne,No one throws up
+travel,h,bell no passport,A Bell forgets their passport for the way back
+travel,e,bell passport,A Bell doesn't forget their passport on the way back
+travel,m,swimsuitless,Someone forgets their swimsuit
+travel,m,wrong train,We take the wrong train
+,,,
+park,m,all rain,It rains every day that we’re at Europapark (parks?)
+park,m,no rain,It doesn’t rain every day that we’re at Europapark (parks?)
+park,m,some rain,It rains one day we're at europapark
+park,e,jersey pic,We get a jersey picture
+park,dupl,2 jersey pic,We get 2 jersey pics (blue and white)
+park,m,no jersey,Someone forgets their jersey
+park,h,broken riding,A rollercoaster breaks down while we’re on it
+park,m,broken pre-queue,A roller coaster breaks down before we go in the queue
+park,h,broken queue,A roller coaster breaks down while we're in the queue
+park,m,open to close,We’re in the park from open till close (Europapark & Rulantica)
+park,m,lost person,Someone gets lost
+park,h,hurt person,Someone ends up in first aid
+park,h,no lost,No one gets lost for more than a couple of mins
+park,m,ben not merched,Ben doesn't buy any merch on the first day
+park,m,ben merched up,Ben buys merch on the first day
+park,m,queue jumped,Someone gets queue jumped
+park,h,blister,Someone gets a blister on day 1
+park,h,crying ride pic,Someone's crying in a ride photo
+Park,h,stuck food loop,Food loop food gets stuck while we're there
+,,,
+life,e,maccies,We go to maccies
+life,h,no maccies,We don't go to maccies
+life,m,schnitzelled,Someone eats a schnitzel or veggie equivalent
+life,h,sauerkrautted,Someone eats Sauerkraut
+life,h,faceplant,Someone faceplants
+life,h,banana'd,Someone banana peel falls
+life,h,scam,Someone gets scammed
+life,h,they're so sick,Someone gets sick (ill)
+life,h,they're too hot,Someone gets heat exhaustion/heat stroke
+life,h,faints,Someone faints
+life,e,fruity ben,Ben eats a fruit/vegetable
+life,h,jersey question,Someone asks us about our jerseys
+life,e,german sarah,Sarah orders something successfully in German
+life,e,german jason,Jason orders something successfully in German
+life,e,german will,Will orders something successfuly in German
+life,m,german someone,Someone who didn't learn German orders something successfully in German
+life,h,romance,Holiday (new) romance
+life,h,noise complaint,We get a noise complaint
+life,h,forgotten key,Someone forgets to hand in a key
+life,m,russell hair,Russell does someone's hair
+life,h,airbnb broken,We break something in the airbnb
+,,,
+challenge,ALL m,jersey num,You take a picture while wearing your jersey with something that has your jersey number on
+challenge,m,pet dog,You pet a dog (thumbs up to a dog if you're allergic)
+challenge,m,you're german,You buy something speaking entirely in German
+challenge,e,pose,You pose on a ride photo
+challenge,e,hug,Hug “Ed Euromaus” aka Fake Mickey
+challenge,e,hug,Hug “Edda Euromausi” aka Fake Minnie
+challenge,Dupl,hug,Hug “Louis” (ngl not sure who this is look here mb)
+challenge,Dupl,hug,Hug “Böckli” (see above comment)
+challenge,Dupl,hug,Hug “Europhant” (imma guess that’s the elephant but who knows tbh) aka Fake Dumbo
+challenge,e,fistbump,Fist bump Fake Mickey
+challenge,e,fistbump,Fist bump Fake Minnie
+challenge,Dupl,fistbump,Fist bump Louis
+challenge,Dupl,fistbump,Fist bump broccoli
+challenge,Dupl,fistbump,Fist bump Fake Dumbo
+challenge,m,other,Hug another character (might not exist)
+challenge,Dupl,other,Fist bump another character (gl anyway)
+challenge,h,germeme,You make a meme which someone laughs out loud to when they first see it
+challenge,m,you're wet,You get the most soaked on a wet ride
+,,,
+,,,
+,E,M,H
+COUNTS,15,21,23
+,,,
+,,,
+Characters:,"[
+  `“Ed Euromaus” aka Fake Mickey`,
+  `“Edda Euromausi” aka Fake Minnie`,
+  `“Louis” (ngl not sure who this is look here mb)`,
+  `“Böckli” (idk who this is either)`,
+  `“Europhant” (probably the elephant but who knows tbh) aka Fake Dumbo`,
+];",,

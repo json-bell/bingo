@@ -1,0 +1,84 @@
+:root {
+  font-size: 15pt;
+  --difficulty-intensity: 0.3;
+}
+
+body {
+  background-color: rgb(59, 50, 50);
+  color: white;
+  text-align: center;
+}
+
+h1 {
+  background-color: rgb(0, 72, 100);
+  display: inline;
+  padding: 1rem;
+  border-radius: 0 0 1rem 1rem;
+  margin: 1rem;
+}
+
+.nav {
+  list-style-type: none;
+  display: inline-flex;
+  border-radius: 0 2rem 0 2rem;
+  background-color: rgb(84, 204, 164);
+  padding: 0 10px;
+}
+
+.nav-item {
+  padding: 1rem;
+  font-size: 1.3rem;
+}
+
+.bingo-grid {
+  display: inline-grid;
+  grid-template-columns: 200px 200px 200px 200px 200px;
+  background-color: white;
+}
+
+.bingo-item {
+  /* width: 200px; */
+  height: 180px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 2px solid rgba(0, 0, 0, 0.7);
+  padding: 0.1rem 0.1rem;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.bingo-item * {
+  margin: 0.5rem 0.25rem;
+}
+
+.grids-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  color: black;
+}
+
+.personal-container {
+  background-color: rgb(199, 220, 252);
+  padding: 2rem;
+  margin: 2rem;
+  list-style-type: none;
+  border-radius: 0 2rem 0 2rem;
+  box-shadow: 0 0 10px 10px #adfceb;
+  text-align: center;
+}
+
+.bingo-item h2 {
+  font-size: 1.3rem;
+}
+
+.difficulty-e {
+  background-color: rgb(116, 199, 116, var(--difficulty-intensity));
+}
+
+.difficulty-m {
+  background-color: rgb(199, 198, 116, var(--difficulty-intensity));
+}
+
+.difficulty-h {
+  background-color: rgb(199, 126, 116, var(--difficulty-intensity));
+}
