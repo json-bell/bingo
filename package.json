@@ -1,6 +1,7 @@
 {
   "name": "fe-nc-jukebox-vite",
   "private": true,
+  "homepage": "https://json-bell.github.io/bingo",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
