@@ -28,6 +28,10 @@ These are the real, verified commands for this repo. Don't guess alternatives (`
 `config/trips.json` field to update to make it live. Promotion/rollback is just editing that
 number in `config/trips.json` — no file renaming or manual promotion step.
 
+Superseded CSV drafts go in `data/archive/<slug>/`, not `data/<slug>/` — keeps them
+accessible without digging through git history, without cluttering the directory the
+generator actually reads from.
+
 _If a quiet run fails or the output is unhelpfully sparse, drop the flag for that one invocation and re-run — quiet is the default, not a hard rule._
 
 `eslint-plugin-react-refresh` is pinned at 0.3.x (older than the version that introduced the
