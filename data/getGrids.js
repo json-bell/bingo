@@ -1,13 +1,3 @@
-import { data, characters } from "./data.js";
-import { people } from "./people.js";
-
-const allEvents = data.rows;
-
-const easyEvents = allEvents.filter(({ difficulty }) => difficulty === "e");
-const medEvents = allEvents.filter(({ difficulty }) => difficulty === "m");
-const hardEvents = allEvents.filter(({ difficulty }) => difficulty === "h");
-const Events = [easyEvents, medEvents, hardEvents];
-
 function shuffleObjectArray(arr) {
   return arr
     .map(({ ...obj }) => ({ ...obj, place: Math.random() }))
@@ -15,7 +5,7 @@ function shuffleObjectArray(arr) {
     .map(({ place, ...obj }) => obj);
 }
 
-function getShuffledCharArray() {
+function getShuffledCharArray(characters) {
   return [
     "TOO MANY NEW BINGO PLS",
     ...characters
@@ -37,8 +27,8 @@ function addCharName(item, name) {
   item.description = item.summary + " " + name;
 }
 
-function makeGrid(Events) {
-  const shuffledChars = getShuffledCharArray();
+function makeGrid(Events, characters) {
+  const shuffledChars = getShuffledCharArray(characters);
   const [easyOrder, medOrder, hardOrder] = Events.map(shuffleObjectArray);
   const edgeIndex = Math.floor(4 * Math.random());
   const medLength = medOrder.length;
@@ -92,12 +82,18 @@ function makeGrid(Events) {
   );
 }
 
-export function getGrids(number = people.length) {
+export function getGrids({ data, characters, people, number = people.length }) {
   console.log("running getGrids");
+  const allEvents = data.rows;
+  const easyEvents = allEvents.filter(({ difficulty }) => difficulty === "e");
+  const medEvents = allEvents.filter(({ difficulty }) => difficulty === "m");
+  const hardEvents = allEvents.filter(({ difficulty }) => difficulty === "h");
+  const Events = [easyEvents, medEvents, hardEvents];
+
   return Array(number)
     .fill(0)
     .map(() => {
-      const output = makeGrid(Events);
+      const output = makeGrid(Events, characters);
       return output;
     });
 }

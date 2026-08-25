@@ -1,32 +1,37 @@
 # Project instructions for Claude Code
 
-<!--
-  SETUP: delete whichever stack block below doesn't apply to this repo, and verify every
-  command against this repo's actual package.json / Makefile / pyproject.toml. Delete this
-  comment block once done.
--->
-
 ## Project overview
 
-<!-- One paragraph: what this repo does, key entry points. Don't restate directory structure —
-     Claude can see that itself; only note things that aren't obvious from the code. -->
+A single-page React app that renders bingo grids for group trips. Each trip is a "slug"
+(e.g. `europapark-2024`) routed client-side at `/:slug` via `react-router-dom`; `/` lists
+known slugs. Every slug has its own people list and its own numbered, pre-generated grid
+files (`grids/<slug>/<n>.json`, built by `npm run make-grid`, not generated at runtime) —
+`config/trips.json` says which numbered version is currently live for each slug. Deployed to
+Vercel (`vercel.json` has the SPA catch-all rewrite it needs) — previously dragged `dist/`
+into Vercel by hand, and briefly set up for GitHub Pages before switching back to Vercel for
+proper path-based routing without a redirect trick.
 
 ## Commands
 
 These are the real, verified commands for this repo. Don't guess alternatives (`yarn` vs `npm` vs `pnpm` etc.) — if a command below is wrong or missing, fix this section or prompt the user to fix it rather than trying variations.
 
-### Node / TypeScript (npm or yarn — delete this block if not applicable)
+| Task           | Command                                   |
+| -------------- | ------------------------------------------ |
+| Dev server     | `npm run dev`                             |
+| Build          | `npm run build`                           |
+| Preview build  | `npm run preview`                         |
+| Lint           | `npm run lint -- --quiet`                 |
+| Generate a new grid version for a slug | `npm run make-grid -- <slug>` (e.g. `europapark-2024`) |
 
-| Task               | Command                                   |
-| ------------------ | ----------------------------------------- |
-| Lint               | `npm run lint -- --quiet`                 |
-| Lint — single file | `npm run lint -- path/to/file.ts --quiet` |
+`make-grid` reads `data/<slug>/bingoes.csv`, writes a new auto-numbered
+`grids/<slug>/<n>.json` (never overwrites an existing version), and prints which
+`config/trips.json` field to update to make it live. Promotion/rollback is just editing that
+number in `config/trips.json` — no file renaming or manual promotion step.
 
-<!-- | Test — all         | `npm test -- --silent` _(if not Jest: Vitest `--reporter=dot`, Mocha `--reporter=dot`)_ | -->
-<!-- | Test — single file | `npm test -- path/to/file.test.ts --silent`                                             | -->
-<!-- | Test — single case | `npm test -- -t "test name" --silent`                                                   | -->
-<!-- | Typecheck          | `npx tsc --noEmit --pretty false`                                                       | -->
-<!-- | Format             | `npm run format -- --log-level warn`                                                    | -->
+**Lint is currently broken**: no `.eslintrc*` file exists in the repo despite ESLint 8 being
+configured in `package.json`, so `npm run lint` fails with "ESLint couldn't find a
+configuration file" regardless of the code. Don't treat lint failures as a sign your change
+broke something until this is fixed — flag it to the user instead of working around it.
 
 _If a quiet run fails or the output is unhelpfully sparse, drop the flag for that one invocation and re-run — quiet is the default, not a hard rule._
 

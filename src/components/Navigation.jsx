@@ -1,6 +1,4 @@
-import { people } from "../../data/people";
-
-export function Navigation() {
+export function Navigation({ people }) {
   return (
     <ul className="nav">
       {people.map((person) => {
