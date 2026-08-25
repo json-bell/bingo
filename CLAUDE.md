@@ -28,12 +28,11 @@ These are the real, verified commands for this repo. Don't guess alternatives (`
 `config/trips.json` field to update to make it live. Promotion/rollback is just editing that
 number in `config/trips.json` — no file renaming or manual promotion step.
 
-**Lint is currently broken**: no `.eslintrc*` file exists in the repo despite ESLint 8 being
-configured in `package.json`, so `npm run lint` fails with "ESLint couldn't find a
-configuration file" regardless of the code. Don't treat lint failures as a sign your change
-broke something until this is fixed — flag it to the user instead of working around it.
-
 _If a quiet run fails or the output is unhelpfully sparse, drop the flag for that one invocation and re-run — quiet is the default, not a hard rule._
+
+`eslint-plugin-react-refresh` is pinned at 0.3.x (older than the version that introduced the
+`allowConstantExport` rule option) — don't add that option to `.eslintrc.cjs` without bumping
+the dependency first, it'll fail config validation.
 
 ## Conventions
 

@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 export function Navigation({ people }) {
   return (
     <ul className="nav">
@@ -11,3 +13,7 @@ export function Navigation({ people }) {
     </ul>
   );
 }
+
+Navigation.propTypes = {
+  people: PropTypes.arrayOf(PropTypes.string).isRequired,
+};

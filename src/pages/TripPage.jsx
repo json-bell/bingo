@@ -21,7 +21,7 @@ export function TripPage() {
   }, [slug]);
 
   if (trip === undefined) return <p>Loading…</p>;
-  if (trip === null) return <p>No trip found for "{slug}".</p>;
+  if (trip === null) return <p>No trip found for &quot;{slug}&quot;.</p>;
 
   const { grids, people } = trip;
   return (
@@ -37,7 +37,7 @@ export function TripPage() {
             className="personal-container"
           >
             <h2>
-              {people[index]}'s grid (number {index + 1})
+              {people[index]}&apos;s grid (number {index + 1})
             </h2>
             <Grid grid={grid} />
           </li>
