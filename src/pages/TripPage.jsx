@@ -29,14 +29,14 @@ export function TripPage() {
       <Header />
       <br />
       <Navigation people={people} />
-      <ul className="grids-container">
+      <ul className="flex flex-wrap justify-center text-black">
         {grids.map((grid, index) => (
           <li
             key={people[index]}
             id={people[index]}
-            className="personal-container"
+            className="bg-[rgb(199,220,252)] p-8 m-8 list-none rounded-tr-[2rem] rounded-bl-[2rem] shadow-[0_0_10px_10px_#adfceb] text-center"
           >
-            <h2>
+            <h2 className="text-2xl font-bold">
               {people[index]}&apos;s grid (number {index + 1})
             </h2>
             <Grid grid={grid} />

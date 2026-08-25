@@ -38,6 +38,17 @@ _If a quiet run fails or the output is unhelpfully sparse, drop the flag for tha
 `allowConstantExport` rule option) — don't add that option to `.eslintrc.cjs` without bumping
 the dependency first, it'll fail config validation.
 
+Styling is Tailwind v4 (`@tailwindcss/vite`, wired into `vite.config.js`; `src/index.css` is
+just `@import "tailwindcss";` plus the genuinely global `:root`/`body` rules — everything else
+is utility classes on the components themselves, not shared CSS files). This requires Vite 5+;
+that's why `vite`/`@vitejs/plugin-react` are pinned well above the versions the project
+originally shipped with. When a component needs two candidate background-color utilities
+(e.g. a default vs. a conditional one), only ever put one `bg-[...]`-type class in the
+rendered className at a time — Tailwind resolves conflicting utilities by generated
+stylesheet order, not by their order in the className string, so having both present at once
+means one silently and unpredictably wins regardless of which condition is "supposed" to
+apply (see `BingoItem.jsx`'s `bgClass` for the pattern: pick one string, don't concatenate).
+
 ## Conventions
 
 - `.claude/rules/` holds deeper, path-scoped conventions that load automatically only when
