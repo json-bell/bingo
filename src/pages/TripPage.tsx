@@ -32,12 +32,12 @@ export function TripPage() {
       <Header />
       <br />
       <Navigation people={people} />
-      <ul className="flex flex-wrap justify-center text-black">
+      <ul className="flex flex-wrap justify-center text-ink">
         {grids.map((grid, index) => (
           <li
             key={people[index]}
             id={people[index]}
-            className="bg-[rgb(199,220,252)] p-8 m-8 list-none rounded-tr-[2rem] rounded-bl-[2rem] shadow-[0_0_10px_10px_#adfceb] text-center"
+            className="bg-surface p-8 m-8 list-none rounded-tr-[2rem] rounded-bl-[2rem] shadow-[0_0_10px_10px_var(--color-accent)] text-center"
           >
             <h2 className="text-2xl font-bold">
               {people[index]}&apos;s grid (number {index + 1})

@@ -1,12 +1,25 @@
 @import "tailwindcss";
 
+@theme {
+  /* "Ticket stub at dusk" palette — semantic roles, not hues. */
+  --color-background: #1b1533;
+  --color-foreground: #f5efe6;
+  --color-surface: #fff6e8;
+  --color-ink: #221b2e;
+  --color-ink-muted: #5b5468;
+  --color-brand: #e8483c;
+  --color-secondary: #2fb6a3;
+  --color-accent: #f5b942;
+  --color-difficulty-easy: #f2d48a;
+  --color-difficulty-medium: #e8a23c;
+  --color-difficulty-hard: #a83324;
+}
+
 :root {
   font-size: 15pt;
-  --difficulty-intensity: 0.3;
 }
 
 body {
-  background-color: rgb(59, 50, 50);
-  color: white;
+  @apply bg-background text-foreground;
   text-align: center;
 }
