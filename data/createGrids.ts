@@ -1,7 +1,8 @@
 import fs from "fs/promises";
 import path from "path";
-import { generateDataFile } from "./getData.js";
-import { getGrids } from "./getGrids.js";
+import { generateDataFile } from "./getData";
+import { getGrids } from "./getGrids";
+import type { BingoItem, Grid } from "../types/trip";
 
 const slug = process.argv[2];
 if (!slug) {
@@ -10,19 +11,30 @@ if (!slug) {
 }
 
 await generateDataFile(slug);
-const { data } = await import(`./${slug}/data.js`);
-const { characters } = await import(`./${slug}/characters.js`);
-const { people } = await import(`./${slug}/people.js`);
+const { data } = (await import(`./${slug}/data.ts`)) as {
+  data: { rows: BingoItem[] };
+};
+const { characters } = (await import(`./${slug}/characters.ts`)) as {
+  characters: string[];
+};
+const { people } = (await import(`./${slug}/people.ts`)) as {
+  people: string[];
+};
 
 const gridsDir = path.join("grids", slug);
 await fs.mkdir(gridsDir, { recursive: true });
-const existing = await fs.readdir(gridsDir).catch(() => []);
+const existing = await fs.readdir(gridsDir).catch(() => [] as string[]);
 const versions = existing
   .map((f) => Number(f.replace(/\.json$/, "")))
   .filter((n) => Number.isInteger(n) && n > 0);
 const nextVersion = versions.length ? Math.max(...versions) + 1 : 1;
 
-const grids = getGrids({ data, characters, people, number: people.length });
+const grids: Grid[] = getGrids({
+  data,
+  characters,
+  people,
+  number: people.length,
+});
 await fs.writeFile(
   path.join(gridsDir, `${nextVersion}.json`),
   JSON.stringify(grids, null, 2) + "\n"

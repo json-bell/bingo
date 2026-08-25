@@ -1,11 +1,13 @@
-function shuffleObjectArray(arr) {
+import type { BingoItem, Difficulty, Grid } from "../types/trip";
+
+function shuffleObjectArray<T extends object>(arr: T[]): T[] {
   return arr
-    .map(({ ...obj }) => ({ ...obj, place: Math.random() }))
+    .map((obj) => ({ ...obj, place: Math.random() }))
     .sort((a, b) => a.place - b.place)
-    .map(({ place, ...obj }) => obj);
+    .map(({ place, ...rest }) => rest as T);
 }
 
-function getShuffledCharArray(characters) {
+function getShuffledCharArray(characters: string[]): string[] {
   return [
     "TOO MANY NEW BINGO PLS",
     ...characters
@@ -15,7 +17,7 @@ function getShuffledCharArray(characters) {
   ];
 }
 
-const difficultyKey = [
+const difficultyKey: Difficulty[][] = [
   ["h", "e", "m", "e", "h"],
   ["e", "m", "h", "m", "e"],
   ["m", "h", "f", "h", "m"],
@@ -23,17 +25,19 @@ const difficultyKey = [
   ["h", "e", "m", "e", "h"],
 ];
 
-function addCharName(item, name) {
+function addCharName(item: BingoItem, name: string): void {
   item.description = item.summary + " " + name;
 }
 
-function makeGrid(Events, characters) {
+function makeGrid(
+  events: [BingoItem[], BingoItem[], BingoItem[]],
+  characters: string[]
+): Grid {
   const shuffledChars = getShuffledCharArray(characters);
-  const [easyOrder, medOrder, hardOrder] = Events.map(shuffleObjectArray);
+  const [easyOrder, medOrder, hardOrder] = events.map(shuffleObjectArray);
   const edgeIndex = Math.floor(4 * Math.random());
   const medLength = medOrder.length;
   const jerseyIndex = medLength - 1 - [0, 3, 4, 7][edgeIndex];
-  console.log(jerseyIndex);
   medOrder[jerseyIndex] = {
     type: "challenge",
     difficulty: "m",
@@ -41,8 +45,7 @@ function makeGrid(Events, characters) {
     description:
       "You get a picture with something that has your jersey number on",
   };
-  console.log("med challenge order->>", medOrder);
-  const orderedEvents = {
+  const orderedEvents: Record<Difficulty, BingoItem[]> = {
     e: easyOrder,
     m: medOrder,
     h: hardOrder,
@@ -53,8 +56,14 @@ function makeGrid(Events, characters) {
   return difficultyKey.map((row) =>
     row.map((difficulty) => {
       const newItem = orderedEvents[difficulty].pop();
+      if (!newItem) {
+        throw new Error(
+          `Ran out of "${difficulty}" difficulty events while building a grid — need more rows of that difficulty in the CSV`
+        );
+      }
       if (["hug", "fistbump"].includes(newItem.summary)) {
-        addCharName(newItem, shuffledChars.pop());
+        const name = shuffledChars.pop();
+        if (name) addCharName(newItem, name);
       }
       if (newItem.summary === "other") {
         const index = Math.floor(Math.random() * 2);
@@ -82,18 +91,28 @@ function makeGrid(Events, characters) {
   );
 }
 
-export function getGrids({ data, characters, people, number = people.length }) {
-  console.log("running getGrids");
+export function getGrids({
+  data,
+  characters,
+  people,
+  number = people.length,
+}: {
+  data: { rows: BingoItem[] };
+  characters: string[];
+  people: string[];
+  number?: number;
+}): Grid[] {
   const allEvents = data.rows;
   const easyEvents = allEvents.filter(({ difficulty }) => difficulty === "e");
   const medEvents = allEvents.filter(({ difficulty }) => difficulty === "m");
   const hardEvents = allEvents.filter(({ difficulty }) => difficulty === "h");
-  const Events = [easyEvents, medEvents, hardEvents];
+  const events: [BingoItem[], BingoItem[], BingoItem[]] = [
+    easyEvents,
+    medEvents,
+    hardEvents,
+  ];
 
   return Array(number)
     .fill(0)
-    .map(() => {
-      const output = makeGrid(Events, characters);
-      return output;
-    });
+    .map(() => makeGrid(events, characters));
 }

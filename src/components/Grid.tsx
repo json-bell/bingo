@@ -1,7 +1,11 @@
-import PropTypes from "prop-types";
+import type { Grid as GridData } from "../../types/trip";
 import { BingoItem } from "./BingoItem";
 
-export function Grid({ grid }) {
+interface GridProps {
+  grid: GridData;
+}
+
+export function Grid({ grid }: GridProps) {
   return (
     <div className="inline-grid grid-cols-[repeat(5,200px)] bg-white">
       {grid.flat().map((bingoItem, index) => {
@@ -10,7 +14,3 @@ export function Grid({ grid }) {
     </div>
   );
 }
-
-Grid.propTypes = {
-  grid: PropTypes.array.isRequired,
-};

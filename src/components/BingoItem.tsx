@@ -1,12 +1,16 @@
-import PropTypes from "prop-types";
+import type { BingoItem as BingoItemData, Difficulty } from "../../types/trip";
 
-const difficultyBg = {
+const difficultyBg: Partial<Record<Difficulty, string>> = {
   e: "bg-[rgba(116,199,116,var(--difficulty-intensity))]",
   m: "bg-[rgba(199,198,116,var(--difficulty-intensity))]",
   h: "bg-[rgba(199,126,116,var(--difficulty-intensity))]",
 };
 
-export function BingoItem({ bingoItem }) {
+interface BingoItemProps {
+  bingoItem: BingoItemData;
+}
+
+export function BingoItem({ bingoItem }: BingoItemProps) {
   const { summary, description, difficulty } = bingoItem;
   const bgClass = difficultyBg[difficulty] ?? "bg-[rgba(255,255,255,0.8)]";
   return (
@@ -19,12 +23,3 @@ export function BingoItem({ bingoItem }) {
     </div>
   );
 }
-
-BingoItem.propTypes = {
-  bingoItem: PropTypes.shape({
-    type: PropTypes.string,
-    summary: PropTypes.string.isRequired,
-    description: PropTypes.string,
-    difficulty: PropTypes.string,
-  }).isRequired,
-};

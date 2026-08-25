@@ -4,22 +4,25 @@ import { Header } from "../components/Header";
 import { Navigation } from "../components/Navigation";
 import { Grid } from "../components/Grid";
 import { loadTrip } from "../lib/trips";
+import type { LoadedTrip } from "../../types/trip";
 
 export function TripPage() {
-  const { slug } = useParams();
-  const [trip, setTrip] = useState(undefined); // undefined = loading, null = not found
+  const { slug } = useParams<{ slug: string }>();
+  const [trip, setTrip] = useState<LoadedTrip | null | undefined>(undefined); // undefined = loading, null = not found
 
   useEffect(() => {
+    if (!slug) return;
     let cancelled = false;
     setTrip(undefined);
     loadTrip(slug).then((result) => {
-      if (!cancelled) setTrip(result ?? null);
+      if (!cancelled) setTrip(result);
     });
     return () => {
       cancelled = true;
     };
   }, [slug]);
 
+  if (!slug) return null;
   if (trip === undefined) return <p>Loading…</p>;
   if (trip === null) return <p>No trip found for &quot;{slug}&quot;.</p>;
 

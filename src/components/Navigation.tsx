@@ -1,6 +1,8 @@
-import PropTypes from "prop-types";
+interface NavigationProps {
+  people: string[];
+}
 
-export function Navigation({ people }) {
+export function Navigation({ people }: NavigationProps) {
   return (
     <ul className="list-none inline-flex rounded-tr-[2rem] rounded-bl-[2rem] bg-[rgb(84,204,164)] py-0 px-[10px]">
       {people.map((person) => {
@@ -13,7 +15,3 @@ export function Navigation({ people }) {
     </ul>
   );
 }
-
-Navigation.propTypes = {
-  people: PropTypes.arrayOf(PropTypes.string).isRequired,
-};

@@ -1,4 +1,4 @@
-export const characters = [
+export const characters: string[] = [
   `“Ed Euromaus” aka Fake Mickey`,
   `“Edda Euromausi” aka Fake Minnie`,
   `“Louis” (ngl not sure who this is look here mb)`,

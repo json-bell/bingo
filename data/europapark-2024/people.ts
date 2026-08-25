@@ -1,4 +1,4 @@
-export const people = [
+export const people: string[] = [
   "Ben",
   "Cameron",
   "Jason",
