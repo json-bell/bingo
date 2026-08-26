@@ -61,20 +61,31 @@ yet support TypeScript 7 (a separate, incompatible rewrite of the compiler). Don
 `npm install typescript@latest` without checking `typescript-eslint`'s support status first,
 or lint will hard-fail with "typescript-eslint does not support TS 7.0."
 
-Colors are semantic design tokens defined once in `src/index.css`'s `@theme` block (the
-"ticket stub at dusk" palette — `background`/`foreground` for the page, `surface` for cards,
+Colors are semantic design tokens defined in `src/index.css`'s `@theme` block, which holds
+several complete palettes as alternate blocks — exactly ONE should be uncommented at a time
+(CSS custom properties don't merge; two active blocks means the lower one silently wins with
+no error, and zero active blocks means Tailwind can't generate `bg-background` etc. at all and
+the build hard-fails). Check `npm run build` after touching this file for exactly that reason.
+The tokens: `background`/`foreground` for the page, `surface` for the per-person card panel,
 `ink`/`ink-muted` for text on `surface`, `brand`/`secondary`/`accent` for brand accents,
-`difficulty-easy`/`-medium`/`-hard` as a low-opacity `bg-*/10` tint on grid tiles, paired with
-a flat neutral `border-ink/20` — not a colored border — and `text-ink` throughout) — never
-reach for a raw `bg-[#hex]` or `bg-[rgb(...)]` arbitrary value for anything that already has a
-semantic token; add a new token instead if none of the existing ones fit. `ink`, not
-`foreground`, is what has enough contrast against `secondary` (teal nav) — check contrast
-(WCAG AA: 4.5:1 normal text, 3:1 for large/bold like headings) before pairing a new
-*background fill* with a text color rather than assuming it'll work; this bit the difficulty
-tiles once already when they were solid-colored fills (`ink-muted` failed contrast on two of
-the three) — the low-opacity tint sidesteps that entirely since `text-ink` reads fine over it
-regardless of difficulty. Colored borders/edge accents on the tiles were tried (full ring,
-gradient edges, gradient corners) and dropped — the flat neutral border read best.
+`tile`/`tile-foreground` for the grid-cell base (free/no-difficulty cells — NOT necessarily the
+same as `surface`; it exists because a "make surface a dark secondary panel" variant still
+needed light cells), and `tile-easy`/`-medium`/`-hard` (solid, precomputed blends of each
+difficulty hue with white — not `bg-difficulty-easy/10`, since alpha-over-whatever's-behind
+went nearly invisible once `surface`/cells went dark; a precomputed solid color doesn't have
+that problem). Every block must also set `brand-foreground`/`secondary-foreground` explicitly
+— don't rely on inheriting `foreground`/`ink` and assume it'll contrast, that's genuinely
+broken working state at least twice already (header rendered dark-on-dark, nav text failed
+contrast on its own bar). Check contrast (WCAG AA: 4.5:1 normal text, 3:1 for large/bold like
+headings) before pairing any new background with a text color rather than assuming it'll work.
+Never reach for a raw `bg-[#hex]`/`bg-[rgb(...)]` arbitrary value for anything that already has
+a semantic token; add a new token (to every block) instead if none of the existing ones fit.
+
+`BingoItem.tsx`'s tile is clickable (native `<dialog>` + `ref`, `.showModal()`/`.close()`) and
+shows the full untruncated text — the tile itself only shows the title plus a `line-clamp-2`
+description. The dialog needs an explicit `m-auto` or it renders pinned to the top-left:
+Tailwind's Preflight zeroes `margin` globally, which strips the browser's default
+`margin: auto` centering for `dialog:modal`.
 
 ## Conventions
 

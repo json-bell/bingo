@@ -1,9 +1,10 @@
+import { useRef } from "react";
 import type { BingoItem as BingoItemData, Difficulty } from "../../types/trip";
 
 const tint: Partial<Record<Difficulty, string>> = {
-  e: "bg-difficulty-easy/10",
-  m: "bg-difficulty-medium/10",
-  h: "bg-difficulty-hard/10",
+  e: "bg-tile-easy",
+  m: "bg-tile-medium",
+  h: "bg-tile-hard",
 };
 
 interface BingoItemProps {
@@ -12,14 +13,50 @@ interface BingoItemProps {
 
 export function BingoItem({ bingoItem }: BingoItemProps) {
   const { summary, description, difficulty } = bingoItem;
-  const bgClass = tint[difficulty] ?? "bg-surface";
+  const bgClass = tint[difficulty] ?? "bg-tile";
+  const dialogRef = useRef<HTMLDialogElement>(null);
+
+  const open = () => dialogRef.current?.showModal();
+  const close = () => dialogRef.current?.close();
+
   return (
-    <div
-      key={`bingo${summary}`}
-      className={`h-[180px] ${bgClass} text-ink rounded-lg border-2 border-ink/20 px-[0.1rem] py-[0.1rem] text-base text-center [&>*]:my-2 [&>*]:mx-1`}
-    >
-      <h3 className="text-[1.17em] font-bold">{summary.toUpperCase()}</h3>
-      <p>{description}</p>
-    </div>
+    <>
+      <div
+        role="button"
+        tabIndex={0}
+        onClick={open}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            open();
+          }
+        }}
+        className={`cursor-pointer aspect-square flex flex-col justify-center ${bgClass} text-tile-foreground rounded-lg border-2 border-tile-foreground/20 p-[8px] text-base text-center`}
+      >
+        <h3 className="text-[1.17em] font-bold my-[5px]">{summary.toUpperCase()}</h3>
+        <p className="line-clamp-2 text-[0.9rem] mx-[4px]">{description}</p>
+      </div>
+
+      <dialog
+        ref={dialogRef}
+        onClick={(e) => {
+          if (e.target === e.currentTarget) close();
+        }}
+        className="m-auto bg-tile text-tile-foreground rounded-lg p-6 max-w-sm backdrop:bg-black/50"
+      >
+        <div className="flex justify-between items-start gap-4">
+          <h3 className="text-xl font-bold">{summary.toUpperCase()}</h3>
+          <button
+            type="button"
+            onClick={close}
+            aria-label="Close"
+            className="text-tile-foreground/60 hover:text-tile-foreground text-xl leading-none"
+          >
+            &times;
+          </button>
+        </div>
+        <p className="mt-2">{description}</p>
+      </dialog>
+    </>
   );
 }
