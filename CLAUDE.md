@@ -50,9 +50,9 @@ Requires **Node 19+**: `data/getGrids.ts` and `data/backfillCellIds.ts` call the
 versions) — an older Node fails with a confusing "crypto is not defined"-style error, not
 an obvious version-mismatch message.
 
-Tests are Vitest, not Jest — see `docs/test-plan.md` for the full reasoning (the short
-version: `src/lib/trips.ts`'s `import.meta.glob` has no Jest equivalent at all) and the
-short/long-term test plan. Two real gotchas from setting it up, both already fixed:
+Tests are Vitest — see `docs/test-plan.md` for the short/long-term test plan and why
+Vitest specifically (it understands `import.meta.glob`, used in `src/lib/trips.ts`,
+natively). Two real gotchas from setting it up, both already fixed:
 jsdom implements `HTMLDialogElement` as a class but doesn't implement `showModal()`/
 `close()` at all — `vitest.setup.ts` polyfills both by toggling the `open` attribute,
 which is enough for anything a test can observe. And Vite's dynamic `import()` needs a

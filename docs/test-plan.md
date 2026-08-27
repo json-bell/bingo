@@ -5,16 +5,14 @@ end-to-end flows through real code with minimal mocking, or targeted unit tests 
 data-management logic. Don't test what React/the framework already guarantees, and don't
 test presentational components that have no real logic in them.
 
-## Tooling: Vitest, not Jest (implemented)
+## Tooling: Vitest (implemented)
 
 `src/lib/trips.ts`'s `loadTrip`/`listSlugs` — the most important data-flow code to cover —
-is built on `import.meta.glob`, a Vite-only compile-time macro with no Node/Jest equivalent
-(it's not a real JS API; there's nothing for a transform to polyfill). Jest would need that
-file's loading mechanism heavily mocked to test it at all, which directly conflicts with the
-"minimal mocking" goal. Vitest is built on Vite itself, understands `import.meta.glob`
-natively, and shares the project's existing `vite.config.ts`/TypeScript setup — otherwise a
-drop-in replacement (`describe`/`it`/`expect`, `@testing-library/jest-dom` matchers work the
-same way). Nothing about how tests are written changes, only the runner.
+is built on `import.meta.glob`, a Vite-only compile-time macro (not a real JS API, so a
+test runner needs to understand it natively rather than transform around it). Vitest is
+built on Vite itself, understands `import.meta.glob` natively, and shares the project's
+existing `vite.config.ts`/TypeScript setup, which is exactly what makes testing that file
+against real fixture data possible without mocking its loading mechanism.
 
 Config lives in `vite.config.ts`'s `test` field (import `defineConfig` from
 `"vitest/config"`, not plain `"vite"`, to get that field typed) plus `vitest.setup.ts`
@@ -53,8 +51,8 @@ Five targets, in priority order:
    `europapark-2024` fixture data already in the repo, not mocks. Assert
    `grids.length === people.length`, `title` matches `config/trips.json`, and
    `loadTrip("nonexistent-slug")` resolves to `null`. This is the one place a real
-   end-to-end-without-mocking test is both possible and valuable — see the Vitest
-   decision above for why Jest couldn't have given us this at all.
+   end-to-end-without-mocking test is both possible and valuable, made possible by
+   Vitest's native `import.meta.glob` support (see the Tooling section above).
 4. **`src/lib/checked.ts`** (`getChecked`/`setChecked`) — test the *contract*, not the
    implementation: empty map when nothing's stored; a value persists and round-trips;
    sequential `setChecked` calls accumulate rather than clobber each other; two different
