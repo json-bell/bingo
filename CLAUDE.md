@@ -82,10 +82,30 @@ Never reach for a raw `bg-[#hex]`/`bg-[rgb(...)]` arbitrary value for anything t
 a semantic token; add a new token (to every block) instead if none of the existing ones fit.
 
 `BingoItem.tsx`'s tile is clickable (native `<dialog>` + `ref`, `.showModal()`/`.close()`) and
-shows the full untruncated text — the tile itself only shows the title plus a `line-clamp-2`
+shows the full untruncated text — the tile itself only shows the title plus a `line-clamp-3`
 description. The dialog needs an explicit `m-auto` or it renders pinned to the top-left:
 Tailwind's Preflight zeroes `margin` globally, which strips the browser's default
 `margin: auto` centering for `dialog:modal`.
+
+`PersonMenu.tsx` reuses that same `<dialog>` pattern but renders responsively: a bottom sheet
+below `md` (`mt-auto`, `rounded-t-3xl`, `w-full max-w-none` — pinned to the bottom, the
+opposite of `BingoItem`'s centered `m-auto`) and a centered modal at `md` and up (`md:m-auto`,
+capped `md:max-w-md`, `md:rounded-2xl`). One `<dialog>`, responsive shell classes only — no
+separate mobile/desktop components needed. See `docs/design-system.md` for the single-`md`-
+breakpoint (768px) strategy this and `AppBar.tsx` both follow.
+
+**Headless-Chrome viewport testing gotcha**: plain `google-chrome --headless --window-size=W,H
+--screenshot=...` does NOT reliably lay out the page at `W` CSS pixels in this environment,
+even though the output PNG is exactly `W×H` pixels — it can silently render at a different
+internal width and crop/scale the result, which previously produced screenshots that looked
+plausible but were measuring the wrong thing entirely (elements that should have been visible
+at a given width appeared clipped or missing, and there was no way to tell from the image
+alone). The reliable method is CDP: launch with `--remote-debugging-port`, then over the
+websocket call `Emulation.setDeviceMetricsOverride({width, height, deviceScaleFactor: 1,
+mobile: true})` *before* navigating, and use `Page.captureScreenshot` (or
+`Runtime.evaluate` + `document.documentElement.clientWidth` to confirm the override actually
+took) rather than the command-line `--screenshot` flag for anything narrower than a typical
+desktop width.
 
 ## Conventions
 

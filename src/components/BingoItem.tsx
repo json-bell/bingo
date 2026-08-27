@@ -9,11 +9,12 @@ const tint: Partial<Record<Difficulty, string>> = {
 
 interface BingoItemProps {
   bingoItem: BingoItemData;
+  tintsEnabled: boolean;
 }
 
-export function BingoItem({ bingoItem }: BingoItemProps) {
+export function BingoItem({ bingoItem, tintsEnabled }: BingoItemProps) {
   const { summary, description, difficulty } = bingoItem;
-  const bgClass = tint[difficulty] ?? "bg-tile";
+  const bgClass = tintsEnabled ? (tint[difficulty] ?? "bg-tile") : "bg-tile";
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   const open = () => dialogRef.current?.showModal();
@@ -31,10 +32,10 @@ export function BingoItem({ bingoItem }: BingoItemProps) {
             open();
           }
         }}
-        className={`cursor-pointer aspect-square flex flex-col justify-center ${bgClass} text-tile-foreground rounded-lg border-2 border-tile-foreground/20 p-[8px] text-base text-center`}
+        className={`cursor-pointer aspect-square flex flex-col justify-center ${bgClass} text-tile-foreground rounded-lg border-2 border-tile-foreground/20 p-[4px] md:p-[8px] text-base text-center`}
       >
-        <h3 className="text-[1.17em] font-bold my-[5px]">{summary.toUpperCase()}</h3>
-        <p className="line-clamp-2 text-[0.9rem] mx-[4px]">{description}</p>
+        <h3 className="text-[12px] md:text-[1.17em] font-bold my-[2px] md:my-[5px]">{summary.toUpperCase()}</h3>
+        <p className="line-clamp-3 text-[10px] md:text-[0.9rem] mx-[2px] md:mx-[4px]">{description}</p>
       </div>
 
       <dialog

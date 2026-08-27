@@ -11,6 +11,7 @@ export type Grid = BingoItem[][];
 
 export interface TripConfig {
   currentGrid: number;
+  title: string;
 }
 
 export type TripsConfig = Record<string, TripConfig>;
@@ -18,4 +19,5 @@ export type TripsConfig = Record<string, TripConfig>;
 export interface LoadedTrip {
   grids: Grid[];
   people: string[];
+  title: string;
 }
