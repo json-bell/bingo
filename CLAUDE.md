@@ -108,7 +108,7 @@ took) rather than the command-line `--screenshot` flag for anything narrower tha
 desktop width.
 
 Offline support is via `vite-plugin-pwa` (`vite.config.ts`), split into two lanes — see
-`docs/plan.md` for the full reasoning and the tick-state roadmap this was built to leave room
+`docs/plan.md` for the full reasoning and the checked-state roadmap this was built to leave room
 for. The app shell (`index.html`, hashed JS/CSS) is precached normally. Trip data
 (`grids/<slug>/<n>.json`, `data/<slug>/people.ts`, lazy-loaded via `import.meta.glob` in
 `src/lib/trips.ts`) is deliberately excluded from precache (`workbox.globIgnores`) and instead
