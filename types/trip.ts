@@ -19,7 +19,7 @@ export interface GridCell extends BingoItem {
 export type Grid = GridCell[][];
 
 export interface TripConfig {
-  currentGrid: number;
+  currentVersion: number;
   title: string;
 }
 

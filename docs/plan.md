@@ -35,7 +35,7 @@ throttling — actually disconnected), hard-reload the page, full grid renders.
 
 **Phase 1 (MVP, implemented)**: `src/lib/checked.ts` (the seam) + `src/context/
 CheckedContext.tsx` (`CheckedProvider`/`useChecked`), wired into `TripPage.tsx` →
-`Grid.tsx` → `BingoItem.tsx`. The toggle itself lives **inside each cell's modal**
+`Grid.tsx` → `Tile.tsx`. The toggle itself lives **inside each cell's modal**
 (next to its full description), not as a separate control on the tile — the tile
 stays a single click target that opens the modal, and just reflects checked state
 passively (dimmed, struck-through text) once it's been marked. Phases 2/3 below are
@@ -53,7 +53,7 @@ setChecked(tripSlug: string, person: string, cellId: string, value: boolean): Pr
 ```
 
 Both return Promises *even in the localStorage phase*, even though that phase's
-underlying read/write is synchronous — so `TripPage.tsx`/`BingoItem.tsx` call the same
+underlying read/write is synchronous — so `TripPage.tsx`/`Tile.tsx` call the same
 shape in all three phases, and only what's *behind* the seam changes.
 
 1. **MVP (localStorage, per-device)** — synchronous reads/writes, keyed per
@@ -84,7 +84,7 @@ None of this needs a websocket or real-time sync layer at any phase — manual R
 own" — so the seam is a single React Context (`CheckedProvider`), mounted once per
 trip page, holding the whole trip's checked-state map (all people, all cells) rather
 than one hook instance per person. It reads from localStorage exactly once on init and
-exposes one `updateChecked(person, cellId, value)` down through `Grid` → `BingoItem`
+exposes one `updateChecked(person, cellId, value)` down through `Grid` → `Tile`
 via `useContext`. This is the one place phase 2/3's REST PATCH + offline queue
 eventually gets built — a single call site to modify, not one per component instance.
 
@@ -98,8 +98,9 @@ one generated grid. `setChecked`/`getChecked` need a real one to key off.
 **Decision: assign a UUID per cell at grid-generation time** (`crypto.randomUUID()`,
 built into Node — no new dependency), in `makeGrid()` in `data/getGrids.ts`. This
 mirrors exactly what a SQL database would do automatically at `INSERT` time — the
-generation step *is* this app's insert moment — so `BingoItem` gains a required
-`id: string` in `types/trip.ts`, and there's no separate "assign IDs" step to keep in
+generation step *is* this app's insert moment — so the placed-cell type (`GridCell`,
+distinct from the template `BingoItem`) carries a required `id: string` in
+`types/trip.ts`, and there's no separate "assign IDs" step to keep in
 sync later.
 
 The ID is a **globally unique, purely opaque join-key** — it carries no positional
@@ -115,7 +116,7 @@ would have reshuffled everyone's actual grid layout, not just added a field. Ins
 `data/backfillCellIds.ts` (a one-off, but kept around in case another already-live
 grid ever needs the same treatment) read `1.json` verbatim, added
 `id: crypto.randomUUID()` to every cell in place, and wrote the result as `2.json` per
-the existing never-overwrite convention; `config/trips.json`'s `currentGrid` is now
+the existing never-overwrite convention; `config/trips.json`'s `currentVersion` is now
 `2`. Content and layout are unchanged from `1.json` — only the new field was added
 (verified programmatically before promoting). `makeGrid()` in `data/getGrids.ts` now
 also assigns an id to every cell it places, so this is a one-time catch-up, not an

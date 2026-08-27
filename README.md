@@ -9,7 +9,7 @@ Renders bingo grids for group trips, one grid per person, at `/<slug>` (e.g.
 1. Edit `data/<slug>/bingoes.csv` with the updated events.
 2. Run `npm run make-grid -- <slug>`. This writes a new `grids/<slug>/<n>.json` — it never
    overwrites an existing version, so nothing is lost mid-iteration.
-3. Update `config/trips.json`'s `"<slug>".currentGrid` to `<n>` to make it live.
+3. Update `config/trips.json`'s `"<slug>".currentVersion` to `<n>` to make it live.
 
 ## Adding a new trip
 

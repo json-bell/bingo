@@ -8,14 +8,14 @@ const tint: Partial<Record<Difficulty, string>> = {
   h: "bg-tile-hard",
 };
 
-interface BingoItemProps {
-  bingoItem: GridCell;
+interface TileProps {
+  cell: GridCell;
   person: string;
   tintsEnabled: boolean;
 }
 
-export function BingoItem({ bingoItem, person, tintsEnabled }: BingoItemProps) {
-  const { id, summary, description, difficulty } = bingoItem;
+export function Tile({ cell, person, tintsEnabled }: TileProps) {
+  const { id, summary, description, difficulty } = cell;
   const bgClass = tintsEnabled ? (tint[difficulty] ?? "bg-tile") : "bg-tile";
   const dialogRef = useRef<HTMLDialogElement>(null);
   const { isChecked, updateChecked } = useChecked();

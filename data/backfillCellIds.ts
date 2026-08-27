@@ -36,5 +36,5 @@ await fs.writeFile(
 );
 console.log(`Wrote grids/${slug}/${nextVersion}.json (backfilled from version ${fromVersion}).`);
 console.log(
-  `Set config/trips.json's "${slug}".currentGrid to ${nextVersion} to make it live.`
+  `Set config/trips.json's "${slug}".currentVersion to ${nextVersion} to make it live.`
 );

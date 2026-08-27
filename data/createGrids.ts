@@ -1,6 +1,6 @@
 import fs from "fs/promises";
 import path from "path";
-import { generateDataFile } from "./getData";
+import { generateDataFile } from "./generateDataFile";
 import { getGrids } from "./getGrids";
 import type { BingoItem, Grid } from "../types/trip";
 
@@ -41,5 +41,5 @@ await fs.writeFile(
 );
 console.log(`Wrote grids/${slug}/${nextVersion}.json`);
 console.log(
-  `Set config/trips.json's "${slug}".currentGrid to ${nextVersion} to make it live.`
+  `Set config/trips.json's "${slug}".currentVersion to ${nextVersion} to make it live.`
 );

@@ -59,7 +59,7 @@ originally shipped with. When a component needs two candidate background-color u
 rendered className at a time — Tailwind resolves conflicting utilities by generated
 stylesheet order, not by their order in the className string, so having both present at once
 means one silently and unpredictably wins regardless of which condition is "supposed" to
-apply (see `BingoItem.tsx`'s `bgClass` for the pattern: pick one string, don't concatenate).
+apply (see `Tile.tsx`'s `bgClass` for the pattern: pick one string, don't concatenate).
 
 `typescript` is pinned to the 6.x line (`^6.0.3`), not latest — `typescript-eslint` doesn't
 yet support TypeScript 7 (a separate, incompatible rewrite of the compiler). Don't
@@ -86,7 +86,7 @@ headings) before pairing any new background with a text color rather than assumi
 Never reach for a raw `bg-[#hex]`/`bg-[rgb(...)]` arbitrary value for anything that already has
 a semantic token; add a new token (to every block) instead if none of the existing ones fit.
 
-`BingoItem.tsx`'s tile is clickable (native `<dialog>` + `ref`, `.showModal()`/`.close()`) and
+`Tile.tsx`'s tile is clickable (native `<dialog>` + `ref`, `.showModal()`/`.close()`) and
 shows the full untruncated text — the tile itself only shows the title plus a `line-clamp-3`
 description. The dialog needs an explicit `m-auto` or it renders pinned to the top-left:
 Tailwind's Preflight zeroes `margin` globally, which strips the browser's default
@@ -94,7 +94,7 @@ Tailwind's Preflight zeroes `margin` globally, which strips the browser's defaul
 
 `PersonMenu.tsx` reuses that same `<dialog>` pattern but renders responsively: a bottom sheet
 below `md` (`mt-auto`, `rounded-t-3xl`, `w-full max-w-none` — pinned to the bottom, the
-opposite of `BingoItem`'s centered `m-auto`) and a centered modal at `md` and up (`md:m-auto`,
+opposite of `Tile`'s centered `m-auto`) and a centered modal at `md` and up (`md:m-auto`,
 capped `md:max-w-md`, `md:rounded-2xl`). One `<dialog>`, responsive shell classes only — no
 separate mobile/desktop components needed. See `docs/design-system.md` for the single-`md`-
 breakpoint (768px) strategy this and `AppBar.tsx` both follow.
@@ -136,7 +136,7 @@ lazy-loaded, per-slug data source is ever added, it needs to go through this sam
 precached app shell instead of the runtime-cached trip-data lane.
 
 Per-cell "checked" state (`src/lib/checked.ts` + `src/context/CheckedContext.tsx`) is the
-localStorage MVP phase of the roadmap in `docs/plan.md` — `BingoItem.tsx`/`TripPage.tsx`
+localStorage MVP phase of the roadmap in `docs/plan.md` — `Tile.tsx`/`TripPage.tsx`
 only ever call `getChecked`/`setChecked`/`useChecked`, never `localStorage` directly, so a
 later swap to a real REST API changes what's behind those calls, not the call sites. The
 toggle itself lives inside each cell's `<dialog>`, not on the tile — the tile stays a single

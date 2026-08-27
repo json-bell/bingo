@@ -23,7 +23,7 @@ tweaks unless a real problem shows up at those widths later.
   button that opens `PersonMenu.tsx`.
 - **`PersonMenu.tsx`** (new): a bottom sheet (native `<dialog>`, reusing the
   `ref`/`.showModal()`/`.close()`/backdrop-click pattern already established in
-  `BingoItem.tsx`) listing all people as jump links. Also houses the `TintToggle` (moved out
+  `Tile.tsx`) listing all people as jump links. Also houses the `TintToggle` (moved out
   of its current fixed bottom-right position, which occludes grid content) and a
   difficulty-color legend (the app has never had one, and the tints are meaningless without
   it).
@@ -38,7 +38,7 @@ tweaks unless a real problem shows up at those widths later.
 Revised from the original plan: rather than swapping the menu button for an always-visible
 inline person list, desktop keeps the **same "Menu" button** as mobile (simpler than
 maintaining two separate nav UIs) — only the `PersonMenu` dialog's *shell* changes shape:
-a bottom sheet below `md`, a centered modal (reusing `BingoItem.tsx`'s existing `m-auto`
+a bottom sheet below `md`, a centered modal (reusing `Tile.tsx`'s existing `m-auto`
 centering pattern, capped to `md:max-w-md`) at `md` and up. Content inside (person list,
 legend, tint toggle) is identical at both sizes.
 
@@ -49,7 +49,7 @@ legend, tint toggle) is identical at both sizes.
 | `src/components/AppBar.tsx` | New. Sticky bar: trip title + a "Menu" button at every width. Replaces `Header.tsx`. |
 | `src/components/PersonMenu.tsx` | New. One `<dialog>`: person list, `TintToggle`, difficulty legend — bottom sheet below `md`, centered modal at `md` and up. |
 | `src/components/TintToggle.tsx` | Restyled: drop the fixed bottom-right positioning; render as a plain row inside `PersonMenu`. |
-| `src/components/BingoItem.tsx` | Untouched this pass — the click → `<dialog>` interaction and `bgClass`-picks-one-string rule stay as-is. |
+| `src/components/Tile.tsx` | Untouched this pass — the click → `<dialog>` interaction and `bgClass`-picks-one-string rule stay as-is. |
 | `src/pages/TripPage.tsx` | Swaps `Header`/`Navigation` for `AppBar`/`PersonMenu`; per-card scroll container is scoped to the grid wrapper, not the whole `<li>`; drops the accent-glow card shadow. |
 | `src/pages/Home.tsx` | Not yet touched — still a follow-up. |
 | `src/components/Navigation.tsx`, `src/components/Header.tsx` | Deleted. |
@@ -76,5 +76,5 @@ space on a phone screen.
 - Don't combine `hidden` with `line-clamp-*` responsive variants carelessly — both are
   `display`-affecting utilities and CLAUDE.md already warns about two conflicting
   same-category utilities being present at once. If mobile ever needs to hide the
-  description entirely, gate it with a single conditional class the way `BingoItem.tsx`
+  description entirely, gate it with a single conditional class the way `Tile.tsx`
   already does for `bgClass`, not two co-present classes.

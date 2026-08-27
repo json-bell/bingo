@@ -18,7 +18,7 @@ export async function loadTrip(slug: string): Promise<LoadedTrip | null> {
   const tripConfig = tripsConfig[slug];
   if (!tripConfig) return null;
   const loadGrid =
-    gridLoaders[`../../grids/${slug}/${tripConfig.currentGrid}.json`];
+    gridLoaders[`../../grids/${slug}/${tripConfig.currentVersion}.json`];
   const loadPeople = peopleLoaders[`../../data/${slug}/people.ts`];
   if (!loadGrid || !loadPeople) return null;
   const [gridModule, peopleModule] = await Promise.all([

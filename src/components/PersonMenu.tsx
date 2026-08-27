@@ -52,7 +52,7 @@ export function PersonMenu({ people, tintsEnabled, onTintsChange, dialogRef }: P
       </ul>
 
       <div className="border-t border-ink-muted/20 pt-4 mb-4">
-        <p className="text-sm text-ink-muted mb-2">Difficulty colors</p>
+        <p className="text-sm text-ink-muted mb-2">Difficulty tints</p>
         <ul className="flex flex-wrap gap-3">
           {legend.map(({ label, swatchClass }) => (
             <li key={label} className="flex items-center gap-2 text-sm">
