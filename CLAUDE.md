@@ -45,7 +45,7 @@ _If a quiet run fails or the output is unhelpfully sparse, drop the flag for tha
 `allowConstantExport` rule option) — don't add that option to `.eslintrc.cjs` without bumping
 the dependency first, it'll fail config validation.
 
-Styling is Tailwind v4 (`@tailwindcss/vite`, wired into `vite.config.js`; `src/index.css` is
+Styling is Tailwind v4 (`@tailwindcss/vite`, wired into `vite.config.ts`; `src/index.css` is
 just `@import "tailwindcss";` plus the genuinely global `:root`/`body` rules — everything else
 is utility classes on the components themselves, not shared CSS files). This requires Vite 5+;
 that's why `vite`/`@vitejs/plugin-react` are pinned well above the versions the project
@@ -106,6 +106,20 @@ mobile: true})` *before* navigating, and use `Page.captureScreenshot` (or
 `Runtime.evaluate` + `document.documentElement.clientWidth` to confirm the override actually
 took) rather than the command-line `--screenshot` flag for anything narrower than a typical
 desktop width.
+
+Offline support is via `vite-plugin-pwa` (`vite.config.ts`), split into two lanes — see
+`docs/plan.md` for the full reasoning and the tick-state roadmap this was built to leave room
+for. The app shell (`index.html`, hashed JS/CSS) is precached normally. Trip data
+(`grids/<slug>/<n>.json`, `data/<slug>/people.ts`, lazy-loaded via `import.meta.glob` in
+`src/lib/trips.ts`) is deliberately excluded from precache (`workbox.globIgnores`) and instead
+runtime-cached (`CacheFirst`) only once actually requested — so visiting one trip doesn't
+pull every trip in the repo into the cache. This only works because `chunkFileNames` in
+`vite.config.ts` routes those specific chunks into a `trip-data/` output directory first —
+without that, they're indistinguishable by URL from ordinary app-shell JS chunks, since
+Vite bundles JSON imports as JS, not as separately-fetchable `.json` requests. If a new
+lazy-loaded, per-slug data source is ever added, it needs to go through this same
+`chunkFileNames` routing (matched by its module path) or it'll silently get swept into the
+precached app shell instead of the runtime-cached trip-data lane.
 
 ## Conventions
 
