@@ -44,6 +44,11 @@ Superseded CSV drafts go in `data/archive/<slug>/`, not `data/<slug>/` — keeps
 accessible without digging through git history, without cluttering the directory the
 generator actually reads from.
 
+Requires **Node 19+**: `data/getGrids.ts` and `data/backfillCellIds.ts` call the global
+`crypto.randomUUID()` with no import (stable in Node 19+; not present at all on older
+versions) — an older Node fails with a confusing "crypto is not defined"-style error, not
+an obvious version-mismatch message.
+
 _If a quiet run fails or the output is unhelpfully sparse, drop the flag for that one invocation and re-run — quiet is the default, not a hard rule._
 
 `eslint-plugin-react-refresh` is pinned at 0.3.x (older than the version that introduced the
@@ -121,6 +126,11 @@ related to the dialog's "top layer" rendering and automated event dispatch), but
 practical takeaway: don't trust an automated-click test of `<dialog>` content in this
 environment when it fails — verify manually before concluding the app itself is broken.
 
+See `docs/visual-verification.md` for a copy-pasteable recipe (launch headless Chrome
+with remote debugging, drive it over CDP) that avoids both gotchas above — reach for it
+whenever a change needs an actual rendered check rather than rediscovering the same
+websocket boilerplate from scratch.
+
 Offline support is via `vite-plugin-pwa` (`vite.config.ts`), split into two lanes — see
 `docs/plan.md` for the full reasoning and the checked-state roadmap this was built to leave room
 for. The app shell (`index.html`, hashed JS/CSS) is precached normally. Trip data
@@ -135,6 +145,15 @@ lazy-loaded, per-slug data source is ever added, it needs to go through this sam
 `chunkFileNames` routing (matched by its module path) or it'll silently get swept into the
 precached app shell instead of the runtime-cached trip-data lane.
 
+`vercel.json` explicitly sets `Cache-Control: no-cache` on `/sw.js` and `/registerSW.js`
+— the whole `registerType: "autoUpdate"` mechanism depends on the browser being able to
+fetch a genuinely fresh copy of the service worker on each visit; if either file were
+served with any real cache lifetime (Vercel's un-configured default for a static file is
+not something to just assume is safe here), updates could silently stop reaching users
+for as long as that cache lasts. This was never actually verified against Vercel's real
+response headers before the headers were added — if you ever remove them, re-verify
+against the live deployment, not just `vite preview`.
+
 Per-cell "checked" state (`src/lib/checked.ts` + `src/context/CheckedContext.tsx`) is the
 localStorage MVP phase of the roadmap in `docs/plan.md` — `Tile.tsx`/`TripPage.tsx`
 only ever call `getChecked`/`setChecked`/`useChecked`, never `localStorage` directly, so a
@@ -142,6 +161,11 @@ later swap to a real REST API changes what's behind those calls, not the call si
 toggle itself lives inside each cell's `<dialog>`, not on the tile — the tile stays a single
 click target that opens the modal, and only passively reflects checked state (dimmed,
 struck-through text).
+
+Every localStorage key in this app is prefixed `bingo:` (`bingo:tintsEnabled`,
+`bingo:checked:<tripSlug>:<person>`) — keep using that prefix for anything new stored
+there, both to namespace against other localStorage users on the same origin and to
+keep related keys grep-able as a group.
 
 ## Conventions
 

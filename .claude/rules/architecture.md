@@ -39,3 +39,27 @@ paths:
   real latent bug the original JS didn't guard against — if a CSV doesn't have enough rows
   of some difficulty for the number of people, it now throws a clear "ran out of events"
   error instead of crashing later on `undefined.summary`.
+
+## Component tree
+
+`App.tsx` → `Home.tsx` (lists trips) or `TripPage.tsx` (one trip, per `:slug`).
+`TripPage.tsx` owns most of the state and composes everything else:
+
+| Component/module | Role |
+| --- | --- |
+| `AppBar.tsx` | Sticky top bar: trip title + a "Menu" button (same button at every width — see `docs/design-system.md` for why there's no separate desktop nav). |
+| `PersonMenu.tsx` | The bottom-sheet/modal `<dialog>` the Menu button opens: person list (jump links), the difficulty legend, and `TintToggle`. |
+| `TintToggle.tsx` | The easy/medium/hard tint on/off switch. State is plain `useState` + `localStorage` in `TripPage.tsx` (`bingo:tintsEnabled`), passed down as a prop — no Context, unlike checked-state below. |
+| `Grid.tsx` | One person's 5×5 grid — maps a `GridCell[][]` to `Tile`s. |
+| `Tile.tsx` | One cell: the clickable square (title + truncated description) plus the `<dialog>` with full description and the checked toggle. |
+| `src/context/CheckedContext.tsx` | `CheckedProvider`, mounted once per trip page (not per person) since the page renders everyone's grid at once. Holds the whole trip's checked-state map, exposes `isChecked`/`updateChecked` via `useChecked()`. |
+| `src/lib/checked.ts` | The actual storage seam behind the context (`getChecked`/`setChecked`) — localStorage today, a REST API later, per `docs/plan.md`. Components never touch `localStorage` directly for checked state. |
+| `src/lib/trips.ts` | `listSlugs()`/`loadTrip(slug)` — the read-only trip/grid data loading layer, unrelated to checked-state. |
+
+Two different state-management approaches are in play on purpose, not by accident: tint
+preference is single-value, global, and doesn't need to reach deeply-nested components in
+more than one place, so plain prop-drilling from `TripPage.tsx` is simpler than a Context.
+Checked state is per-(person, cell), read and written from every `Tile` instance across
+every person's grid, which is exactly the "many descendants need it" case Context exists
+for. If a new piece of state needs to reach more than a couple of prop levels deep, look at
+which of these two shapes it actually matches before defaulting to either pattern.
