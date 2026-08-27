@@ -32,6 +32,7 @@ These are the real, verified commands for this repo. Don't guess alternatives (`
 | Typecheck only | `npm run tscheck`                         |
 | Preview build  | `npm run preview`                         |
 | Lint           | `npm run lint -- --quiet`                 |
+| Tests          | `npm run test` (Vitest, run-once — not watch mode) |
 | Generate a new grid version for a slug | `npm run make-grid -- <slug>` (e.g. `europapark-2024`) |
 
 `make-grid` runs `data/createGrids.ts` via `tsx` (not `node` — these are `.ts` files, not
@@ -48,6 +49,17 @@ Requires **Node 19+**: `data/getGrids.ts` and `data/backfillCellIds.ts` call the
 `crypto.randomUUID()` with no import (stable in Node 19+; not present at all on older
 versions) — an older Node fails with a confusing "crypto is not defined"-style error, not
 an obvious version-mismatch message.
+
+Tests are Vitest, not Jest — see `docs/test-plan.md` for the full reasoning (the short
+version: `src/lib/trips.ts`'s `import.meta.glob` has no Jest equivalent at all) and the
+short/long-term test plan. Two real gotchas from setting it up, both already fixed:
+jsdom implements `HTMLDialogElement` as a class but doesn't implement `showModal()`/
+`close()` at all — `vitest.setup.ts` polyfills both by toggling the `open` attribute,
+which is enough for anything a test can observe. And Vite's dynamic `import()` needs a
+statically-analyzable specifier, so a test that needs to read back a file written to a
+runtime-only path (e.g. a disposable fixture slug under `data/`) should read and parse
+the file's source directly instead of importing it as a module — see
+`data/generateDataFile.test.ts` for the pattern.
 
 _If a quiet run fails or the output is unhelpfully sparse, drop the flag for that one invocation and re-run — quiet is the default, not a hard rule._
 

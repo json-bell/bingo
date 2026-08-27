@@ -5,7 +5,7 @@ end-to-end flows through real code with minimal mocking, or targeted unit tests 
 data-management logic. Don't test what React/the framework already guarantees, and don't
 test presentational components that have no real logic in them.
 
-## Tooling: Vitest, not Jest
+## Tooling: Vitest, not Jest (implemented)
 
 `src/lib/trips.ts`'s `loadTrip`/`listSlugs` — the most important data-flow code to cover —
 is built on `import.meta.glob`, a Vite-only compile-time macro with no Node/Jest equivalent
@@ -16,7 +16,25 @@ natively, and shares the project's existing `vite.config.ts`/TypeScript setup �
 drop-in replacement (`describe`/`it`/`expect`, `@testing-library/jest-dom` matchers work the
 same way). Nothing about how tests are written changes, only the runner.
 
-## Short-term: what to test now
+Config lives in `vite.config.ts`'s `test` field (import `defineConfig` from
+`"vitest/config"`, not plain `"vite"`, to get that field typed) plus `vitest.setup.ts`
+(registered via `setupFiles`). `vitest.setup.ts` is included by `tsconfig.app.json`, not
+`tsconfig.node.json` — it needs DOM lib types (it patches `HTMLDialogElement.prototype`),
+same reason `data/*.test.ts` files (Node-context, no DOM) and `src/**/*.test.tsx` files
+(jsdom-context) sit under different tsconfig projects already.
+
+Two real gotchas hit while setting this up, both already fixed — see `CLAUDE.md`'s testing
+paragraph for the short version:
+- jsdom implements `HTMLDialogElement` as a real class (elements really are instances of
+  it) but doesn't implement `showModal()`/`close()` at all — not a missing element, just
+  two missing methods. `vitest.setup.ts` polyfills both by toggling the `open` attribute.
+- Vite's dynamic `import()` needs a statically-analyzable specifier; a fully
+  runtime-variable path (e.g. importing a file just written to a disposable fixture slug)
+  fails with "Unknown variable dynamic import" even with `await import()`. Read the
+  written file's source directly and parse out what's needed instead of importing it as a
+  module — see `data/generateDataFile.test.ts`.
+
+## Short-term: what to test now (implemented)
 
 Five targets, in priority order:
 
