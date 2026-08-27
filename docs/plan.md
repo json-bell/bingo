@@ -31,7 +31,15 @@ never go stale once cached.
 Verified end-to-end: register the service worker, go fully offline (no network
 throttling — actually disconnected), hard-reload the page, full grid renders.
 
-## Checked-state roadmap (not yet built)
+## Checked-state roadmap
+
+**Phase 1 (MVP, implemented)**: `src/lib/checked.ts` (the seam) + `src/context/
+CheckedContext.tsx` (`CheckedProvider`/`useChecked`), wired into `TripPage.tsx` →
+`Grid.tsx` → `BingoItem.tsx`. The toggle itself lives **inside each cell's modal**
+(next to its full description), not as a separate control on the tile — the tile
+stays a single click target that opens the modal, and just reflects checked state
+passively (dimmed, struck-through text) once it's been marked. Phases 2/3 below are
+not yet built.
 
 Settled on **"Checked"** as the terminology (not "tick") — `isChecked`, `useChecked`,
 `CheckedProvider`, `setChecked`.
@@ -101,13 +109,17 @@ today, and never needs to travel through the checked-state API at all — the cl
 already has the full grid loaded and just needs, per cell it's rendering, "is this
 `cellId` checked?"
 
-**Backfill, not regenerate**: `grids/europapark-2024/1.json` predates this and has no
-IDs, but `makeGrid()` is randomized (no seed), so regenerating from the CSV would
-reshuffle everyone's actual grid layout, not just add a field. Instead: a one-off
-script reads `1.json` verbatim, walks every cell adding `id: crypto.randomUUID()` in
-place, and writes the result as `2.json` per the existing never-overwrite convention
-— then `config/trips.json`'s `currentGrid` gets bumped to `2`. Content and layout are
-unchanged; only the new field is added.
+**Backfill, not regenerate (done)**: `grids/europapark-2024/1.json` predated this and
+had no IDs, and `makeGrid()` is randomized (no seed), so regenerating from the CSV
+would have reshuffled everyone's actual grid layout, not just added a field. Instead,
+`data/backfillCellIds.ts` (a one-off, but kept around in case another already-live
+grid ever needs the same treatment) read `1.json` verbatim, added
+`id: crypto.randomUUID()` to every cell in place, and wrote the result as `2.json` per
+the existing never-overwrite convention; `config/trips.json`'s `currentGrid` is now
+`2`. Content and layout are unchanged from `1.json` — only the new field was added
+(verified programmatically before promoting). `makeGrid()` in `data/getGrids.ts` now
+also assigns an id to every cell it places, so this is a one-time catch-up, not an
+ongoing step.
 
 ## Future SQL migration shape (not being built now)
 

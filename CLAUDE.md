@@ -11,10 +11,15 @@ Vercel (`vercel.json` has the SPA catch-all rewrite it needs) — previously dra
 into Vercel by hand, and briefly set up for GitHub Pages before switching back to Vercel for
 proper path-based routing without a redirect trick.
 
-Shared data-structure types (`BingoItem`, `Difficulty`, `Grid`, `TripConfig`, `LoadedTrip`)
-live in `types/trip.ts` at the repo root, imported by both `src/` (the app, browser/DOM
-context) and `data/` (the Node generator scripts) — it's the one place those shapes are
-defined, don't redeclare them locally in either.
+Shared data-structure types (`BingoItem`, `GridCell`, `Difficulty`, `Grid`, `TripConfig`,
+`LoadedTrip`) live in `types/trip.ts` at the repo root, imported by both `src/` (the app,
+browser/DOM context) and `data/` (the Node generator scripts) — it's the one place those
+shapes are defined, don't redeclare them locally in either. `BingoItem` (a template event
+still in the shuffle pool, `data/<slug>/data.ts`) and `GridCell` (that same shape once
+placed into a specific person's grid, with an added `id`) are deliberately separate types,
+not the same one reused — the same source event can end up placed into several different
+people's grids, each as its own cell needing its own id, so the id can't live on the
+template.
 
 ## Commands
 
@@ -107,6 +112,15 @@ mobile: true})` *before* navigating, and use `Page.captureScreenshot` (or
 took) rather than the command-line `--screenshot` flag for anything narrower than a typical
 desktop width.
 
+**Automating clicks inside a `<dialog>` is unreliable in headless Chrome via CDP**
+(`Runtime.evaluate`-driven `.click()`, and coordinate-based `Input.dispatchMouseEvent`) —
+a checkbox inside a `showModal()`-opened dialog silently did nothing (no console error, no
+state change) across multiple fresh browser profiles, while the same interaction worked
+fine for a real person in a real browser. Root cause not fully pinned down (suspected to be
+related to the dialog's "top layer" rendering and automated event dispatch), but the
+practical takeaway: don't trust an automated-click test of `<dialog>` content in this
+environment when it fails — verify manually before concluding the app itself is broken.
+
 Offline support is via `vite-plugin-pwa` (`vite.config.ts`), split into two lanes — see
 `docs/plan.md` for the full reasoning and the checked-state roadmap this was built to leave room
 for. The app shell (`index.html`, hashed JS/CSS) is precached normally. Trip data
@@ -120,6 +134,14 @@ Vite bundles JSON imports as JS, not as separately-fetchable `.json` requests. I
 lazy-loaded, per-slug data source is ever added, it needs to go through this same
 `chunkFileNames` routing (matched by its module path) or it'll silently get swept into the
 precached app shell instead of the runtime-cached trip-data lane.
+
+Per-cell "checked" state (`src/lib/checked.ts` + `src/context/CheckedContext.tsx`) is the
+localStorage MVP phase of the roadmap in `docs/plan.md` — `BingoItem.tsx`/`TripPage.tsx`
+only ever call `getChecked`/`setChecked`/`useChecked`, never `localStorage` directly, so a
+later swap to a real REST API changes what's behind those calls, not the call sites. The
+toggle itself lives inside each cell's `<dialog>`, not on the tile — the tile stays a single
+click target that opens the modal, and only passively reflects checked state (dimmed,
+struck-through text).
 
 ## Conventions
 

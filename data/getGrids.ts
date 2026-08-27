@@ -1,4 +1,4 @@
-import type { BingoItem, Difficulty, Grid } from "../types/trip";
+import type { BingoItem, Difficulty, Grid, GridCell } from "../types/trip";
 
 function shuffleObjectArray<T extends object>(arr: T[]): T[] {
   return arr
@@ -86,7 +86,8 @@ function makeGrid(
         newItem.description = goal.description;
         newItem.summary = goal.summary;
       }
-      return newItem;
+      const cell: GridCell = { ...newItem, id: crypto.randomUUID() };
+      return cell;
     })
   );
 }

@@ -1,0 +1,1685 @@
+[
+  [
+    [
+      {
+        "type": "park",
+        "difficulty": "h",
+        "summary": "blister",
+        "description": "Someone gets a blister on day 1",
+        "id": "9a3c5dfd-a657-485f-a7b1-7e67cf07e916"
+      },
+      {
+        "type": "life",
+        "difficulty": "e",
+        "summary": "german jason",
+        "description": "Jason orders something successfully in German",
+        "id": "2828f655-b969-4ac8-8653-4a971435b936"
+      },
+      {
+        "type": "park",
+        "difficulty": "m",
+        "summary": "some rain",
+        "description": "It rains one day we're at europapark",
+        "id": "a9b5aa7e-d448-4b4b-b505-5e1321192f48"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "e",
+        "summary": "fistbump",
+        "description": "fistbump “Ed Euromaus” aka Fake Mickey",
+        "id": "f804b51e-1419-41ec-a97c-1965d529c190"
+      },
+      {
+        "type": "life",
+        "difficulty": "h",
+        "summary": "they're too hot",
+        "description": "Someone gets heat exhaustion/heat stroke",
+        "id": "2d20dce7-d50c-4091-a3e4-cbf7d93cf63c"
+      }
+    ],
+    [
+      {
+        "type": "challenge",
+        "difficulty": "e",
+        "summary": "hug",
+        "description": "hug “Edda Euromausi” aka Fake Minnie",
+        "id": "dcc00e88-d40d-4736-b026-d2d475db20fc"
+      },
+      {
+        "type": "park",
+        "difficulty": "m",
+        "summary": "broken pre-queue",
+        "description": "A roller coaster breaks down before we go in the queue",
+        "id": "07a43f34-0ebc-4b8d-aa55-8834e9309b2f"
+      },
+      {
+        "type": "life",
+        "difficulty": "h",
+        "summary": "romance",
+        "description": "Holiday (new) romance",
+        "id": "55af9fce-2ad7-42c5-bebf-7b435f2f98a5"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "m",
+        "summary": "pet dog",
+        "description": "You pet a dog (thumbs up to a dog if you're allergic)",
+        "id": "b6681442-94ee-4207-a588-837f977cb969"
+      },
+      {
+        "type": "life",
+        "difficulty": "e",
+        "summary": "german will",
+        "description": "Will orders something successfuly in German",
+        "id": "b3bbd79f-0cee-4862-8cdd-c0192a5a65bb"
+      }
+    ],
+    [
+      {
+        "type": "travel",
+        "difficulty": "m",
+        "summary": "airport confiscate",
+        "description": "Someone has something confiscated at security",
+        "id": "0ea17707-1e69-4ce0-945b-20d4c2ee6693"
+      },
+      {
+        "type": "life",
+        "difficulty": "h",
+        "summary": "they're so sick",
+        "description": "Someone gets sick (ill)",
+        "id": "18a297aa-d89f-4a6f-8b04-f7629aeeefa6"
+      },
+      {
+        "type": "free",
+        "difficulty": "f",
+        "summary": "free",
+        "description": "free",
+        "id": "d57f415c-52c3-41ec-96c3-c581deeaeb97"
+      },
+      {
+        "type": "life",
+        "difficulty": "h",
+        "summary": "sauerkrautted",
+        "description": "Someone eats Sauerkraut",
+        "id": "41576ccc-73d7-48ef-aadd-28fa876177e1"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "m",
+        "summary": "jersey number",
+        "description": "You get a picture with something that has your jersey number on",
+        "id": "686b3a8a-4e84-45a3-bac2-010d5f3c2e01"
+      }
+    ],
+    [
+      {
+        "type": "travel",
+        "difficulty": "e",
+        "summary": "flight on time",
+        "description": "Flight is on time",
+        "id": "f55cc872-9b21-4757-aec2-64b036364868"
+      },
+      {
+        "type": "park",
+        "difficulty": "m",
+        "summary": "all rain",
+        "description": "It rains every day that we’re at Europapark (parks?)",
+        "id": "7f8e7553-b49a-4dd2-816c-a0b6ef493cf8"
+      },
+      {
+        "type": "life",
+        "difficulty": "h",
+        "summary": "airbnb broken",
+        "description": "We break something in the airbnb",
+        "id": "56713305-a467-42ba-bf4b-57cf944116fd"
+      },
+      {
+        "type": "park",
+        "difficulty": "m",
+        "summary": "no rain",
+        "description": "It doesn’t rain every day that we’re at Europapark (parks?)",
+        "id": "5d049bbf-e126-4044-834b-dec28e7be6a0"
+      },
+      {
+        "type": "park",
+        "difficulty": "e",
+        "summary": "jersey pic",
+        "description": "We get a jersey picture",
+        "id": "badc56ff-6643-4990-9131-d495ed8182e5"
+      }
+    ],
+    [
+      {
+        "type": "life",
+        "difficulty": "h",
+        "summary": "forgotten key",
+        "description": "Someone forgets to hand in a key",
+        "id": "7be81d4c-b018-4b98-afc6-e6f764643a6f"
+      },
+      {
+        "type": "life",
+        "difficulty": "e",
+        "summary": "maccies",
+        "description": "We go to maccies",
+        "id": "f9257eea-c855-4d58-ac6f-c909089ebbbf"
+      },
+      {
+        "type": "park",
+        "difficulty": "m",
+        "summary": "lost person",
+        "description": "Someone gets lost",
+        "id": "f97df8b4-4fad-42ed-adc6-d03e0e07ecb9"
+      },
+      {
+        "type": "travel",
+        "difficulty": "e",
+        "summary": "bell passport",
+        "description": "A Bell doesn't forget their passport on the way back",
+        "id": "88b13fd9-dd31-4725-a80f-a55037137f40"
+      },
+      {
+        "type": "life",
+        "difficulty": "h",
+        "summary": "noise complaint",
+        "description": "We get a noise complaint",
+        "id": "95ef8e86-5981-4a06-ac87-763212eba9bd"
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "life",
+        "difficulty": "h",
+        "summary": "forgotten key",
+        "description": "Someone forgets to hand in a key",
+        "id": "06ef73ce-e992-44b3-8e87-c8cfb2cc589d"
+      },
+      {
+        "type": "life",
+        "difficulty": "e",
+        "summary": "fruity ben",
+        "description": "Ben eats a fruit/vegetable",
+        "id": "80e6ff51-3203-4168-9ef4-ed194de3e36d"
+      },
+      {
+        "type": "travel",
+        "difficulty": "m",
+        "summary": "swimsuitless",
+        "description": "Someone forgets their swimsuit",
+        "id": "c26c14ce-90b3-4722-8926-f2ce87a2cc00"
+      },
+      {
+        "type": "travel",
+        "difficulty": "e",
+        "summary": "bell passport",
+        "description": "A Bell doesn't forget their passport on the way back",
+        "id": "8fb349b5-8e39-424a-aa33-e967a4b01284"
+      },
+      {
+        "type": "life",
+        "difficulty": "h",
+        "summary": "airbnb broken",
+        "description": "We break something in the airbnb",
+        "id": "af8a247a-557c-478e-b9ea-c812f62a7907"
+      }
+    ],
+    [
+      {
+        "type": "challenge",
+        "difficulty": "e",
+        "summary": "pose",
+        "description": "You pose on a ride photo",
+        "id": "03e76972-f34a-4ace-867d-a081dae29c5a"
+      },
+      {
+        "type": "park",
+        "difficulty": "m",
+        "summary": "no rain",
+        "description": "It doesn’t rain every day that we’re at Europapark (parks?)",
+        "id": "2fe48009-ff76-4f48-8f5e-a26057ca7d08"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "h",
+        "summary": "germeme",
+        "description": "You make a meme which someone laughs out loud to when they first see it",
+        "id": "e169d5c9-551c-43c9-a795-06667327f423"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "m",
+        "summary": "fistbump other",
+        "description": "Fistbump another character (might not exist)",
+        "id": "ade312be-a8ef-4a8b-9019-b73252763b2c"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "e",
+        "summary": "hug",
+        "description": "hug “Louis” (ngl not sure who this is look here mb)",
+        "id": "43afff89-dbdd-40ed-b133-14f85ac63c84"
+      }
+    ],
+    [
+      {
+        "type": "life",
+        "difficulty": "m",
+        "summary": "schnitzelled",
+        "description": "Someone eats a schnitzel or veggie equivalent",
+        "id": "c857f794-63a7-4fc1-b41d-864a04f17075"
+      },
+      {
+        "type": "life",
+        "difficulty": "h",
+        "summary": "banana'd",
+        "description": "Someone banana peel falls",
+        "id": "d54a49ad-cc36-4ae1-9a09-f819073f525c"
+      },
+      {
+        "type": "free",
+        "difficulty": "f",
+        "summary": "free",
+        "description": "free",
+        "id": "1edadd85-ea43-42b1-b4fc-c160e96315bc"
+      },
+      {
+        "type": "travel",
+        "difficulty": "h",
+        "summary": "bell no passport",
+        "description": "A Bell forgets their passport for the way back",
+        "id": "450b0a2f-0951-40de-8e77-b734a67e08cb"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "m",
+        "summary": "pet dog",
+        "description": "You pet a dog (thumbs up to a dog if you're allergic)",
+        "id": "e777c21e-4b4e-4a45-9312-6d1ddec74900"
+      }
+    ],
+    [
+      {
+        "type": "life",
+        "difficulty": "e",
+        "summary": "maccies",
+        "description": "We go to maccies",
+        "id": "21c58362-9403-40b7-946a-ca57925ac541"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "m",
+        "summary": "you're wet",
+        "description": "You get the most soaked on a wet ride",
+        "id": "fb9d787f-94ce-4f08-8cb9-4104bba0a771"
+      },
+      {
+        "type": "life",
+        "difficulty": "h",
+        "summary": "jersey question",
+        "description": "Someone asks us about our jerseys",
+        "id": "6c6865dc-3a04-4253-b87d-fc9821cec694"
+      },
+      {
+        "type": "park",
+        "difficulty": "m",
+        "summary": "some rain",
+        "description": "It rains one day we're at europapark",
+        "id": "04bb6013-73e5-4d64-a13e-e52b081a71a3"
+      },
+      {
+        "type": "life",
+        "difficulty": "e",
+        "summary": "german sarah",
+        "description": "Sarah orders something successfully in German",
+        "id": "c857bf2f-d4ba-40b7-940f-badc85f7448c"
+      }
+    ],
+    [
+      {
+        "type": "life",
+        "difficulty": "h",
+        "summary": "noise complaint",
+        "description": "We get a noise complaint",
+        "id": "f3969e7f-2a8f-40b1-b5ac-2e2e879d8ed0"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "e",
+        "summary": "hug",
+        "description": "hug “Europhant” (imma guess that's the elephant but who knows tbh) aka Fake Dumbo",
+        "id": "20d53791-de3c-4ad2-aa7a-003c19bddd26"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "m",
+        "summary": "jersey number",
+        "description": "You get a picture with something that has your jersey number on",
+        "id": "51e60dbe-cdc6-49f0-ab90-6d6d5fc772c0"
+      },
+      {
+        "type": "travel",
+        "difficulty": "e",
+        "summary": "no throne",
+        "description": "No one throws up",
+        "id": "25c150b8-b5e0-4511-b09c-cbb1e86c67f6"
+      },
+      {
+        "type": "park",
+        "difficulty": "h",
+        "summary": "hurt person",
+        "description": "Someone ends up in first aid",
+        "id": "1f4e93ce-d397-4c9b-a098-2e4454fe1e33"
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "park",
+        "difficulty": "h",
+        "summary": "broken riding",
+        "description": "A rollercoaster breaks down while we’re on it",
+        "id": "f89f270f-f7f1-45de-8d05-dbbb2680d3b0"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "e",
+        "summary": "pose",
+        "description": "You pose on a ride photo",
+        "id": "817e8853-c57b-44fe-b9fd-858ca8a9ffc4"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "m",
+        "summary": "jersey number",
+        "description": "You get a picture with something that has your jersey number on",
+        "id": "55150398-a762-42ee-be3f-d0d9e441ab1e"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "e",
+        "summary": "fistbump",
+        "description": "fistbump “Ed Euromaus” aka Fake Mickey",
+        "id": "43dcd156-bbed-46be-a4f9-0753ea720f36"
+      },
+      {
+        "type": "life",
+        "difficulty": "h",
+        "summary": "jersey question",
+        "description": "Someone asks us about our jerseys",
+        "id": "1dd91c0b-f9ab-46c8-87a9-c11808a17fd9"
+      }
+    ],
+    [
+      {
+        "type": "challenge",
+        "difficulty": "e",
+        "summary": "fistbump",
+        "description": "fistbump “Europhant” (imma guess that's the elephant but who knows tbh) aka Fake Dumbo",
+        "id": "f2b82d48-f896-462f-8d38-1f04411042b4"
+      },
+      {
+        "type": "life",
+        "difficulty": "m",
+        "summary": "russell hair",
+        "description": "Russell does someone's hair",
+        "id": "b759af29-66ed-401f-8769-71f1d9fe4f73"
+      },
+      {
+        "type": "life",
+        "difficulty": "h",
+        "summary": "scam",
+        "description": "Someone gets scammed",
+        "id": "d9afb305-88e6-45e4-9b90-e70e53f0cb4f"
+      },
+      {
+        "type": "park",
+        "difficulty": "m",
+        "summary": "lost person",
+        "description": "Someone gets lost",
+        "id": "b3c8a60d-058a-482c-af81-5632be885d14"
+      },
+      {
+        "type": "travel",
+        "difficulty": "e",
+        "summary": "flight on time",
+        "description": "Flight is on time",
+        "id": "15f8f0af-e364-4d82-8dde-469d1cfee90a"
+      }
+    ],
+    [
+      {
+        "type": "park",
+        "difficulty": "m",
+        "summary": "ben merched up",
+        "description": "Ben buys merch on the first day",
+        "id": "c821327b-9bf7-4e1c-b483-7281d8257f2e"
+      },
+      {
+        "type": "park",
+        "difficulty": "h",
+        "summary": "hurt person",
+        "description": "Someone ends up in first aid",
+        "id": "8cf5b6b3-6497-49e4-9824-92010c820fe5"
+      },
+      {
+        "type": "free",
+        "difficulty": "f",
+        "summary": "free",
+        "description": "free",
+        "id": "048f2893-1613-4a3b-bf8b-5a8ec4793fe0"
+      },
+      {
+        "type": "life",
+        "difficulty": "h",
+        "summary": "banana'd",
+        "description": "Someone banana peel falls",
+        "id": "ac27e501-c40c-4b26-ba82-9f314dcec2a7"
+      },
+      {
+        "type": "travel",
+        "difficulty": "m",
+        "summary": "swimsuitless",
+        "description": "Someone forgets their swimsuit",
+        "id": "c93d7ab7-4ef0-45cd-b3fe-667dd719be0d"
+      }
+    ],
+    [
+      {
+        "type": "challenge",
+        "difficulty": "e",
+        "summary": "hug",
+        "description": "hug “Böckli” (see above comment)",
+        "id": "90e3e0a2-f656-4261-9928-24e86c89a0f9"
+      },
+      {
+        "type": "life",
+        "difficulty": "m",
+        "summary": "schnitzelled",
+        "description": "Someone eats a schnitzel or veggie equivalent",
+        "id": "8543495d-1f12-4619-a73e-635d0ee92262"
+      },
+      {
+        "type": "park",
+        "difficulty": "h",
+        "summary": "blister",
+        "description": "Someone gets a blister on day 1",
+        "id": "b7f7bfc0-2bd6-492f-ac5c-9158704bc644"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "m",
+        "summary": "you're wet",
+        "description": "You get the most soaked on a wet ride",
+        "id": "a1d9efdd-61a9-4de9-a592-e0b5a749f67c"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "e",
+        "summary": "hug",
+        "description": "hug “Edda Euromausi” aka Fake Minnie",
+        "id": "7c34701c-b52b-4dc3-90f5-46ccd543ac9f"
+      }
+    ],
+    [
+      {
+        "type": "Park",
+        "difficulty": "h",
+        "summary": "stuck food loop",
+        "description": "Food loop food gets stuck while we're there",
+        "id": "5375a4f0-1ea1-471e-a2bc-41dbdfc8d99a"
+      },
+      {
+        "type": "life",
+        "difficulty": "e",
+        "summary": "german jason",
+        "description": "Jason orders something successfully in German",
+        "id": "bd8f4a6b-c37b-4183-a58d-acde80743509"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "m",
+        "summary": "fistbump other",
+        "description": "Fistbump another character (might not exist)",
+        "id": "7405be85-d83d-4ffe-aa54-d80964144575"
+      },
+      {
+        "type": "travel",
+        "difficulty": "e",
+        "summary": "bell passport",
+        "description": "A Bell doesn't forget their passport on the way back",
+        "id": "6813b2ca-6c09-49bf-aa8e-bdbb210b50e7"
+      },
+      {
+        "type": "life",
+        "difficulty": "h",
+        "summary": "no maccies",
+        "description": "We don't go to maccies",
+        "id": "57d207e4-1a76-4c1e-986c-6584f60c4c99"
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "Park",
+        "difficulty": "h",
+        "summary": "stuck food loop",
+        "description": "Food loop food gets stuck while we're there",
+        "id": "b284978c-592a-4f39-aad7-4d07004d258f"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "e",
+        "summary": "hug",
+        "description": "hug “Edda Euromausi” aka Fake Minnie",
+        "id": "a410ae6d-c3c3-4b12-868d-1e7358e1007c"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "m",
+        "summary": "hug other",
+        "description": "Hug another character (might not exist)",
+        "id": "36180a91-d114-4235-a4e5-b22cd5bc8c53"
+      },
+      {
+        "type": "park",
+        "difficulty": "e",
+        "summary": "2 jersey pic",
+        "description": "We get 2 jersey pics (blue and white)",
+        "id": "871a2b83-c64c-4434-b1b3-2daaf847b3ab"
+      },
+      {
+        "type": "life",
+        "difficulty": "h",
+        "summary": "they're so sick",
+        "description": "Someone gets sick (ill)",
+        "id": "42a957d0-0e18-46c7-a42b-76a69353d170"
+      }
+    ],
+    [
+      {
+        "type": "challenge",
+        "difficulty": "e",
+        "summary": "pose",
+        "description": "You pose on a ride photo",
+        "id": "c37e191d-7b63-44ce-a5e1-2269e5e21d27"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "m",
+        "summary": "you're german",
+        "description": "You buy something speaking entirely in German",
+        "id": "9af47b27-8743-4ae5-b6f8-34f597c2d841"
+      },
+      {
+        "type": "life",
+        "difficulty": "h",
+        "summary": "sauerkrautted",
+        "description": "Someone eats Sauerkraut",
+        "id": "0c60e23c-5c0f-4e04-86a7-869da6b73389"
+      },
+      {
+        "type": "park",
+        "difficulty": "m",
+        "summary": "broken pre-queue",
+        "description": "A roller coaster breaks down before we go in the queue",
+        "id": "5ed60515-1a84-4127-8a95-5d8c0c52d216"
+      },
+      {
+        "type": "travel",
+        "difficulty": "e",
+        "summary": "flight delay",
+        "description": "Flight is delayed",
+        "id": "7b67e269-3cb3-429d-bd49-ab12ea6cf4a8"
+      }
+    ],
+    [
+      {
+        "type": "travel",
+        "difficulty": "m",
+        "summary": "swimsuitless",
+        "description": "Someone forgets their swimsuit",
+        "id": "05e07ee0-e754-4008-852c-2fb1ba8be76d"
+      },
+      {
+        "type": "life",
+        "difficulty": "h",
+        "summary": "jersey question",
+        "description": "Someone asks us about our jerseys",
+        "id": "2161477c-7788-4ae4-a640-013870f7474f"
+      },
+      {
+        "type": "free",
+        "difficulty": "f",
+        "summary": "free",
+        "description": "free",
+        "id": "5a7d43ad-0385-4b18-b1a2-6037811adc65"
+      },
+      {
+        "type": "life",
+        "difficulty": "h",
+        "summary": "forgotten key",
+        "description": "Someone forgets to hand in a key",
+        "id": "feb01f0a-fa51-4f78-96e7-155b7280290a"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "m",
+        "summary": "jersey number",
+        "description": "You get a picture with something that has your jersey number on",
+        "id": "e8e2d2d5-a0f6-4fb6-a471-2b4531ea9297"
+      }
+    ],
+    [
+      {
+        "type": "life",
+        "difficulty": "e",
+        "summary": "maccies",
+        "description": "We go to maccies",
+        "id": "8f619fd3-af89-4d1e-bc54-babbd1b83327"
+      },
+      {
+        "type": "park",
+        "difficulty": "m",
+        "summary": "no rain",
+        "description": "It doesn’t rain every day that we’re at Europapark (parks?)",
+        "id": "71970864-74cc-4501-9d57-9960addb154a"
+      },
+      {
+        "type": "life",
+        "difficulty": "h",
+        "summary": "faceplant",
+        "description": "Someone faceplants",
+        "id": "c6faec1d-240a-4334-8677-cff581db5565"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "m",
+        "summary": "pet dog",
+        "description": "You pet a dog (thumbs up to a dog if you're allergic)",
+        "id": "751c2aac-71c6-4e3d-9aa5-5b731a981f57"
+      },
+      {
+        "type": "life",
+        "difficulty": "e",
+        "summary": "fruity ben",
+        "description": "Ben eats a fruit/vegetable",
+        "id": "169b1ab6-a67e-4106-a864-97d2b32d5e93"
+      }
+    ],
+    [
+      {
+        "type": "life",
+        "difficulty": "h",
+        "summary": "scam",
+        "description": "Someone gets scammed",
+        "id": "a658dc4c-931a-4487-bb33-8967b4754fac"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "e",
+        "summary": "hug",
+        "description": "hug “Böckli” (see above comment)",
+        "id": "3b21c8c3-b1ed-422b-8dbd-2a14534bfae2"
+      },
+      {
+        "type": "life",
+        "difficulty": "m",
+        "summary": "russell hair",
+        "description": "Russell does someone's hair",
+        "id": "1bbade2b-e4e4-48c6-a328-957df28610f2"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "e",
+        "summary": "fistbump",
+        "description": "fistbump “Ed Euromaus” aka Fake Mickey",
+        "id": "9507f9ea-166c-4cd6-8317-17eea315c952"
+      },
+      {
+        "type": "park",
+        "difficulty": "h",
+        "summary": "blister",
+        "description": "Someone gets a blister on day 1",
+        "id": "6f4094a6-72f2-4884-9de9-132b1f24597c"
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "life",
+        "difficulty": "h",
+        "summary": "banana'd",
+        "description": "Someone banana peel falls",
+        "id": "c6f65454-9f9d-459c-a16d-c70962d95ee7"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "e",
+        "summary": "pose",
+        "description": "You pose on a ride photo",
+        "id": "1881948b-6a89-4795-bcd8-34d16059c9cb"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "m",
+        "summary": "hug other",
+        "description": "Hug another character (might not exist)",
+        "id": "ce40a204-f68b-4b00-87db-d8b3a10644bb"
+      },
+      {
+        "type": "life",
+        "difficulty": "e",
+        "summary": "german will",
+        "description": "Will orders something successfuly in German",
+        "id": "44b03568-86cb-414f-a1e3-bad1cd19a7fe"
+      },
+      {
+        "type": "park",
+        "difficulty": "h",
+        "summary": "no lost",
+        "description": "No one gets lost for more than a couple of mins",
+        "id": "09453735-0ea3-43ba-a2c2-5fee9512b21e"
+      }
+    ],
+    [
+      {
+        "type": "challenge",
+        "difficulty": "e",
+        "summary": "fistbump",
+        "description": "fistbump “Edda Euromausi” aka Fake Minnie",
+        "id": "0b3b7d95-b70a-4f09-ba50-6dc8369c5cdc"
+      },
+      {
+        "type": "park",
+        "difficulty": "m",
+        "summary": "some rain",
+        "description": "It rains one day we're at europapark",
+        "id": "90fb7ff1-42db-462a-bee4-c2c66d1dc48a"
+      },
+      {
+        "type": "life",
+        "difficulty": "h",
+        "summary": "noise complaint",
+        "description": "We get a noise complaint",
+        "id": "1552a90a-6b8c-43ca-8e99-263854c86426"
+      },
+      {
+        "type": "park",
+        "difficulty": "m",
+        "summary": "queue jumped",
+        "description": "Someone gets queue jumped",
+        "id": "1a82aa85-2062-42e9-a5bb-2aedf867fb42"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "e",
+        "summary": "fistbump",
+        "description": "fistbump “Louis” (ngl not sure who this is look here mb)",
+        "id": "2693faac-5fd2-412a-a171-d78258306626"
+      }
+    ],
+    [
+      {
+        "type": "park",
+        "difficulty": "m",
+        "summary": "ben not merched",
+        "description": "Ben doesn't buy any merch on the first day",
+        "id": "437e0051-0720-4832-9324-28a0fcad209a"
+      },
+      {
+        "type": "park",
+        "difficulty": "h",
+        "summary": "blister",
+        "description": "Someone gets a blister on day 1",
+        "id": "dc4404c4-dca7-451a-82fa-83050c5680b2"
+      },
+      {
+        "type": "free",
+        "difficulty": "f",
+        "summary": "free",
+        "description": "free",
+        "id": "3e764344-c38d-4f20-ba5d-843ec93b0031"
+      },
+      {
+        "type": "life",
+        "difficulty": "h",
+        "summary": "romance",
+        "description": "Holiday (new) romance",
+        "id": "e1831163-d2cc-406e-af33-3f6fd4fbe295"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "m",
+        "summary": "jersey number",
+        "description": "You get a picture with something that has your jersey number on",
+        "id": "e985028c-3e61-46b5-860a-e55b33769a11"
+      }
+    ],
+    [
+      {
+        "type": "life",
+        "difficulty": "e",
+        "summary": "german jason",
+        "description": "Jason orders something successfully in German",
+        "id": "f94b987f-d72f-43a5-bc09-8e799fc34dd4"
+      },
+      {
+        "type": "travel",
+        "difficulty": "m",
+        "summary": "airport pat down",
+        "description": "Someone gets a pat down",
+        "id": "8f08bd62-ef62-4a18-8ca6-bd5e17eb24b0"
+      },
+      {
+        "type": "life",
+        "difficulty": "h",
+        "summary": "forgotten key",
+        "description": "Someone forgets to hand in a key",
+        "id": "39c54fb8-3f97-4f8e-adf9-6e8aedf1b99a"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "m",
+        "summary": "you're german",
+        "description": "You buy something speaking entirely in German",
+        "id": "c23e3b26-824b-4c88-b3ad-996633cb5073"
+      },
+      {
+        "type": "travel",
+        "difficulty": "e",
+        "summary": "no throne",
+        "description": "No one throws up",
+        "id": "999d6488-e42c-4ea1-8951-dbb92416cf77"
+      }
+    ],
+    [
+      {
+        "type": "life",
+        "difficulty": "h",
+        "summary": "faceplant",
+        "description": "Someone faceplants",
+        "id": "cab10b3d-7553-4b76-91ee-151462bae11e"
+      },
+      {
+        "type": "life",
+        "difficulty": "e",
+        "summary": "german sarah",
+        "description": "Sarah orders something successfully in German",
+        "id": "fec861fd-44e9-4202-ab13-a44b27c9de8f"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "m",
+        "summary": "you're wet",
+        "description": "You get the most soaked on a wet ride",
+        "id": "3754e354-7077-4d4c-9c1a-2e278332fe5c"
+      },
+      {
+        "type": "travel",
+        "difficulty": "e",
+        "summary": "flight on time",
+        "description": "Flight is on time",
+        "id": "8e3aeebd-0246-46ac-80a4-cae9722fe42f"
+      },
+      {
+        "type": "park",
+        "difficulty": "h",
+        "summary": "hurt person",
+        "description": "Someone ends up in first aid",
+        "id": "b6f6a07a-a6e2-4250-bdd9-3efe605251a9"
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "life",
+        "difficulty": "h",
+        "summary": "no maccies",
+        "description": "We don't go to maccies",
+        "id": "34464134-f9e0-4596-b1d6-4e34b6d27962"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "e",
+        "summary": "hug",
+        "description": "hug “Europhant” (imma guess that's the elephant but who knows tbh) aka Fake Dumbo",
+        "id": "04bc7a7b-6927-4c18-96ac-54a84f441b94"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "m",
+        "summary": "jersey number",
+        "description": "You get a picture with something that has your jersey number on",
+        "id": "aab79bc1-e692-4d7c-834e-ef68cec7eb34"
+      },
+      {
+        "type": "life",
+        "difficulty": "e",
+        "summary": "fruity ben",
+        "description": "Ben eats a fruit/vegetable",
+        "id": "780c20f1-ffba-4f1d-8ad0-7459546f3a87"
+      },
+      {
+        "type": "travel",
+        "difficulty": "h",
+        "summary": "bell no passport",
+        "description": "A Bell forgets their passport for the way back",
+        "id": "d19ed987-e2c4-4b41-ab2e-dbef2019a9d8"
+      }
+    ],
+    [
+      {
+        "type": "travel",
+        "difficulty": "e",
+        "summary": "flight on time",
+        "description": "Flight is on time",
+        "id": "66d8573a-1b85-425a-b44e-45a0cd4ff2bc"
+      },
+      {
+        "type": "park",
+        "difficulty": "m",
+        "summary": "queue jumped",
+        "description": "Someone gets queue jumped",
+        "id": "e6c77946-e435-4d8a-a04b-3abc7e0c3bef"
+      },
+      {
+        "type": "life",
+        "difficulty": "h",
+        "summary": "banana'd",
+        "description": "Someone banana peel falls",
+        "id": "bb807787-2b48-4ca8-827b-221839ef8cd8"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "m",
+        "summary": "you're german",
+        "description": "You buy something speaking entirely in German",
+        "id": "88490dd7-cceb-4157-82c1-72242d5bcf10"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "e",
+        "summary": "fistbump",
+        "description": "fistbump “Ed Euromaus” aka Fake Mickey",
+        "id": "0b9b3573-49a6-423a-90d1-18d6a25534a7"
+      }
+    ],
+    [
+      {
+        "type": "park",
+        "difficulty": "m",
+        "summary": "no jersey",
+        "description": "Someone forgets their jersey",
+        "id": "709bbb3a-f5b4-4b5d-b2a0-88754af76a75"
+      },
+      {
+        "type": "life",
+        "difficulty": "h",
+        "summary": "faceplant",
+        "description": "Someone faceplants",
+        "id": "b0ef9403-35b6-4c70-80b7-a51acf8f0c1b"
+      },
+      {
+        "type": "free",
+        "difficulty": "f",
+        "summary": "free",
+        "description": "free",
+        "id": "5bed6cb9-3e6e-40fc-bb06-f7d3860ea4cc"
+      },
+      {
+        "type": "life",
+        "difficulty": "h",
+        "summary": "jersey question",
+        "description": "Someone asks us about our jerseys",
+        "id": "bfb9e324-77b1-4c88-ae5c-dbd0fcbb4b0d"
+      },
+      {
+        "type": "life",
+        "difficulty": "m",
+        "summary": "schnitzelled",
+        "description": "Someone eats a schnitzel or veggie equivalent",
+        "id": "a58c6c45-9b18-4549-a01d-0982d97e0ebe"
+      }
+    ],
+    [
+      {
+        "type": "life",
+        "difficulty": "e",
+        "summary": "german sarah",
+        "description": "Sarah orders something successfully in German",
+        "id": "d57fd234-1423-4d30-bf70-cde08dc06f8b"
+      },
+      {
+        "type": "travel",
+        "difficulty": "m",
+        "summary": "wrong train",
+        "description": "We take the wrong train",
+        "id": "6f1c05a5-c82f-48cf-b137-c6ee4266ca72"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "h",
+        "summary": "germeme",
+        "description": "You make a meme which someone laughs out loud to when they first see it",
+        "id": "154187f6-0c21-4dec-9a5e-e0e3c59096a3"
+      },
+      {
+        "type": "park",
+        "difficulty": "m",
+        "summary": "some rain",
+        "description": "It rains one day we're at europapark",
+        "id": "50aad941-48a2-4417-8f4e-80972b029d5f"
+      },
+      {
+        "type": "travel",
+        "difficulty": "e",
+        "summary": "flight delay",
+        "description": "Flight is delayed",
+        "id": "070cc0a4-ff62-48a3-b291-b2bf3f3e61a1"
+      }
+    ],
+    [
+      {
+        "type": "life",
+        "difficulty": "h",
+        "summary": "scam",
+        "description": "Someone gets scammed",
+        "id": "f3a2aed9-040f-46d8-bd4c-ed52ec572e86"
+      },
+      {
+        "type": "life",
+        "difficulty": "e",
+        "summary": "german will",
+        "description": "Will orders something successfuly in German",
+        "id": "b0acc6e0-f317-4811-ab2f-0be4748f0e9e"
+      },
+      {
+        "type": "travel",
+        "difficulty": "m",
+        "summary": "airport confiscate",
+        "description": "Someone has something confiscated at security",
+        "id": "2d33c3ba-b2d4-4e7d-b7b1-edcf0efeaa67"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "e",
+        "summary": "fistbump",
+        "description": "fistbump “Böckli” (see above comment)",
+        "id": "5ec4c44a-a339-4118-82fa-438eb592a086"
+      },
+      {
+        "type": "park",
+        "difficulty": "h",
+        "summary": "blister",
+        "description": "Someone gets a blister on day 1",
+        "id": "3d0b74f8-02b2-4cc8-bd06-564ee50e3cda"
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "life",
+        "difficulty": "h",
+        "summary": "forgotten key",
+        "description": "Someone forgets to hand in a key",
+        "id": "9d60b4e5-6453-4247-af72-5b8cbc37daa9"
+      },
+      {
+        "type": "travel",
+        "difficulty": "e",
+        "summary": "no throne",
+        "description": "No one throws up",
+        "id": "8f0d9b9d-f969-4b36-a026-8c8047b4e98d"
+      },
+      {
+        "type": "park",
+        "difficulty": "m",
+        "summary": "queue jumped",
+        "description": "Someone gets queue jumped",
+        "id": "d07fbb89-63c1-4e25-99ba-d38bf5a46510"
+      },
+      {
+        "type": "life",
+        "difficulty": "e",
+        "summary": "german will",
+        "description": "Will orders something successfuly in German",
+        "id": "be5c9266-2193-46f5-9b52-0b50a0e349a2"
+      },
+      {
+        "type": "life",
+        "difficulty": "h",
+        "summary": "scam",
+        "description": "Someone gets scammed",
+        "id": "e3732e37-805f-4760-9126-f274aae5d50a"
+      }
+    ],
+    [
+      {
+        "type": "challenge",
+        "difficulty": "e",
+        "summary": "pose",
+        "description": "You pose on a ride photo",
+        "id": "493d7338-ca9a-479f-96a6-54f8b03b8dc8"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "m",
+        "summary": "pet dog",
+        "description": "You pet a dog (thumbs up to a dog if you're allergic)",
+        "id": "b643c6aa-debf-475a-85fe-4d847197d748"
+      },
+      {
+        "type": "life",
+        "difficulty": "h",
+        "summary": "airbnb broken",
+        "description": "We break something in the airbnb",
+        "id": "23f0d1df-820b-4623-a094-2e27cdf1ea16"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "m",
+        "summary": "you're german",
+        "description": "You buy something speaking entirely in German",
+        "id": "9f08e20e-457f-4197-a6fb-dd74c0a920f1"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "e",
+        "summary": "hug",
+        "description": "hug “Edda Euromausi” aka Fake Minnie",
+        "id": "a6015155-3db4-457f-b4bd-c5b2f859a987"
+      }
+    ],
+    [
+      {
+        "type": "park",
+        "difficulty": "m",
+        "summary": "no jersey",
+        "description": "Someone forgets their jersey",
+        "id": "0ad26bfd-4823-4e78-9264-0d0ecc6c56e4"
+      },
+      {
+        "type": "park",
+        "difficulty": "h",
+        "summary": "no lost",
+        "description": "No one gets lost for more than a couple of mins",
+        "id": "346e52d4-84f3-498e-9bb5-62d34176d673"
+      },
+      {
+        "type": "free",
+        "difficulty": "f",
+        "summary": "free",
+        "description": "free",
+        "id": "7a61fe81-9b66-431c-9d3f-d87aad0ed2da"
+      },
+      {
+        "type": "life",
+        "difficulty": "h",
+        "summary": "they're so sick",
+        "description": "Someone gets sick (ill)",
+        "id": "fd90116c-017b-4bad-b5ce-2482e59c5da1"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "m",
+        "summary": "hug other",
+        "description": "Hug another character (might not exist)",
+        "id": "d92d5b34-829d-459e-81ff-d3e7d15f3099"
+      }
+    ],
+    [
+      {
+        "type": "life",
+        "difficulty": "e",
+        "summary": "fruity ben",
+        "description": "Ben eats a fruit/vegetable",
+        "id": "4fe28481-b218-4b5b-aaab-3441c143e546"
+      },
+      {
+        "type": "travel",
+        "difficulty": "m",
+        "summary": "wrong train",
+        "description": "We take the wrong train",
+        "id": "f8ab8e57-c888-47be-ab66-c7ac702fc960"
+      },
+      {
+        "type": "travel",
+        "difficulty": "h",
+        "summary": "bell no passport",
+        "description": "A Bell forgets their passport for the way back",
+        "id": "3108ed33-f70c-4ccd-8789-0c21f730bce7"
+      },
+      {
+        "type": "travel",
+        "difficulty": "m",
+        "summary": "airport confiscate",
+        "description": "Someone has something confiscated at security",
+        "id": "e014795f-a6f5-46d5-a455-342996f68ef1"
+      },
+      {
+        "type": "travel",
+        "difficulty": "e",
+        "summary": "flight on time",
+        "description": "Flight is on time",
+        "id": "3f8ff462-47c8-478c-a590-3f5ab1ea1783"
+      }
+    ],
+    [
+      {
+        "type": "park",
+        "difficulty": "h",
+        "summary": "broken riding",
+        "description": "A rollercoaster breaks down while we’re on it",
+        "id": "28bdac14-0e86-4aa3-9a7c-0b67de134a31"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "e",
+        "summary": "fistbump",
+        "description": "fistbump “Ed Euromaus” aka Fake Mickey",
+        "id": "5e129f64-8a82-439b-afaa-245fe3c93b46"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "m",
+        "summary": "jersey number",
+        "description": "You get a picture with something that has your jersey number on",
+        "id": "9835be6b-9059-4c92-8e63-976c36dad722"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "e",
+        "summary": "fistbump",
+        "description": "fistbump “Europhant” (imma guess that's the elephant but who knows tbh) aka Fake Dumbo",
+        "id": "d256d5c1-9929-402c-8ce5-d0b0237e87ee"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "h",
+        "summary": "germeme",
+        "description": "You make a meme which someone laughs out loud to when they first see it",
+        "id": "725b242e-4a1f-4d25-9b5d-4803e3f59a9e"
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "life",
+        "difficulty": "h",
+        "summary": "romance",
+        "description": "Holiday (new) romance",
+        "id": "6c257fc2-9493-460f-afac-8af2cc5f8d86"
+      },
+      {
+        "type": "life",
+        "difficulty": "e",
+        "summary": "german sarah",
+        "description": "Sarah orders something successfully in German",
+        "id": "d68f01f0-d497-4444-8005-706b1743d74a"
+      },
+      {
+        "type": "park",
+        "difficulty": "m",
+        "summary": "queue jumped",
+        "description": "Someone gets queue jumped",
+        "id": "4840a9cd-6c14-4837-b244-57aa288a6cc7"
+      },
+      {
+        "type": "life",
+        "difficulty": "e",
+        "summary": "fruity ben",
+        "description": "Ben eats a fruit/vegetable",
+        "id": "d3f474c0-04ad-4598-9992-d4b45858a1f5"
+      },
+      {
+        "type": "life",
+        "difficulty": "h",
+        "summary": "airbnb broken",
+        "description": "We break something in the airbnb",
+        "id": "a8c8d86f-5c46-462e-b689-a04667a2fdbe"
+      }
+    ],
+    [
+      {
+        "type": "travel",
+        "difficulty": "e",
+        "summary": "bell passport",
+        "description": "A Bell doesn't forget their passport on the way back",
+        "id": "fce3e965-3a20-4e5c-bf22-f3301f28da14"
+      },
+      {
+        "type": "life",
+        "difficulty": "m",
+        "summary": "russell hair",
+        "description": "Russell does someone's hair",
+        "id": "e68bb3f3-4762-40bf-8cc4-49b769080808"
+      },
+      {
+        "type": "life",
+        "difficulty": "h",
+        "summary": "no maccies",
+        "description": "We don't go to maccies",
+        "id": "25b8a1d3-69b0-4ea5-9d39-2e172ea1be8e"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "m",
+        "summary": "you're german",
+        "description": "You buy something speaking entirely in German",
+        "id": "3e27e287-f2c3-4037-a821-70e6300c9934"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "e",
+        "summary": "pose",
+        "description": "You pose on a ride photo",
+        "id": "645ec2cf-1a6f-46f3-b529-d88389b4f9fd"
+      }
+    ],
+    [
+      {
+        "type": "park",
+        "difficulty": "m",
+        "summary": "broken pre-queue",
+        "description": "A roller coaster breaks down before we go in the queue",
+        "id": "8b1e70a8-ec62-4999-be33-cddd1e997689"
+      },
+      {
+        "type": "life",
+        "difficulty": "h",
+        "summary": "banana'd",
+        "description": "Someone banana peel falls",
+        "id": "74ef8880-b235-4450-aafa-87b4492ac2e0"
+      },
+      {
+        "type": "free",
+        "difficulty": "f",
+        "summary": "free",
+        "description": "free",
+        "id": "e2033d85-954e-4817-a685-6b293768f1e0"
+      },
+      {
+        "type": "travel",
+        "difficulty": "h",
+        "summary": "throw up",
+        "description": "Someone throws up",
+        "id": "eeb38772-bc2a-4eb2-81ce-c25b22deb63c"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "m",
+        "summary": "jersey number",
+        "description": "You get a picture with something that has your jersey number on",
+        "id": "d6bb6403-48d3-4451-b52d-5a39313a7aeb"
+      }
+    ],
+    [
+      {
+        "type": "travel",
+        "difficulty": "e",
+        "summary": "flight delay",
+        "description": "Flight is delayed",
+        "id": "b791f23c-20a6-42d3-ad4f-ca76ae520b29"
+      },
+      {
+        "type": "park",
+        "difficulty": "m",
+        "summary": "ben not merched",
+        "description": "Ben doesn't buy any merch on the first day",
+        "id": "3b3f6192-87f9-43d3-b169-7511fe2e8ca3"
+      },
+      {
+        "type": "park",
+        "difficulty": "h",
+        "summary": "hurt person",
+        "description": "Someone ends up in first aid",
+        "id": "54003394-81c8-4c9e-9e82-ddc588e0ca50"
+      },
+      {
+        "type": "park",
+        "difficulty": "m",
+        "summary": "some rain",
+        "description": "It rains one day we're at europapark",
+        "id": "4986897f-eb7b-4bf8-bdca-852258a46eea"
+      },
+      {
+        "type": "life",
+        "difficulty": "e",
+        "summary": "maccies",
+        "description": "We go to maccies",
+        "id": "b304019c-85c7-4449-8cf7-c2521374937a"
+      }
+    ],
+    [
+      {
+        "type": "life",
+        "difficulty": "h",
+        "summary": "forgotten key",
+        "description": "Someone forgets to hand in a key",
+        "id": "5169e8c8-6e13-4375-a399-fb9a526f7ffe"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "e",
+        "summary": "fistbump",
+        "description": "fistbump “Edda Euromausi” aka Fake Minnie",
+        "id": "765b559a-286b-4b83-9b8c-590efd315a38"
+      },
+      {
+        "type": "travel",
+        "difficulty": "m",
+        "summary": "wrong train",
+        "description": "We take the wrong train",
+        "id": "e5120598-f60c-48c2-b5f8-a9b6b9b8f37c"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "e",
+        "summary": "hug",
+        "description": "hug “Ed Euromaus” aka Fake Mickey",
+        "id": "6e8660b6-93b9-4259-ba63-885534a8922e"
+      },
+      {
+        "type": "park",
+        "difficulty": "h",
+        "summary": "broken riding",
+        "description": "A rollercoaster breaks down while we’re on it",
+        "id": "32ffeee3-3941-40a8-907c-f86f1c1c184a"
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "park",
+        "difficulty": "h",
+        "summary": "broken queue",
+        "description": "A roller coaster breaks down while we're in the queue",
+        "id": "1f1af04a-7556-4961-9a91-fdeabb48d3e1"
+      },
+      {
+        "type": "life",
+        "difficulty": "e",
+        "summary": "german jason",
+        "description": "Jason orders something successfully in German",
+        "id": "810868ac-c1ff-4273-8d0d-7aca7d259b2c"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "m",
+        "summary": "you're german",
+        "description": "You buy something speaking entirely in German",
+        "id": "7c37dc3f-04c8-42aa-b7dc-c3620bae05a6"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "e",
+        "summary": "hug",
+        "description": "hug “Ed Euromaus” aka Fake Mickey",
+        "id": "1f36b893-7ceb-4355-b54c-2b7e92be84aa"
+      },
+      {
+        "type": "park",
+        "difficulty": "h",
+        "summary": "no lost",
+        "description": "No one gets lost for more than a couple of mins",
+        "id": "68c6f905-41d8-4082-aacf-2c7117de6c11"
+      }
+    ],
+    [
+      {
+        "type": "travel",
+        "difficulty": "e",
+        "summary": "bell passport",
+        "description": "A Bell doesn't forget their passport on the way back",
+        "id": "245bc6ef-a9c0-40eb-a136-7fd04616788b"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "m",
+        "summary": "you're wet",
+        "description": "You get the most soaked on a wet ride",
+        "id": "0e79898d-6216-4a9b-aedc-e967b3bb3c37"
+      },
+      {
+        "type": "life",
+        "difficulty": "h",
+        "summary": "scam",
+        "description": "Someone gets scammed",
+        "id": "e947d8f9-2026-48fa-a61a-b8632d8c42e4"
+      },
+      {
+        "type": "park",
+        "difficulty": "m",
+        "summary": "lost person",
+        "description": "Someone gets lost",
+        "id": "b8c1ce0f-2b3e-4179-92b9-ac325be5bffb"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "e",
+        "summary": "pose",
+        "description": "You pose on a ride photo",
+        "id": "047f6d60-78c3-4860-bedc-ecb3ab0084e5"
+      }
+    ],
+    [
+      {
+        "type": "challenge",
+        "difficulty": "m",
+        "summary": "jersey number",
+        "description": "You get a picture with something that has your jersey number on",
+        "id": "d90f2f52-ae9c-4f27-9071-30010127fb1d"
+      },
+      {
+        "type": "travel",
+        "difficulty": "h",
+        "summary": "throw up",
+        "description": "Someone throws up",
+        "id": "23a974af-77d9-48f4-9462-e99219f71678"
+      },
+      {
+        "type": "free",
+        "difficulty": "f",
+        "summary": "free",
+        "description": "free",
+        "id": "cdb31a9a-8c03-4cb4-8f43-e10f9a96f04e"
+      },
+      {
+        "type": "life",
+        "difficulty": "h",
+        "summary": "faints",
+        "description": "Someone faints",
+        "id": "d0845ef3-08a8-4f74-8b98-6be6636bd9e9"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "m",
+        "summary": "pet dog",
+        "description": "You pet a dog (thumbs up to a dog if you're allergic)",
+        "id": "9153a692-b4d6-45df-b3c0-f6f1981278ea"
+      }
+    ],
+    [
+      {
+        "type": "life",
+        "difficulty": "e",
+        "summary": "fruity ben",
+        "description": "Ben eats a fruit/vegetable",
+        "id": "472480ff-daf6-4a50-8f3f-31498ee3104a"
+      },
+      {
+        "type": "park",
+        "difficulty": "m",
+        "summary": "ben not merched",
+        "description": "Ben doesn't buy any merch on the first day",
+        "id": "723a8ed6-f36d-4cd4-8524-372936ab5c9b"
+      },
+      {
+        "type": "life",
+        "difficulty": "h",
+        "summary": "forgotten key",
+        "description": "Someone forgets to hand in a key",
+        "id": "ba991165-6980-4e3b-9090-b60844785c69"
+      },
+      {
+        "type": "park",
+        "difficulty": "m",
+        "summary": "all rain",
+        "description": "It rains every day that we’re at Europapark (parks?)",
+        "id": "fe3ff455-0393-450e-91bd-c2c248a54687"
+      },
+      {
+        "type": "challenge",
+        "difficulty": "e",
+        "summary": "fistbump",
+        "description": "fistbump “Louis” (ngl not sure who this is look here mb)",
+        "id": "b7d568cd-e9a3-4844-8d48-814c04f17c9e"
+      }
+    ],
+    [
+      {
+        "type": "travel",
+        "difficulty": "h",
+        "summary": "bell no passport",
+        "description": "A Bell forgets their passport for the way back",
+        "id": "b8759272-8e10-41aa-9c0e-872bc40d64ed"
+      },
+      {
+        "type": "life",
+        "difficulty": "e",
+        "summary": "german sarah",
+        "description": "Sarah orders something successfully in German",
+        "id": "db84f182-c786-4757-8d04-27d79e018425"
+      },
+      {
+        "type": "park",
+        "difficulty": "m",
+        "summary": "open to close",
+        "description": "We’re in the park from open till close (Europapark & Rulantica)",
+        "id": "83d7cdcc-a171-43c4-9b72-47fbd567dd78"
+      },
+      {
+        "type": "life",
+        "difficulty": "e",
+        "summary": "maccies",
+        "description": "We go to maccies",
+        "id": "d94b1998-2493-4854-ac8a-d67aa21bbb98"
+      },
+      {
+        "type": "life",
+        "difficulty": "h",
+        "summary": "airbnb broken",
+        "description": "We break something in the airbnb",
+        "id": "e9064261-a83f-40b4-9b11-5f165e8bfd8a"
+      }
+    ]
+  ]
+]

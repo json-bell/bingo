@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { AppBar } from "../components/AppBar";
 import { PersonMenu } from "../components/PersonMenu";
 import { Grid } from "../components/Grid";
+import { CheckedProvider } from "../context/CheckedContext";
 import { loadTrip } from "../lib/trips";
 import type { LoadedTrip } from "../../types/trip";
 
@@ -40,7 +41,7 @@ export function TripPage() {
 
   const { grids, people, title } = trip;
   return (
-    <>
+    <CheckedProvider tripSlug={slug} people={people}>
       <AppBar title={title} onOpenMenu={() => menuRef.current?.showModal()} />
       <PersonMenu
         people={people}
@@ -65,11 +66,11 @@ export function TripPage() {
               </div>
             </div>
             <div className="max-w-full overflow-x-auto p-1 md:p-8 pt-2 md:pt-4">
-              <Grid grid={grid} tintsEnabled={tintsEnabled} />
+              <Grid grid={grid} person={people[index]} tintsEnabled={tintsEnabled} />
             </div>
           </li>
         ))}
       </ul>
-    </>
+    </CheckedProvider>
   );
 }

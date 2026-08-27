@@ -7,7 +7,16 @@ export interface BingoItem {
   description: string;
 }
 
-export type Grid = BingoItem[][];
+// A BingoItem once it's been placed into a specific person's grid — as opposed
+// to a template event still sitting in the shuffle pool (data/<slug>/data.ts).
+// The same source event can end up placed into several different people's
+// grids, each as its own cell, so the id is assigned at placement time
+// (data/getGrids.ts), never on the source BingoItem itself.
+export interface GridCell extends BingoItem {
+  id: string;
+}
+
+export type Grid = GridCell[][];
 
 export interface TripConfig {
   currentGrid: number;
