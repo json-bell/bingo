@@ -109,6 +109,14 @@ description. The dialog needs an explicit `m-auto` or it renders pinned to the t
 Tailwind's Preflight zeroes `margin` globally, which strips the browser's default
 `margin: auto` centering for `dialog:modal`.
 
+The checked toggle inside that dialog is Save/Cancel, not live-committing: a local
+`draftChecked` state (seeded from the real committed value every time the dialog opens)
+is what the `Switch` in the modal actually controls; only the "Save" button calls
+`updateChecked`. Cancel, a backdrop click, and Escape all just close the dialog — none of
+them touch real state, so the draft is discarded for free rather than needing explicit
+revert logic. The tile's own passive styling (dimmed/`line-through` once checked) reads
+the real committed value via `isChecked`, never the draft.
+
 `PersonMenu.tsx` reuses that same `<dialog>` pattern but renders responsively: a bottom sheet
 below `md` (`mt-auto`, `rounded-t-3xl`, `w-full max-w-none` — pinned to the bottom, the
 opposite of `Tile`'s centered `m-auto`) and a centered modal at `md` and up (`md:m-auto`,

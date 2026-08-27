@@ -1,6 +1,7 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import type { GridCell, Difficulty } from "../../types/trip";
 import { useChecked } from "../context/CheckedContext";
+import { Switch } from "./Switch";
 
 const tint: Partial<Record<Difficulty, string>> = {
   e: "bg-tile-easy",
@@ -21,8 +22,21 @@ export function Tile({ cell, person, tintsEnabled }: TileProps) {
   const { isChecked, updateChecked } = useChecked();
   const checked = isChecked(person, id);
 
-  const open = () => dialogRef.current?.showModal();
+  // Draft state for the modal only — the switch toggles this, not the real
+  // checked state. Only "Save" commits it; Cancel/backdrop-click/Escape all
+  // just close without ever calling updateChecked, so they discard the draft
+  // for free rather than needing explicit "revert" handling.
+  const [draftChecked, setDraftChecked] = useState(checked);
+
+  const open = () => {
+    setDraftChecked(checked);
+    dialogRef.current?.showModal();
+  };
   const close = () => dialogRef.current?.close();
+  const save = () => {
+    updateChecked(person, id, draftChecked);
+    close();
+  };
 
   return (
     <>
@@ -58,7 +72,10 @@ export function Tile({ cell, person, tintsEnabled }: TileProps) {
         className="m-auto bg-tile text-tile-foreground rounded-lg p-6 max-w-sm backdrop:bg-black/50"
       >
         <div className="flex justify-between items-start gap-4">
-          <h3 className="text-xl font-bold">{summary.toUpperCase()}</h3>
+          <div>
+            <p className="text-sm text-tile-foreground/60">{person}</p>
+            <h3 className="text-xl font-bold">{summary.toUpperCase()}</h3>
+          </div>
           <button
             type="button"
             onClick={close}
@@ -69,15 +86,25 @@ export function Tile({ cell, person, tintsEnabled }: TileProps) {
           </button>
         </div>
         <p className="mt-2">{description}</p>
-        <label className="mt-4 flex items-center gap-2 cursor-pointer select-none">
-          <input
-            type="checkbox"
-            checked={checked}
-            onChange={(e) => updateChecked(person, id, e.target.checked)}
-            className="w-5 h-5 cursor-pointer accent-brand"
-          />
-          Mark as checked
-        </label>
+        <div className="mt-4">
+          <Switch label="Mark as checked" checked={draftChecked} onChange={setDraftChecked} />
+        </div>
+        <div className="mt-4 flex justify-end gap-2">
+          <button
+            type="button"
+            onClick={close}
+            className="px-4 py-2 rounded-lg text-tile-foreground/70 hover:text-tile-foreground font-semibold"
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            onClick={save}
+            className="px-4 py-2 rounded-lg bg-brand text-brand-foreground font-semibold"
+          >
+            Save
+          </button>
+        </div>
       </dialog>
     </>
   );

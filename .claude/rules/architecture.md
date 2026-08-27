@@ -49,9 +49,10 @@ paths:
 | --- | --- |
 | `AppBar.tsx` | Sticky top bar: trip title + a "Menu" button (same button at every width — see `docs/design-system.md` for why there's no separate desktop nav). |
 | `PersonMenu.tsx` | The bottom-sheet/modal `<dialog>` the Menu button opens: person list (jump links), the difficulty legend, and `TintToggle`. |
-| `TintToggle.tsx` | The easy/medium/hard tint on/off switch. State is plain `useState` + `localStorage` in `TripPage.tsx` (`bingo:tintsEnabled`), passed down as a prop — no Context, unlike checked-state below. |
+| `TintToggle.tsx` | The easy/medium/hard tint on/off switch — a thin wrapper around `Switch.tsx` with a fixed label. State is plain `useState` + `localStorage` in `TripPage.tsx` (`bingo:tintsEnabled`), passed down as a prop — no Context, unlike checked-state below. |
+| `Switch.tsx` | The reusable on/off switch UI (`{label, checked, onChange}`) shared by `TintToggle.tsx` and the checked-toggle inside `Tile.tsx`'s modal — one visual for every binary toggle in the app. |
 | `Grid.tsx` | One person's 5×5 grid — maps a `GridCell[][]` to `Tile`s. |
-| `Tile.tsx` | One cell: the clickable square (title + truncated description) plus the `<dialog>` with full description and the checked toggle. |
+| `Tile.tsx` | One cell: the clickable square (title + truncated description) plus the `<dialog>` (person, full description, a `Switch`, and Save/Cancel). The switch only edits local draft state — "Save" is the sole path that calls `updateChecked`; Cancel/backdrop/Escape close without committing. |
 | `src/context/CheckedContext.tsx` | `CheckedProvider`, mounted once per trip page (not per person) since the page renders everyone's grid at once. Holds the whole trip's checked-state map, exposes `isChecked`/`updateChecked` via `useChecked()`. |
 | `src/lib/checked.ts` | The actual storage seam behind the context (`getChecked`/`setChecked`) — localStorage today, a REST API later, per `docs/plan.md`. Components never touch `localStorage` directly for checked state. |
 | `src/lib/trips.ts` | `listSlugs()`/`loadTrip(slug)` — the read-only trip/grid data loading layer, unrelated to checked-state. |
