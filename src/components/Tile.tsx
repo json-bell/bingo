@@ -69,23 +69,25 @@ export function Tile({ cell, person, tintsEnabled }: TileProps) {
         onClick={(e) => {
           if (e.target === e.currentTarget) close();
         }}
-        className="m-auto bg-tile text-tile-foreground rounded-lg p-6 max-w-sm backdrop:bg-black/50"
+        className="m-auto w-full max-w-sm min-h-80 flex flex-col bg-surface text-ink rounded-lg p-6 backdrop:bg-black/60"
       >
-        <div className="flex justify-between items-start gap-4">
-          <div>
-            <p className="text-sm text-tile-foreground/60">{person}</p>
-            <h3 className="text-xl font-bold">{summary.toUpperCase()}</h3>
+        <div className="flex-1">
+          <div className="flex justify-between items-start gap-4">
+            <div>
+              <p className="text-sm text-ink-muted">{person}</p>
+              <h3 className="text-xl font-bold">{summary.toUpperCase()}</h3>
+            </div>
+            <button
+              type="button"
+              onClick={close}
+              aria-label="Close"
+              className="text-ink-muted hover:text-ink text-xl leading-none"
+            >
+              &times;
+            </button>
           </div>
-          <button
-            type="button"
-            onClick={close}
-            aria-label="Close"
-            className="text-tile-foreground/60 hover:text-tile-foreground text-xl leading-none"
-          >
-            &times;
-          </button>
+          <p className="mt-2">{description}</p>
         </div>
-        <p className="mt-2">{description}</p>
         <div className="mt-4">
           <Switch label="Mark as checked" checked={draftChecked} onChange={setDraftChecked} />
         </div>
@@ -93,7 +95,7 @@ export function Tile({ cell, person, tintsEnabled }: TileProps) {
           <button
             type="button"
             onClick={close}
-            className="px-4 py-2 rounded-lg text-tile-foreground/70 hover:text-tile-foreground font-semibold"
+            className="px-4 py-2 rounded-lg text-ink-muted hover:text-ink font-semibold"
           >
             Cancel
           </button>
