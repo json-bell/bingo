@@ -56,10 +56,22 @@ paths:
 | `src/lib/checked.ts` | The actual storage seam behind the context (`getChecked`/`setChecked`) — localStorage today, a REST API later, per `docs/plan.md`. Components never touch `localStorage` directly for checked state. |
 | `src/lib/trips.ts` | `listSlugs()`/`loadTrip(slug)` — the read-only trip/grid data loading layer, unrelated to checked-state. |
 
-Two different state-management approaches are in play on purpose, not by accident: tint
-preference is single-value, global, and doesn't need to reach deeply-nested components in
-more than one place, so plain prop-drilling from `TripPage.tsx` is simpler than a Context.
-Checked state is per-(person, cell), read and written from every `Tile` instance across
-every person's grid, which is exactly the "many descendants need it" case Context exists
-for. If a new piece of state needs to reach more than a couple of prop levels deep, look at
-which of these two shapes it actually matches before defaulting to either pattern.
+Two different state-management approaches are in play on purpose, not by accident — and
+the deciding factor is the *shape* of the state, not how many components need it or how
+deep the tree is (tint preference actually reaches two separate subtrees, `PersonMenu`→
+`TintToggle` and `Grid`→`Tile`, just shallowly — one level each — so depth/reach alone
+doesn't distinguish the two cases). Tint preference is a single synchronous boolean,
+already fully handled by one `useState` + one `useEffect` writing to `localStorage`;
+wrapping that in `createContext`/a `Provider`/a custom hook would be more code than the
+prop-drilling it replaces, for no real benefit. Checked state is a genuinely more complex
+shape: a map keyed by `(person, cellId)`, loaded *asynchronously* (`getChecked`/
+`setChecked` return Promises on purpose, anticipating a future REST call per
+`docs/plan.md`), mutated via a function that also writes through to storage, and read by
+every `Tile` instance across every person's grid simultaneously (`TripPage.tsx` renders
+everyone's grid at once, not just one person's). That combination — async, keyed/
+structured, side-effecting, many concurrent consumers — is what actually earns a Context.
+A single scalar reached through one or two shallow prop hops doesn't, regardless of how
+many places it's used. When new state comes up, check which of these two shapes it
+actually matches before defaulting to either pattern — and if more Context genuinely is
+warranted, prefer another focused, single-purpose one (like `CheckedContext`) over folding
+unrelated state into an existing context or a shared "app state" bucket.
