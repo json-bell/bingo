@@ -109,6 +109,18 @@ description. The dialog needs an explicit `m-auto` or it renders pinned to the t
 Tailwind's Preflight zeroes `margin` globally, which strips the browser's default
 `margin: auto` centering for `dialog:modal`.
 
+**Never put a bare `display`-affecting utility (`flex`, `grid`, `block`, ...) directly on
+a `<dialog>` element** — use the `open:` variant (e.g. `open:flex`) instead. A closed
+`<dialog>` is hidden by the browser's own UA stylesheet (`dialog:not([open]) { display:
+none }`), but author-origin CSS — which is exactly what a Tailwind utility class compiles
+to — beats a UA stylesheet rule regardless of specificity. A bare `flex` class was added
+to `Tile.tsx`'s dialog once for layout purposes and made every tile's modal permanently
+visible (as an empty-looking box, on every grid, before any click), because it
+unconditionally forced `display: flex` even without the `open` attribute. This is real
+browser-cascade behavior that jsdom-based tests don't reliably catch — verify any
+dialog-styling change with `docs/visual-verification.md`'s recipe, checking the page
+right after load with nothing clicked, not just after opening it.
+
 The checked toggle inside that dialog is Save/Cancel, not live-committing: a local
 `draftChecked` state (seeded from the real committed value every time the dialog opens)
 is what the `Switch` in the modal actually controls; only the "Save" button calls

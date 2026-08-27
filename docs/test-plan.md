@@ -77,7 +77,13 @@ Five targets, in priority order:
   plus the one integration test above.
 - Tailwind/visual output, the service worker/PWA config (`vite-plugin-pwa`, the
   `trip-data`/precache split in `vite.config.ts`) — not meaningfully unit-testable; that's
-  what `docs/visual-verification.md`'s recipe is for instead.
+  what `docs/visual-verification.md`'s recipe is for instead. Concretely: a bare `flex`
+  class on `Tile.tsx`'s `<dialog>` once made every tile's modal permanently visible on
+  every grid (see CLAUDE.md's `<dialog>` section) — real browser-cascade behavior
+  (author CSS beats the UA stylesheet's `dialog:not([open])` rule regardless of
+  specificity) that jsdom's `TripPage.test.tsx` didn't catch, since every existing
+  assertion only checked dialog state *after* an open/close action, never the untouched
+  initial page load.
 - `data/backfillCellIds.ts` — a one-off migration script, already manually verified
   (diffed programmatically before promoting), not worth ongoing coverage.
 

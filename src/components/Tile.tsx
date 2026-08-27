@@ -69,7 +69,7 @@ export function Tile({ cell, person, tintsEnabled }: TileProps) {
         onClick={(e) => {
           if (e.target === e.currentTarget) close();
         }}
-        className="m-auto w-full max-w-sm min-h-80 flex flex-col bg-surface text-ink rounded-lg p-6 backdrop:bg-black/60"
+        className="m-auto w-full max-w-sm min-h-80 open:flex flex-col bg-surface text-ink rounded-lg p-6 backdrop:bg-black/60"
       >
         <div className="flex-1">
           <div className="flex justify-between items-start gap-4">
