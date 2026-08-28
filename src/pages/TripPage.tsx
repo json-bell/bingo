@@ -4,6 +4,7 @@ import { AppBar } from "../components/AppBar";
 import { PersonMenu } from "../components/PersonMenu";
 import { Grid } from "../components/Grid";
 import { CheckedProvider } from "../context/CheckedContext";
+import { QueueStatus } from "../components/QueueStatus";
 import { loadTrip } from "../lib/trips";
 import type { LoadedTrip } from "../../types/trip";
 
@@ -39,10 +40,11 @@ export function TripPage() {
   if (trip === undefined) return <p>Loading…</p>;
   if (trip === null) return <p>No trip found for &quot;{slug}&quot;.</p>;
 
-  const { grids, people, title } = trip;
+  const { grids, people, title, version } = trip;
   return (
-    <CheckedProvider tripSlug={slug} people={people}>
+    <CheckedProvider tripSlug={slug} version={version}>
       <AppBar title={title} onOpenMenu={() => menuRef.current?.showModal()} />
+      <QueueStatus />
       <PersonMenu
         people={people}
         tintsEnabled={tintsEnabled}

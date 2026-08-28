@@ -207,19 +207,30 @@ with remote debugging, drive it over CDP) that avoids both gotchas above — rea
 whenever a change needs an actual rendered check rather than rediscovering the same
 websocket boilerplate from scratch.
 
-Offline support is via `vite-plugin-pwa` (`vite.config.ts`), split into two lanes — see
-`docs/plan.md` for the full reasoning and the checked-state roadmap this was built to leave room
-for. The app shell (`index.html`, hashed JS/CSS) is precached normally. Trip data
-(`grids/<slug>/<n>.json`, `data/<slug>/people.ts`, lazy-loaded via `import.meta.glob` in
-`src/lib/trips.ts`) is deliberately excluded from precache (`workbox.globIgnores`) and instead
-runtime-cached (`CacheFirst`) only once actually requested — so visiting one trip doesn't
-pull every trip in the repo into the cache. This only works because `chunkFileNames` in
-`vite.config.ts` routes those specific chunks into a `trip-data/` output directory first —
-without that, they're indistinguishable by URL from ordinary app-shell JS chunks, since
-Vite bundles JSON imports as JS, not as separately-fetchable `.json` requests. If a new
-lazy-loaded, per-slug data source is ever added, it needs to go through this same
+Offline support is via `vite-plugin-pwa` (`vite.config.ts`), split into three lanes — see
+`docs/backend-architecture.md` §9 for the full reasoning. The app shell (`index.html`, hashed
+JS/CSS) is precached normally. Trip data (`grids/<slug>/<n>.json`, `data/<slug>/people.ts`,
+lazy-loaded via `import.meta.glob` in `src/lib/trips.ts`) is deliberately excluded from precache
+(`workbox.globIgnores`) and instead runtime-cached (`CacheFirst`) only once actually requested —
+so visiting one trip doesn't pull every trip in the repo into the cache. This only works because
+`chunkFileNames` in `vite.config.ts` routes those specific chunks into a `trip-data/` output
+directory first — without that, they're indistinguishable by URL from ordinary app-shell JS
+chunks, since Vite bundles JSON imports as JS, not as separately-fetchable `.json` requests. If a
+new lazy-loaded, per-slug data source is ever added, it needs to go through this same
 `chunkFileNames` routing (matched by its module path) or it'll silently get swept into the
-precached app shell instead of the runtime-cached trip-data lane.
+precached app shell instead of the runtime-cached trip-data lane. The checked-state `GET` is the
+third lane, `NetworkFirst` rather than `CacheFirst` — its content is mutable, unlike grid layout,
+so freshness matters more than an instant cache hit; the last successful response is what's
+served when offline.
+
+The service worker's own `NavigationRoute` intercepts *any* navigation request (typing a URL,
+following a link) within its scope and serves the cached app shell — client-side, before the
+request ever reaches the network, so `vercel.json`'s SPA rewrite can't help here at all. Hit this
+for real: navigating straight to `/api/health` in a browser rendered an empty page (the app
+shell, with React Router matching no route for the two-segment path) instead of reaching the
+function. Fixed with `workbox.navigateFallbackDenylist: [/^\/api\//]`, for the same underlying
+reason the `vercel.json` rewrite needs its own `/api/` exclusion — two independent layers, each
+capable of swallowing `/api/*` on its own, both need the exclusion.
 
 `vercel.json` explicitly sets `Cache-Control: no-cache` on `/sw.js` and `/registerSW.js`
 — the whole `registerType: "autoUpdate"` mechanism depends on the browser being able to
@@ -230,18 +241,26 @@ for as long as that cache lasts. This was never actually verified against Vercel
 response headers before the headers were added — if you ever remove them, re-verify
 against the live deployment, not just `vite preview`.
 
-Per-cell "checked" state (`src/lib/checked.ts` + `src/context/CheckedContext.tsx`) is the
-localStorage MVP phase of the roadmap in `docs/plan.md` — `Tile.tsx`/`TripPage.tsx`
-only ever call `getChecked`/`setChecked`/`useChecked`, never `localStorage` directly, so a
-later swap to a real REST API changes what's behind those calls, not the call sites. The
+Per-cell "checked" state (`src/lib/checked.ts` + `src/context/CheckedContext.tsx`) is backed by
+the real `GET`/`PATCH` API now (`docs/backend-architecture.md` §4/§9), not localStorage —
+`Tile.tsx`/`TripPage.tsx` still only ever call `fetchChecked`/`saveChecked`/`useChecked`, never
+`fetch` or the queue directly, exactly as the seam was designed to allow (`docs/plan.md`). The
 toggle itself lives inside each cell's `<dialog>`, not on the tile — the tile stays a single
 click target that opens the modal, and only passively reflects checked state (dimmed,
 struck-through text).
 
+Every write goes through `src/lib/checkedQueue.ts` — online or offline, there's no "if online,
+PATCH directly" branch, so the `409`/`404`/`503` handling is written once. Three triggers drain
+it (immediately after enqueueing, on mount, on the browser's `online` event), deliberately no
+periodic polling and no manual "Resync" button — a stuck queue is visible via
+`src/components/QueueStatus.tsx`'s "N updates queued" indicator, and the obvious response
+(reload) is itself one of the three triggers.
+
 Every localStorage key in this app is prefixed `bingo:` (`bingo:tintsEnabled`,
-`bingo:checked:<tripSlug>:<person>`) — keep using that prefix for anything new stored
-there, both to namespace against other localStorage users on the same origin and to
-keep related keys grep-able as a group.
+`bingo:checked:queue:<tripSlug>`) — keep using that prefix for anything new stored there, both to
+namespace against other localStorage users on the same origin and to keep related keys grep-able
+as a group. Checked-state itself no longer lives in localStorage at all — only the pending-write
+queue does, and only until it drains.
 
 ## Conventions
 

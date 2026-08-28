@@ -6,10 +6,19 @@ Grid content is effectively locked in the moment you leave home, but a future pe
 different treatment (caching *and* storage), and this doc is where that split is decided
 and tracked as the checked-state feature evolves through its phases.
 
+**Status: all phases below are now implemented.** This doc is kept as the historical record
+of the original thinking — the actual final shape (which refined some details below, notably
+dropping `person` from the seam's signature in favor of a globally-unique `cellId`, and adding
+`version`/basis-timestamp optimistic concurrency this doc's phase 3 sketch didn't anticipate)
+is `docs/backend-architecture.md`, which explicitly supersedes the "Future SQL migration
+shape" and "Checked-state roadmap" phases 2/3 sections below.
+
 ## Current state (implemented)
 
-Offline support for the app shell and trip data is live via `vite-plugin-pwa`
-(`vite.config.ts`), split into two independent lanes:
+Offline support for the app shell, trip data, and checked-state is live via `vite-plugin-pwa`
+(`vite.config.ts`), split into three independent lanes (a third, `NetworkFirst`, lane for the
+checked-state `GET` was added once that API existed — see `docs/backend-architecture.md` §9;
+the two below are unchanged from when this section was first written):
 
 **App shell** (`index.html`, hashed JS/CSS) — precached at build time by Workbox's
 default `generateSW` mode, with `navigateFallback: "/index.html"` so any client-side
@@ -33,13 +42,17 @@ throttling — actually disconnected), hard-reload the page, full grid renders.
 
 ## Checked-state roadmap
 
-**Phase 1 (MVP, implemented)**: `src/lib/checked.ts` (the seam) + `src/context/
-CheckedContext.tsx` (`CheckedProvider`/`useChecked`), wired into `TripPage.tsx` →
+**Phase 1 (MVP, localStorage — superseded)**: `src/lib/checked.ts` (the seam) +
+`src/context/CheckedContext.tsx` (`CheckedProvider`/`useChecked`), wired into `TripPage.tsx` →
 `Grid.tsx` → `Tile.tsx`. The toggle itself lives **inside each cell's modal**
 (next to its full description), not as a separate control on the tile — the tile
 stays a single click target that opens the modal, and just reflects checked state
-passively (dimmed, struck-through text) once it's been marked. Phases 2/3 below are
-not yet built.
+passively (dimmed, struck-through text) once it's been marked — this part is still true.
+**Phases 2/3 below are now implemented too**, in refined form — see
+`docs/backend-architecture.md` §4 (the API) and §9 (the frontend integration, including the
+offline queue that replaced this section's "FIFO outbox" sketch with a cell-id-keyed queue
+instead, and three specific drain triggers rather than "the manual Refresh button or
+`online`").
 
 Settled on **"Checked"** as the terminology (not "tick") — `isChecked`, `useChecked`,
 `CheckedProvider`, `setChecked`.

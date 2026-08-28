@@ -29,4 +29,5 @@ export interface LoadedTrip {
   grids: Grid[];
   people: string[];
   title: string;
+  version: number;
 }

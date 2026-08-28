@@ -20,7 +20,7 @@ export function Tile({ cell, person, tintsEnabled }: TileProps) {
   const bgClass = tintsEnabled ? (tint[difficulty] ?? "bg-tile") : "bg-tile";
   const dialogRef = useRef<HTMLDialogElement>(null);
   const { isChecked, updateChecked } = useChecked();
-  const checked = isChecked(person, id);
+  const checked = isChecked(id);
 
   // Draft state for the modal only — the switch toggles this, not the real
   // checked state. Only "Save" commits it; Cancel/backdrop-click/Escape all
@@ -34,7 +34,7 @@ export function Tile({ cell, person, tintsEnabled }: TileProps) {
   };
   const close = () => dialogRef.current?.close();
   const save = () => {
-    updateChecked(person, id, draftChecked);
+    updateChecked(id, draftChecked);
     close();
   };
 

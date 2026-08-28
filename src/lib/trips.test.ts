@@ -13,6 +13,7 @@ describe("trips", () => {
 
     expect(trip).not.toBeNull();
     expect(trip?.title).toBe("Europapark 2024 Bingo!!");
+    expect(trip?.version).toBe(2);
     expect(trip?.grids).toHaveLength(trip?.people.length ?? -1);
     for (const grid of trip?.grids ?? []) {
       expect(grid).toHaveLength(5);

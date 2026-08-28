@@ -53,8 +53,10 @@ paths:
 | `Switch.tsx` | The reusable on/off switch UI (`{label, checked, onChange}`) shared by `TintToggle.tsx` and the checked-toggle inside `Tile.tsx`'s modal — one visual for every binary toggle in the app. |
 | `Grid.tsx` | One person's 5×5 grid — maps a `GridCell[][]` to `Tile`s. |
 | `Tile.tsx` | One cell: the clickable square (title + truncated description) plus the `<dialog>` (person, full description, a `Switch`, and Save/Cancel). The switch only edits local draft state — "Save" is the sole path that calls `updateChecked`; Cancel/backdrop/Escape close without committing. |
-| `src/context/CheckedContext.tsx` | `CheckedProvider`, mounted once per trip page (not per person) since the page renders everyone's grid at once. Holds the whole trip's checked-state map, exposes `isChecked`/`updateChecked` via `useChecked()`. |
-| `src/lib/checked.ts` | The actual storage seam behind the context (`getChecked`/`setChecked`) — localStorage today, a REST API later, per `docs/plan.md`. Components never touch `localStorage` directly for checked state. |
+| `src/context/CheckedContext.tsx` | `CheckedProvider`, mounted once per trip page (not per person) since the page renders everyone's grid at once. Holds a flat `Record<cellId, CheckedCell>` for the whole trip, exposes `isChecked`/`updateChecked`/`queuedCount` via `useChecked()`. Wires the three drain triggers (on enqueue, on mount, on the browser's `online` event). |
+| `src/lib/checked.ts` | The storage seam behind the context (`fetchChecked`/`saveChecked`) — the real `GET`/`PATCH` API (`docs/backend-architecture.md` §4), not localStorage. Components never touch `fetch` directly for checked state. |
+| `src/lib/checkedQueue.ts` | The offline write queue behind `saveChecked()` — cell-id-keyed, persisted to localStorage, `drain()`. Every write goes through this, online or offline; there's no separate "online" code path. |
+| `src/components/QueueStatus.tsx` | The "N updates queued" indicator — replaces both periodic polling and a manual resync button; reads `queuedCount` from `useChecked()`. |
 | `src/lib/trips.ts` | `listSlugs()`/`loadTrip(slug)` — the read-only trip/grid data loading layer, unrelated to checked-state. |
 
 Two different state-management approaches are in play on purpose, not by accident — and
@@ -65,12 +67,13 @@ doesn't distinguish the two cases). Tint preference is a single synchronous bool
 already fully handled by one `useState` + one `useEffect` writing to `localStorage`;
 wrapping that in `createContext`/a `Provider`/a custom hook would be more code than the
 prop-drilling it replaces, for no real benefit. Checked state is a genuinely more complex
-shape: a map keyed by `(person, cellId)`, loaded *asynchronously* (`getChecked`/
-`setChecked` return Promises on purpose, anticipating a future REST call per
-`docs/plan.md`), mutated via a function that also writes through to storage, and read by
-every `Tile` instance across every person's grid simultaneously (`TripPage.tsx` renders
-everyone's grid at once, not just one person's). That combination — async, keyed/
-structured, side-effecting, many concurrent consumers — is what actually earns a Context.
+shape: a map keyed by `cellId` (globally unique, so no `person` in the key at all — see
+`docs/backend-architecture.md` §2), loaded *asynchronously* (`fetchChecked`/`saveChecked`
+are real network calls now, per `docs/backend-architecture.md` §4/§9), mutated via a
+function that also writes through to an offline queue, and read by every `Tile` instance
+across every person's grid simultaneously (`TripPage.tsx` renders everyone's grid at once,
+not just one person's). That combination — async, keyed/structured, side-effecting, many
+concurrent consumers — is what actually earns a Context.
 A single scalar reached through one or two shallow prop hops doesn't, regardless of how
 many places it's used. When new state comes up, check which of these two shapes it
 actually matches before defaulting to either pattern — and if more Context genuinely is
