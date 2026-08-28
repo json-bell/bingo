@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "tscheck": "tsc -b --noEmit",
-    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint": "eslint src api db --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "make-grid": "tsx data/createGrids.ts",
     "test": "vitest run",
