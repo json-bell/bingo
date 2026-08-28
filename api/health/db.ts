@@ -1,7 +1,7 @@
 import { count } from "drizzle-orm";
-import { db } from "../../db/client";
-import { checked } from "../../db/schema";
-import { apiError, json } from "../lib/responses";
+import { db } from "../../db/client.js";
+import { checked } from "../../db/schema.js";
+import { apiError, json } from "../lib/responses.js";
 
 // A real SELECT count(*) against the checked table, not SELECT 1 -- this
 // proves connectivity *and* that migrations have actually been applied to

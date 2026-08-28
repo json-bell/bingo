@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { GET } from "./db";
+import { GET } from "./db.js";
 
 describe("GET /api/health/db", () => {
   it("returns 200 with a real row count against the test database", async () => {

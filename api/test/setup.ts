@@ -3,7 +3,7 @@ import { sql } from "drizzle-orm";
 import { migrate } from "drizzle-orm/node-postgres/migrator";
 import type { NodePgDatabase } from "drizzle-orm/node-postgres";
 import { beforeAll, beforeEach } from "vitest";
-import type * as schema from "../../db/schema";
+import type * as schema from "../../db/schema.js";
 
 // Must happen before db/client.ts's module body runs (it reads
 // process.env.DATABASE_URL at import time) -- a static `import { db }`
@@ -13,7 +13,7 @@ config({ path: ".env.test" });
 process.env.DATABASE_URL = process.env.TEST_DATABASE_URL;
 process.env.DB_DRIVER = "pg";
 
-const { db } = await import("../../db/client");
+const { db } = await import("../../db/client.js");
 
 // Once per run: apply the committed migrations to bingo_test. This
 // exercises the actual migration files, so a migration that doesn't

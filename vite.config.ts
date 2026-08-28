@@ -27,6 +27,15 @@ export default defineConfig({
       manifest: false,
       workbox: {
         navigateFallback: "/index.html",
+        // Without this, the service worker's own NavigationRoute intercepts
+        // *any* navigation request (typing a URL, following a link) within
+        // its scope and serves the cached app shell instead — client-side,
+        // before the request ever reaches the network, so vercel.json's
+        // rewrite fix (see docs/backend-architecture.md §8) can't help here
+        // at all. Hit this for real: navigating straight to /api/health in
+        // a browser rendered an empty page (the app shell, with React
+        // Router matching no route for it) instead of reaching the function.
+        navigateFallbackDenylist: [/^\/api\//],
         // Trip data is handled by the runtimeCaching rule below instead of
         // being precached upfront — see the chunkFileNames comment above.
         globIgnores: ["**/trip-data/**"],

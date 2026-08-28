@@ -1,4 +1,4 @@
-import { json } from "./lib/responses";
+import { json } from "./lib/responses.js";
 
 // No database access at all — this answers "is the function deployment
 // alive and routing correctly", isolated from whether Neon is reachable.
