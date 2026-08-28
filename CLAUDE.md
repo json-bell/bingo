@@ -204,6 +204,11 @@ keep related keys grep-able as a group.
 - `.claude/rules/` holds deeper, path-scoped conventions that load automatically only when
   Claude touches matching files (keeps them out of every session's base context).
 - `docs/` holds human-facing project docs (architecture, runbooks). Not auto-loaded by Claude.
+- Non-trivial work happens on a `feat/<description>` branch off `main`, committing as it
+  progresses, merged back into `main` locally with `git merge --no-ff` (a real merge commit,
+  not a squash and not a fast-forward) once the feature's ready — keeps history essentially
+  linear (one feature at a time) while still showing each feature's individual commits and an
+  explicit "Merge branch 'feat/...' into main" marker. Delete the branch after it's merged.
 
 ## Read-only commands
 
