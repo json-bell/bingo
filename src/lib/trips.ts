@@ -25,5 +25,10 @@ export async function loadTrip(slug: string): Promise<LoadedTrip | null> {
     loadGrid(),
     loadPeople(),
   ]);
-  return { grids: gridModule.default, people: peopleModule.people, title: tripConfig.title };
+  return {
+    grids: gridModule.default,
+    people: peopleModule.people,
+    title: tripConfig.title,
+    version: tripConfig.currentVersion,
+  };
 }
