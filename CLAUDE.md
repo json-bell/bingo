@@ -79,6 +79,16 @@ different set of cell ids, orphaning the grid file that already exists. `npm run
 -- <slug> <version>` (`data/seedGridCli.ts`) is the actual retry path: it re-seeds from the
 grid file that's already on disk instead of generating a new one.
 
+`npm run make-grid:prod`, `npm run seed-grid:prod`, and `npm run migrate:prod` are
+convenience wrappers that source `~/.config/bingo-prod.env` (`export DATABASE_URL=<pooled>`,
+`export DATABASE_URL_UNPOOLED=<unpooled>`) before running the plain command — **that file is
+local-only, never committed, and won't exist on a fresh clone or a different machine**; the
+scripts fail cleanly with a "no such file" error in that case, which is expected, not a sign
+anything's broken. The path is deliberately hardcoded into these scripts (not a secret
+itself, only the file's contents are) so production commands don't need the real connection
+string typed inline. `seed-grid:prod` and `migrate:prod` override to the unpooled string;
+`make-grid:prod` doesn't need to, since seeding is a regular write like any other API call.
+
 Requires **Node 19+**: `data/getGrids.ts` and `data/backfillCellIds.ts` call the global
 `crypto.randomUUID()` with no import (stable in Node 19+; not present at all on older
 versions) — an older Node fails with a confusing "crypto is not defined"-style error, not
