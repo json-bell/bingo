@@ -1,0 +1,25 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: bingo-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: bingo
+      POSTGRES_PASSWORD: bingo
+      POSTGRES_DB: bingo_dev
+    ports:
+      # 5433, not 5432 — a host-installed Postgres on the default port would
+      # otherwise make `docker compose up` fail (or, worse, succeed while every
+      # connection silently goes to the wrong server).
+      - "5433:5432"
+    volumes:
+      - bingo-pgdata:/var/lib/postgresql/data
+      - ./docker/init-test-db.sql:/docker-entrypoint-initdb.d/init-test-db.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bingo -d bingo_dev"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  bingo-pgdata:
