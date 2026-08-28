@@ -486,7 +486,7 @@ and the frontend drops the write (§9). Seeding is not an optimization.
 ```yaml
 services:
   postgres:
-    image: postgres:17-alpine
+    image: postgres:18-alpine
     container_name: bingo-postgres
     restart: unless-stopped
     environment:
@@ -499,7 +499,16 @@ services:
       # connection silently goes to the wrong server).
       - "5433:5432"
     volumes:
-      - bingo-pgdata:/var/lib/postgresql/data
+      # Postgres 18+'s official image expects a single mount at
+      # /var/lib/postgresql (not .../data) -- it stores data in a
+      # version-specific subdirectory beneath that now, to support
+      # pg_ctlcluster-style in-place major-version upgrades later. The old
+      # .../data mount point makes the 18+ entrypoint refuse to start
+      # ("there appears to be PostgreSQL data in: ... (unused mount/volume)").
+      # Hit this for real going from postgres:17-alpine to :18-alpine --
+      # needed a full `docker compose down -v` + recreate, not just an
+      # image-tag swap, since the old volume's layout doesn't match either.
+      - bingo-pgdata:/var/lib/postgresql
       - ./docker/init-test-db.sql:/docker-entrypoint-initdb.d/init-test-db.sql:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U bingo -d bingo_dev"]

@@ -1,6 +1,6 @@
 services:
   postgres:
-    image: postgres:17-alpine
+    image: postgres:18-alpine
     container_name: bingo-postgres
     restart: unless-stopped
     environment:
@@ -13,7 +13,12 @@ services:
       # connection silently goes to the wrong server).
       - "5433:5432"
     volumes:
-      - bingo-pgdata:/var/lib/postgresql/data
+      # Postgres 18+'s official image expects a single mount at
+      # /var/lib/postgresql (not .../data) -- it stores data in a
+      # version-specific subdirectory beneath that now, to support
+      # pg_ctlcluster-style in-place major-version upgrades later. The old
+      # .../data mount point makes the 18+ entrypoint refuse to start.
+      - bingo-pgdata:/var/lib/postgresql
       - ./docker/init-test-db.sql:/docker-entrypoint-initdb.d/init-test-db.sql:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U bingo -d bingo_dev"]
