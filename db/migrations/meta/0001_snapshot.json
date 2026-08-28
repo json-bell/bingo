@@ -1,0 +1,92 @@
+{
+  "id": "351f8af5-87b1-4cb3-9e63-26b887a542fb",
+  "prevId": "aa8db4c6-74f0-4c06-b807-8f9114981d81",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.checked": {
+      "name": "checked",
+      "schema": "",
+      "columns": {
+        "cell_id": {
+          "name": "cell_id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "checked": {
+          "name": "checked",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp (3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "trip_slug": {
+          "name": "trip_slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "grid_version": {
+          "name": "grid_version",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "person": {
+          "name": "person",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "checked_trip_idx": {
+          "name": "checked_trip_idx",
+          "columns": [
+            {
+              "expression": "trip_slug",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "grid_version",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

@@ -75,7 +75,11 @@ export default defineConfig({
           name: "web",
           environment: "jsdom",
           setupFiles: ["./vitest.setup.ts"],
+          // seedGrid.test.ts needs the api project's DB setup (real
+          // Postgres, migrate + truncate) -- excluded here so it doesn't
+          // also run under jsdom with no database connection at all.
           include: ["src/**/*.test.{ts,tsx}", "data/**/*.test.ts"],
+          exclude: ["data/seedGrid.test.ts"],
         },
       },
       {
@@ -84,7 +88,15 @@ export default defineConfig({
           name: "api",
           environment: "node",
           setupFiles: ["./api/test/setup.ts"],
-          include: ["api/**/*.test.ts", "db/**/*.test.ts"],
+          include: ["api/**/*.test.ts", "db/**/*.test.ts", "data/seedGrid.test.ts"],
+          // All api tests share one real bigo_test Postgres database (no
+          // per-file isolation), and each test's beforeEach TRUNCATEs the
+          // whole checked table -- Vitest's default file parallelism let
+          // two files' truncates interleave with each other's inserts,
+          // causing real, observed flaky row-count failures. Small hobby
+          // project, not worth per-file DB isolation to get parallelism
+          // back: just serialize.
+          fileParallelism: false,
         },
       },
     ],
