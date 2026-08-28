@@ -760,18 +760,34 @@ the JS module it thought it was loading — `Failed to parse source for import a
 the content contains invalid JS syntax`. This has nothing to do with `/api/*` specifically; it
 broke the frontend itself under `vercel dev`.
 
-Fixed to exclude both `/api/*` **and anything that looks like a real file** (has a `.` in the
-path), not just the API prefix originally planned:
+First fix excluded `/api/*` and anything that looks like a real file (has a `.` in the path)
+— this covered `/src/main.tsx`, but a browser-based reload (headless Chrome via CDP, not just
+`curl` — see `docs/visual-verification.md`; a plain `curl` of each path individually didn't
+reproduce this, only a real page load firing many concurrent requests did) still failed on
+Vite's own **dotless** internal paths: `/@vite/client` and `/@react-refresh` (Vite's HMR
+client and React Fast Refresh, both `500`s under the file-extension-only rule, since neither
+has a `.` anywhere). Both are part of Vite's `@`-prefixed virtual-module convention, so the
+final fix excludes that prefix too:
 
 ```json
-{ "source": "/((?!api/)(?!.*\\.).*)", "destination": "/index.html" }
+{ "source": "/((?!api/)(?!@)(?!.*\\.).*)", "destination": "/index.html" }
 ```
+
+Verified via a full headless-browser page load (not just individual `curl` checks, which
+missed the `@`-prefixed failures entirely): zero `4xx`/`5xx` responses other than the
+harmless `favicon.ico` `404` this app has always had, `#root` actually renders on both `/`
+and a real trip slug (`/europapark-2024`, `~400KB` of rendered grid markup — confirming the
+SPA fallback itself, not just the exclusions, still works).
 
 This is a strictly more defensive pattern than the original, not just a fix for the same
 problem: in production, `dist/`'s built assets all have extensions and would have been caught
 by the filesystem check anyway — but the same pattern also now correctly falls through for
-`/src/main.tsx`-style dev-only paths under `vercel dev`, which never touch the filesystem
-check at all locally, only in a real deployment.
+Vite's dev-only paths under `vercel dev`, which never touch the filesystem check at all
+locally, only in a real deployment. If a future Vite/plugin upgrade introduces some other
+dotless, non-`@`-prefixed internal path, the same class of failure could recur — the
+symptom to watch for is `500`s (not `404`s) on requests that aren't this app's own code, and
+the fix is the same shape: add another exclusion to this pattern, verified via a real browser
+load rather than one-off `curl` checks.
 
 The `no-cache` headers already in `vercel.json` for `/sw.js` and `/registerSW.js` stay as they
 are — unrelated, and load-bearing for `registerType: "autoUpdate"`.
