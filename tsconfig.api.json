@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.api.tsbuildinfo",
+    "target": "ES2022",
+    "lib": ["ES2023"],
+    // NodeNext, not "bundler" like tsconfig.node.json: this code runs on
+    // Vercel's real Node.js runtime, which transpiles each file in place and
+    // traces local imports as separate files rather than bundling them the
+    // way Vite/tsx do -- so relative imports genuinely need explicit .js
+    // extensions (the compiled output's extension, not the .ts source's) to
+    // resolve at runtime. "bundler" mode allows omitting them, which is
+    // exactly what let a real ERR_MODULE_NOT_FOUND crash reach production
+    // undetected -- npm run tscheck passed locally the whole time. NodeNext
+    // makes a missing extension a compile error instead, here specifically.
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "skipLibCheck": true,
+    "types": ["node"],
+
+    "isolatedModules": true,
+    "noEmit": true,
+    "resolveJsonModule": true,
+
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true
+  },
+  "include": ["api", "db"]
+}

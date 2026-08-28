@@ -811,8 +811,24 @@ are — unrelated, and load-bearing for `registerType: "autoUpdate"`.
   `include: ["api", "db"]`) and reference it from `tsconfig.json`. `@types/node` v26 declares
   the global `Request`/`Response`/`fetch` types the Web-standard handlers need, so no `DOM` lib
   is required — if they come up as missing, that's the thing to check, not a reason to pull in
-  `DOM`. Watch for "file is in multiple projects" if `db/` ends up in both `tsconfig.node.json`
-  and `tsconfig.api.json`; keep it in exactly one `include`.
+  `DOM`. Keep `db/` out of `tsconfig.node.json`'s `include` — it belongs in exactly one project,
+  not both.
+
+  **Set `module`/`moduleResolution` to `"NodeNext"` here, not `"bundler"`** (unlike
+  `tsconfig.node.json`, which correctly uses `"bundler"` for `data/`/`vite.config.ts`, since
+  those run under Vite/tsx). This isn't optional polish — a first deploy shipped with
+  `"bundler"` here, and every single function crashed with `ERR_MODULE_NOT_FOUND`: Vercel's
+  Node function builder transpiles each `.ts` file to `.js` in place and traces local imports
+  as separate files rather than bundling them into one (confirmed against Vercel's own docs —
+  this kind of automatic bundling is currently Next.js-only, not available for a plain `api/`
+  directory), so the real Node runtime's ESM resolver needs every relative import's literal
+  compiled-output extension (`./lib/responses.js`, not `./lib/responses`) to find it.
+  `"bundler"` mode allows omitting it, which is exactly what let that crash reach production
+  undetected — `npm run tscheck` passed locally the whole time, because `tsx`/`vitest`/
+  `vercel dev` all resolve extensionless imports fine. `"NodeNext"` makes a missing extension
+  a compile error instead, caught by the same `npm run tscheck` that was silent before —
+  verified by deliberately dropping one and confirming `tsc` rejects it (`TS2835: Relative
+  import paths need explicit file extensions...`) before restoring it.
 - **`npm run lint`** is `eslint src --ext ts,tsx` — it does not touch `api/`, `db/`, or `data/`.
   Widen it to `eslint src api db --ext ts,tsx` so backend code is actually linted. `.eslintrc.cjs`
   sets `env: { browser: true }` globally; backend files need `node: true`, which is cleanest as

@@ -19,5 +19,5 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["vite.config.ts", "data", "types", "api", "db"]
+  "include": ["vite.config.ts", "data", "types"]
 }
