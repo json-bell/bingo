@@ -52,6 +52,27 @@ export default defineConfig({
               expiration: { maxEntries: 20 },
             },
           },
+          {
+            // Checked state is mutable, unlike trip-data — so NetworkFirst,
+            // not CacheFirst: try the network for freshness, fall back to
+            // the last good response when it fails. This is what makes
+            // "the state as of the last time the app loaded online"
+            // available offline. See docs/backend-architecture.md §9.
+            urlPattern: ({ url }: { url: URL }) =>
+              url.pathname.startsWith("/api/trips/") && url.pathname.endsWith("/checked"),
+            method: "GET",
+            handler: "NetworkFirst",
+            options: {
+              cacheName: "checked-state",
+              // Flaky venue wifi hangs rather than failing fast; without
+              // this the app waits on a dead socket instead of rendering
+              // cached state.
+              networkTimeoutSeconds: 5,
+              expiration: { maxEntries: 20 },
+              // Never cache an error response as if it were state.
+              cacheableResponse: { statuses: [200] },
+            },
+          },
         ],
       },
     }),

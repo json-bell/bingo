@@ -1,40 +1,69 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { getChecked, setChecked } from "./checked";
+import { waitFor } from "@testing-library/react";
+import { http, HttpResponse } from "msw";
+import { server } from "./msw/server";
+import { fetchChecked, saveChecked } from "./checked";
 
-// Assertions here are phrased against what getChecked/setChecked promise to
-// return, not localStorage-specific mechanics — see docs/test-plan.md's
-// "Long-term" section for why that matters once phase 2 swaps the
-// implementation behind this same seam for a REST API.
+// fetch() is intercepted at the network layer (msw), not mocked at the
+// function level -- these assertions exercise real request construction
+// and response parsing, per docs/backend-architecture.md §9.
 describe("checked", () => {
   beforeEach(() => {
     localStorage.clear();
   });
 
-  it("returns an empty map when nothing has been stored yet", async () => {
-    expect(await getChecked("europapark-2024", "Ben")).toEqual({});
+  describe("fetchChecked", () => {
+    it("requests the trip's checked state with the version query param and returns the cells map", async () => {
+      let capturedUrl: URL | undefined;
+      server.use(
+        http.get("/api/trips/:slug/checked", ({ params, request }) => {
+          capturedUrl = new URL(request.url);
+          expect(params.slug).toBe("europapark-2024");
+          return HttpResponse.json({
+            slug: "europapark-2024",
+            version: 2,
+            cells: { "cell-1": { checked: true, updatedAt: "2026-01-01T00:00:00.000Z" } },
+          });
+        })
+      );
+
+      const cells = await fetchChecked("europapark-2024", 2);
+
+      expect(capturedUrl?.searchParams.get("version")).toBe("2");
+      expect(cells).toEqual({ "cell-1": { checked: true, updatedAt: "2026-01-01T00:00:00.000Z" } });
+    });
+
+    it("throws on a non-2xx response", async () => {
+      server.use(http.get("/api/trips/:slug/checked", () => HttpResponse.json({}, { status: 503 })));
+
+      await expect(fetchChecked("europapark-2024", 2)).rejects.toThrow();
+    });
   });
 
-  it("persists a value and returns it on the next read", async () => {
-    await setChecked("europapark-2024", "Ben", "cell-1", true);
-    expect(await getChecked("europapark-2024", "Ben")).toEqual({ "cell-1": true });
-  });
+  describe("saveChecked", () => {
+    it("enqueues the write and, once the drain succeeds, calls back with the server row", async () => {
+      server.use(
+        http.patch("/api/checked", async ({ request }) => {
+          const body = (await request.json()) as { id: string; checked: boolean };
+          return HttpResponse.json({
+            id: body.id,
+            checked: body.checked,
+            updatedAt: "2026-01-01T00:01:00.000Z",
+          });
+        })
+      );
 
-  it("accumulates sequential writes rather than clobbering earlier ones", async () => {
-    await setChecked("europapark-2024", "Ben", "cell-1", true);
-    await setChecked("europapark-2024", "Ben", "cell-2", true);
-    const result = await setChecked("europapark-2024", "Ben", "cell-1", false);
+      const received: Array<[string, unknown]> = [];
+      await saveChecked("europapark-2024", "cell-1", true, "2026-01-01T00:00:00.000Z", (cellId, row) => {
+        received.push([cellId, row]);
+      });
 
-    expect(result).toEqual({ "cell-1": false, "cell-2": true });
-    expect(await getChecked("europapark-2024", "Ben")).toEqual({ "cell-1": false, "cell-2": true });
-  });
+      // saveChecked fires the drain without awaiting it (never blocks the
+      // caller on the network) -- wait for the callback rather than a
+      // fixed delay.
+      await waitFor(() => expect(received).toHaveLength(1));
 
-  it("keeps different (tripSlug, person) pairs fully isolated", async () => {
-    await setChecked("europapark-2024", "Ben", "cell-1", true);
-    await setChecked("europapark-2024", "Cameron", "cell-1", false);
-    await setChecked("disney-2026", "Ben", "cell-1", false);
-
-    expect(await getChecked("europapark-2024", "Ben")).toEqual({ "cell-1": true });
-    expect(await getChecked("europapark-2024", "Cameron")).toEqual({ "cell-1": false });
-    expect(await getChecked("disney-2026", "Ben")).toEqual({ "cell-1": false });
+      expect(received).toEqual([["cell-1", { checked: true, updatedAt: "2026-01-01T00:01:00.000Z" }]]);
+    });
   });
 });

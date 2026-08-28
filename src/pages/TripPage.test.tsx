@@ -2,12 +2,16 @@ import { describe, it, expect, beforeEach } from "vitest";
 import { render, waitFor } from "@testing-library/react";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
+import { http, HttpResponse } from "msw";
+import { server } from "../lib/msw/server";
 import { TripPage } from "./TripPage";
 
 // The two integration tests below: real fixture data, real components, no
-// mocked context — this is what would catch a broken wiring between Tile,
+// mocked context -- this is what would catch a broken wiring between Tile,
 // CheckedContext, and checked.ts that the unit tests of each piece in
-// isolation wouldn't (see docs/test-plan.md).
+// isolation wouldn't (see docs/test-plan.md). fetch() is intercepted at the
+// network layer via msw, not mocked at the function level -- these go
+// *through* the checked.ts/checkedQueue.ts seam, not around it.
 
 function findButtonByText(container: HTMLElement, selector: string, text: string): HTMLElement {
   const match = Array.from(container.querySelectorAll<HTMLElement>(selector)).find(
@@ -49,7 +53,19 @@ describe("TripPage: checking a cell end to end", () => {
     localStorage.clear();
   });
 
-  it("Save commits the checked state to both the rendered tile and localStorage", async () => {
+  it("Save commits the checked state to the rendered tile and sends a PATCH", async () => {
+    let patchedBody: { id: string; checked: boolean } | undefined;
+    server.use(
+      http.patch("/api/checked", async ({ request }) => {
+        patchedBody = (await request.json()) as { id: string; checked: boolean };
+        return HttpResponse.json({
+          id: patchedBody.id,
+          checked: patchedBody.checked,
+          updatedAt: new Date().toISOString(),
+        });
+      })
+    );
+
     const { user, container, tile, checkbox } = await renderTripPageAndOpenFirstTile();
 
     expect(checkbox.checked).toBe(false);
@@ -61,15 +77,20 @@ describe("TripPage: checking a cell end to end", () => {
     expect(container.querySelector("dialog[open]")).toBeNull();
     expect(tile.querySelector("h3")).toHaveClass("line-through");
 
-    const storedKey = Object.keys(localStorage).find((key) =>
-      key.startsWith("bingo:checked:europapark-2024:")
-    );
-    expect(storedKey).toBeDefined();
-    const storedValue = JSON.parse(localStorage.getItem(storedKey as string) ?? "{}");
-    expect(Object.values(storedValue)).toContain(true);
+    await waitFor(() => expect(patchedBody).toBeDefined());
+    expect(patchedBody?.checked).toBe(true);
   });
 
-  it("Cancel discards the toggle and persists nothing", async () => {
+  it("Cancel discards the toggle and sends no PATCH", async () => {
+    let patchCalled = false;
+    server.use(
+      http.patch("/api/checked", async ({ request }) => {
+        patchCalled = true;
+        const body = (await request.json()) as { id: string; checked: boolean };
+        return HttpResponse.json({ id: body.id, checked: body.checked, updatedAt: new Date().toISOString() });
+      })
+    );
+
     const { user, container, tile, checkbox } = await renderTripPageAndOpenFirstTile();
 
     await user.click(checkbox);
@@ -80,9 +101,9 @@ describe("TripPage: checking a cell end to end", () => {
     expect(container.querySelector("dialog[open]")).toBeNull();
     expect(tile.querySelector("h3")).not.toHaveClass("line-through");
 
-    const storedKey = Object.keys(localStorage).find((key) =>
-      key.startsWith("bingo:checked:europapark-2024:")
-    );
-    expect(storedKey).toBeUndefined();
+    // No clean "wait for nothing to happen" idiom -- give an (incorrect)
+    // PATCH a real chance to fire before asserting none did.
+    await new Promise((resolve) => setTimeout(resolve, 50));
+    expect(patchCalled).toBe(false);
   });
 });
