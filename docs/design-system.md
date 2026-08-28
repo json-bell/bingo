@@ -56,8 +56,11 @@ legend, tint toggle) is identical at both sizes.
 
 Untouched: `src/lib/trips.ts`, `src/App.tsx`, `types/trip.ts`, `config/`, `data/`, `grids/`.
 
-Not built this pass (still open follow-ups, not blocking): the `useActivePerson` scroll-spy
-subtitle in `AppBar`, and `Home.tsx`'s styling pass.
+A scroll-spy subtitle in `AppBar` (showing "whose grid am I on" while scrolling) was
+considered but not built — sticky per-card name labels (`TripPage.tsx`'s `sticky top-16`
+wrapper) cover that need instead. `Home.tsx`'s styling pass (deferred at the time this doc
+was written) has since been done: it now uses the same `surface`/`brand` tokens as the rest
+of the app, with a centered card-style link per trip.
 
 ## Tokens
 
