@@ -3,6 +3,7 @@ import { waitFor } from "@testing-library/react";
 import { http, HttpResponse } from "msw";
 import { server } from "./msw/server";
 import { fetchChecked, saveChecked } from "./checked";
+import { readQueue } from "./checkedQueue";
 
 // fetch() is intercepted at the network layer (msw), not mocked at the
 // function level -- these assertions exercise real request construction
@@ -64,6 +65,28 @@ describe("checked", () => {
       await waitFor(() => expect(received).toHaveLength(1));
 
       expect(received).toEqual([["cell-1", { checked: true, updatedAt: "2026-01-01T00:01:00.000Z" }]]);
+    });
+
+    it("awaits the actual drain -- the queue is already empty by the time it resolves, not just eventually", async () => {
+      // Regression guard: saveChecked previously fired the drain with
+      // `void drain(...)` (fire-and-forget), so its own returned promise
+      // resolved right after enqueueing, before the PATCH had even been
+      // sent -- nothing then re-synced the "N updates queued" indicator
+      // once the write actually completed, so it stayed stuck forever.
+      server.use(
+        http.patch("/api/checked", async ({ request }) => {
+          const body = (await request.json()) as { id: string; checked: boolean };
+          return HttpResponse.json({
+            id: body.id,
+            checked: body.checked,
+            updatedAt: "2026-01-01T00:01:00.000Z",
+          });
+        })
+      );
+
+      await saveChecked("europapark-2024", "cell-1", true, "2026-01-01T00:00:00.000Z", () => {});
+
+      expect(readQueue("europapark-2024")).toEqual({});
     });
   });
 });

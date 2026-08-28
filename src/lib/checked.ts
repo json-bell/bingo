@@ -38,8 +38,15 @@ export async function fetchChecked(tripSlug: string, version: number): Promise<C
 }
 
 // The only write entry point. Writes to the persisted queue synchronously,
-// then fires a drain. Never throws -- a failed drain just leaves work
-// queued for the next trigger (see checkedQueue.ts).
+// then attempts a drain. Never throws -- drain() already swallows network
+// errors and non-2xx responses internally, so awaiting it here doesn't risk
+// blocking the caller on a rejection, and callers that don't want to wait
+// simply don't await this (see CheckedContext.tsx's updateChecked, which
+// calls this without awaiting but does chain .then() to know when the
+// drain this call triggered has actually finished -- that's why this
+// awaits drain() rather than firing it with `void`: a caller has no other
+// way to learn when a *specific* save's queue removal has happened, as
+// opposed to some unrelated later drain).
 export async function saveChecked(
   tripSlug: string,
   cellId: string,
@@ -53,5 +60,5 @@ export async function saveChecked(
     basisUpdatedAt,
     enqueuedAt: new Date().toISOString(),
   });
-  void drain(tripSlug, onServerRow);
+  await drain(tripSlug, onServerRow);
 }

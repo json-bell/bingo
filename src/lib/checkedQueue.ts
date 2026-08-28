@@ -100,23 +100,34 @@ export async function drain(
         break;
       }
 
-      if (response.status === 200) {
-        const row = (await response.json()) as PatchResponseBody;
-        if (row.id && row.updatedAt !== undefined && row.checked !== undefined) {
-          onServerRow(row.id, { checked: row.checked, updatedAt: row.updatedAt });
-        }
+      if (response.status === 200 || response.status === 409) {
+        // removeIfUnchanged happens BEFORE onServerRow in both branches,
+        // deliberately: onServerRow is what triggers the caller's "N
+        // updates queued" count re-sync (CheckedContext.tsx's
+        // applyServerRow), and that re-sync reads the queue's current
+        // state. Calling it before removal made the indicator read one
+        // item too many -- reordering means the removal is already
+        // reflected by the time anything re-checks the count.
         removeIfUnchanged(tripSlug, write);
-      } else if (response.status === 409) {
-        // The server is right. Apply the current row -- the local edit is
-        // discarded. This is exactly why the 409 body carries the row.
-        const body = (await response.json()) as PatchResponseBody;
-        if (body.current) {
-          onServerRow(body.current.id, {
-            checked: body.current.checked,
-            updatedAt: body.current.updatedAt,
-          });
+        try {
+          const body = (await response.json()) as PatchResponseBody;
+          if (response.status === 200 && body.id && body.updatedAt !== undefined && body.checked !== undefined) {
+            onServerRow(body.id, { checked: body.checked, updatedAt: body.updatedAt });
+          } else if (response.status === 409 && body.current) {
+            // The server is right. Apply the current row -- the local edit
+            // is discarded. This is exactly why the 409 body carries it.
+            onServerRow(body.current.id, {
+              checked: body.current.checked,
+              updatedAt: body.current.updatedAt,
+            });
+          }
+        } catch (error) {
+          // A malformed response body shouldn't break "never throws" --
+          // the write is already removed from the queue above; the local
+          // optimistic value just won't get corrected by a server row this
+          // time, and the next GET will reconcile it regardless.
+          console.warn(`Could not parse response body for cell ${write.cellId}:`, error);
         }
-        removeIfUnchanged(tripSlug, write);
       } else if (response.status === 400 || response.status === 404) {
         // Unretryable. A 404 specifically means the grid wasn't seeded;
         // leaving it queued would retry forever. The tile reverts to
