@@ -580,6 +580,43 @@ routing config that can drift from `vercel.json`.)
 `--wait` on `docker compose up -d` matters: it blocks until the healthcheck passes, so
 `db:reset` doesn't race the migration against a Postgres that hasn't finished starting.
 
+### Two `vercel dev` gotchas hit and fixed during Phase 1 (not hypothetical — this happened)
+
+Getting `vercel dev` actually working locally surfaced two real project-configuration
+problems, neither of which is the `vercel.json` rewrite risk called out in §8 below — both
+were more fundamental than that, and both are now fixed on the live Vercel project:
+
+1. **The project's Root Directory was `dist`**, a leftover from the original "dragged
+   `dist/` into Vercel by hand" setup this repo's CLAUDE.md describes. With Root Directory
+   set to `dist`, Vercel treats that folder as the *entire* project — `vercel dev` searched
+   for `api/` inside `dist/` and never found it, because `dist/` is pure static build output
+   with no `api/` in it at all. This wasn't a rewrite problem (that would show up as a `200`
+   of HTML); it was one level below that — Vercel didn't know `api/` existed, period. Fixed
+   via `vercel project update <name> --auto-detect root-directory --output-directory dist`
+   (clears the Root Directory override back to the repo root; Output Directory has to be set
+   explicitly to `dist` at the same time, since without a Root Directory override Vercel's
+   own guess defaults to `public` or `.`, neither of which is right for a Vite build).
+2. **The Framework Preset was `Other`, not `Vite`, and didn't auto-detect** even after fixing
+   Root Directory. With `Other`, Vercel's generic dev-command support doesn't pass
+   `--port $PORT` to the dev command, so a plain `vite` binds its own default port (`5173`)
+   instead of the port Vercel is listening for — `vercel dev` then fails with
+   `Failed to detect a server running on port ...`. Fixed via
+   `vercel project update <name> --framework vite`, after which Vercel runs
+   `vite --port $PORT` itself and everything lines up.
+
+A third thing worth knowing, not a bug but easy to get wrong: **`vercel dev`'s function
+runtime reads local secrets from the linked Vercel project's own *Development*-scoped
+environment variables (`vercel env add <NAME> development`), not from `.env.local`.**
+`.env.local` is what the Vite dev *command* subprocess sees (so the frontend and
+DB-access-free routes like `GET /api/health` work fine regardless) — but `api/` handlers
+that touch the database failed with `Error: DATABASE_URL is not set` even though
+`DATABASE_URL` was correctly sitting in `.env.local` the entire time, because the function
+runtime pulls from the cloud-stored Development environment instead. `DATABASE_URL` and
+`DB_DRIVER` were added there (pointing at the same local Docker Postgres connection string
+`.env.local` already has — this is local-only data, it never reaches Vercel's actual
+infrastructure, `vercel dev` just requires it to live in this particular place to be visible
+to functions specifically).
+
 ---
 
 ## 7. Backend tests
@@ -705,20 +742,36 @@ blocks the phase it appears in.
    (225 rows). New grids seed themselves via `make-grid` from then on. Blocks Phase 4 being
    testable against real data.
 
-### The `vercel.json` rewrite (verify on first deploy)
+### The `vercel.json` rewrite — already fixed, and for a bigger reason than expected
 
-`vercel.json` has `{"source": "/(.*)", "destination": "/index.html"}` — the SPA catch-all. In
-Vercel's documented routing order, `rewrites` are evaluated **after** the filesystem check
-(static files *and* functions), so `/api/health` should resolve to the function and never reach
-the rewrite. **Do not take that on trust** — it is the single most likely thing to silently
-break on the first deploy, and it fails in a confusing way: `/api/health` returns `200` with
-the HTML of `index.html`, so `response.ok` is true and only `JSON.parse` fails.
+`vercel.json` originally had `{"source": "/(.*)", "destination": "/index.html"}` — the SPA
+catch-all. The plan was to verify this didn't swallow `/api/*` on first deploy (Vercel's
+documented routing order checks the filesystem *before* rewrites, so it was expected to be
+fine in production) — but this got caught earlier than planned, during Phase 1's own local
+`vercel dev` testing, and for a more fundamental reason than the one anticipated.
 
-Phase 2's checkpoint is exactly this check. If it does fire, the fix is an explicit exclusion:
+**`vercel dev`'s proxy to the framework dev server does not check real files before applying
+a rewrite the way production's static hosting does.** With the original blanket
+`/(.*)` pattern, *every* request got rewritten to `/index.html` — including Vite's own
+dev-only module paths like `/src/main.tsx`, which don't exist as real files (Vite serves them
+transformed, on the fly). The browser would request `/src/main.tsx`, get back `index.html`'s
+HTML instead, and Vite's import-analysis plugin would then fail trying to parse that HTML as
+the JS module it thought it was loading — `Failed to parse source for import analysis because
+the content contains invalid JS syntax`. This has nothing to do with `/api/*` specifically; it
+broke the frontend itself under `vercel dev`.
+
+Fixed to exclude both `/api/*` **and anything that looks like a real file** (has a `.` in the
+path), not just the API prefix originally planned:
 
 ```json
-{ "source": "/((?!api/).*)", "destination": "/index.html" }
+{ "source": "/((?!api/)(?!.*\\.).*)", "destination": "/index.html" }
 ```
+
+This is a strictly more defensive pattern than the original, not just a fix for the same
+problem: in production, `dist/`'s built assets all have extensions and would have been caught
+by the filesystem check anyway — but the same pattern also now correctly falls through for
+`/src/main.tsx`-style dev-only paths under `vercel dev`, which never touch the filesystem
+check at all locally, only in a real deployment.
 
 The `no-cache` headers already in `vercel.json` for `/sw.js` and `/registerSW.js` stay as they
 are — unrelated, and load-bearing for `registerType: "autoUpdate"`.
@@ -1034,9 +1087,10 @@ the local container; `npm run build` and `npm run lint -- --quiet` are both clea
 3. Human: run `DATABASE_URL=<unpooled> npx drizzle-kit migrate` once against Neon.
 4. Merge `feat/backend-setup` into `main` with `git merge --no-ff` (a real merge commit — not
    squashed, not fast-forwarded) and deploy.
-5. Verify `/api/health` on the deployed URL returns JSON, **not** `index.html`'s markup — this
-   is the `vercel.json` rewrite check from §8. If it returns HTML, apply the negative-lookahead
-   rewrite and redeploy.
+5. Verify `/api/health` on the deployed URL returns JSON, **not** `index.html`'s markup. The
+   `vercel.json` rewrite this would have caught (§8) was already found and fixed during
+   Phase 1's own local `vercel dev` testing, but re-verify against the real deployment rather
+   than assuming the local fix transfers unchanged.
 6. Verify `/api/health/db` returns `200` with `rows: 0` and note its `latencyMs` on a cold
    start, so the normal number is known before anyone has to judge whether a slow response is a
    problem.
