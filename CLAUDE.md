@@ -34,7 +34,8 @@ These are the real, verified commands for this repo. Don't guess alternatives (`
 | Preview build  | `npm run preview`                         |
 | Lint           | `npm run lint -- --quiet`                 |
 | Tests          | `npm run test` (Vitest, run-once — not watch mode) |
-| Generate a new grid version for a slug | `npm run make-grid -- <slug>` (e.g. `europapark-2024`) |
+| Generate a new grid version for a slug | `npm run make-grid -- <slug>` (e.g. `europapark-2024`) — also seeds the `checked` table for that version |
+| Re-seed an existing grid version's `checked` rows | `npm run seed-grid -- <slug> <version>` — the retry path when `make-grid`'s own seed step fails; see below |
 | Start local Postgres | `npm run db:up` (`docker compose up -d --wait`) |
 | Stop local Postgres | `npm run db:down` |
 | Reset local Postgres completely | `npm run db:reset` |
@@ -66,6 +67,17 @@ number in `config/trips.json` — no file renaming or manual promotion step.
 Superseded CSV drafts go in `data/archive/<slug>/`, not `data/<slug>/` — keeps them
 accessible without digging through git history, without cluttering the directory the
 generator actually reads from.
+
+`make-grid` seeds the `checked` table (`data/seedGrid.ts`) immediately after writing the
+grid JSON — one command generates and seeds together, so the second step can't be
+forgotten. **Which database gets seeded is whichever `DATABASE_URL` is set in the
+environment when the command runs** — a human decision at generation time, not something
+inferred; seeding production means running `make-grid` with the production `DATABASE_URL`
+set. If seeding fails, **re-running `make-grid` does not retry it** — `getGrids()` is
+unseeded-random and never overwrites, so a second run mints an entirely new version with a
+different set of cell ids, orphaning the grid file that already exists. `npm run seed-grid
+-- <slug> <version>` (`data/seedGridCli.ts`) is the actual retry path: it re-seeds from the
+grid file that's already on disk instead of generating a new one.
 
 Requires **Node 19+**: `data/getGrids.ts` and `data/backfillCellIds.ts` call the global
 `crypto.randomUUID()` with no import (stable in Node 19+; not present at all on older

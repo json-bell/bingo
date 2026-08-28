@@ -383,9 +383,17 @@ Statuses: `200` on success · `400` malformed body (missing `id`, non-boolean `c
 unparseable `updatedAt`) · `404` unknown `cell_id` · `409` stale basis · `405` non-PATCH ·
 `503` DB unreachable · `500` unhandled.
 
-Use `<=` rather than `<` in the guard so that re-sending an identical write with an unchanged
-basis timestamp succeeds (it's a no-op set to the same value) instead of 409-ing. The queue
-drains at-least-once by design; a duplicate delivery must not look like a conflict.
+Use `<=` rather than `<` in the guard — not primarily for duplicate-delivery handling (a
+retry sent *after* an earlier attempt already committed will legitimately find the row's
+`updated_at` has moved past the retry's stale basis, and correctly gets a `409`, since
+`updated_at` advances on every successful write regardless of whether the new value differs
+from the old one — verified in `api/checked.test.ts`). `<=` is what makes the *uncontested*
+case work at all: when nothing else has touched the row since the client's read, its basis
+exactly **equals** the row's current `updated_at` — that equality is the everyday case, not
+an edge case, so a strict `<` guard would reject every normal first write. The queue draining
+at-least-once (§9) means a retry-after-a-lost-response *can* still 409 this way — but its
+`current` body already holds the value the client wanted, so reconciling onto it loses
+nothing even though the response wasn't a `200`.
 
 ---
 
@@ -1149,6 +1157,29 @@ the local row count, not Neon's).
 4. `data/seedGrid.ts` + `data/seedGridCli.ts`; wire `seedGrid()` into `data/createGrids.ts`
    after the `fs.writeFile`, with the "re-run `npm run seed-grid`" error path and the
    `dbLabel()` line naming the target host. Tests for `seedGrid()`.
+
+   Three real things found building this, none hypothetical:
+   - **Plain (non-Next.js) Vercel Functions get no route-params object at all** — confirmed
+     against Vercel's own Functions API reference, which lists only `request` (plus a
+     deprecated `context`) for the "Other frameworks" signature. `[slug]` is a real, working
+     file-routing convention, but the value has to be parsed out of `request.url` by hand
+     inside the handler (`api/trips/[slug]/checked.ts` does this via a regex against
+     `url.pathname`) — there's no Next.js-style `{ params }` second argument to reach for.
+   - **A real optimistic-concurrency bug**: Postgres's `NOW()` has microsecond precision, but
+     JS `Date`/`toISOString()` only carries milliseconds. A client round-tripping the full
+     value (read it from GET, send it back as a PATCH's basis) silently truncates it, so the
+     basis it sends can land *earlier* than what's actually stored — failing the `<=` guard
+     on the very first, completely uncontested write, not just on genuine conflicts. Fixed
+     at the schema level (`precision: 3` on `updated_at`, migration `0001_lowly_selene.sql`)
+     so the column can never hold more precision than a client can represent — caught by an
+     actual failing test (`api/checked.test.ts`), not by inspection.
+   - **A test-isolation race, not a code bug**: all `api` project tests share one real
+     `bingo_test` Postgres database with no per-file isolation, and each test's `beforeEach`
+     `TRUNCATE`s the whole `checked` table. Vitest's default file parallelism let two test
+     *files*' truncates interleave with each other's inserts, producing real, observed
+     flaky row-count failures that had nothing to do with the handlers under test. Fixed
+     with `fileParallelism: false` on the `api` project in `vite.config.ts` — small hobby
+     project, not worth chasing per-file DB isolation just to keep parallel test files.
 5. Human: seed production for the currently-live grid —
    `npm run seed-grid -- europapark-2024 2` with the production `DATABASE_URL`. Note that
    `grids/europapark-2024/1.json` has **no cell ids at all** (it predates them; `2.json` is the

@@ -12,7 +12,18 @@ export const checked = pgTable(
     // Server-authoritative. Every successful write sets this to NOW() — see
     // the PATCH contract in docs/backend-architecture.md §4. The client
     // never chooses this value.
-    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+    //
+    // precision: 3 (milliseconds) is load-bearing, not cosmetic: Postgres's
+    // NOW() defaults to microsecond precision, but JS Date/toISOString()
+    // only carries milliseconds. A client round-tripping the full-precision
+    // value (read it, then send it back as a PATCH's basis) truncates it,
+    // so the basis it sends can end up *earlier* than what's actually
+    // stored -- failing the optimistic-concurrency guard even on the very
+    // first, completely uncontested write. Capping the column at the same
+    // precision JS can represent means there's nothing left to truncate.
+    updatedAt: timestamp("updated_at", { withTimezone: true, precision: 3 })
+      .notNull()
+      .defaultNow(),
 
     // Scoping columns — NOT part of the key, and NOT cell content. Without
     // these, "give me this trip's checked state" has nothing to filter by —
