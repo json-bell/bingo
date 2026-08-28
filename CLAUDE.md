@@ -28,12 +28,34 @@ These are the real, verified commands for this repo. Don't guess alternatives (`
 | Task           | Command                                   |
 | -------------- | ------------------------------------------ |
 | Dev server     | `npm run dev`                             |
+| Dev server **with** the backend API | `npm run dev:api` (`vercel dev`) — see the note below; plain `npm run dev` never serves `api/` at all |
 | Build          | `npm run build` (runs `tsc -b` first — build fails on type errors, not just bundling errors) |
 | Typecheck only | `npm run tscheck`                         |
 | Preview build  | `npm run preview`                         |
 | Lint           | `npm run lint -- --quiet`                 |
 | Tests          | `npm run test` (Vitest, run-once — not watch mode) |
 | Generate a new grid version for a slug | `npm run make-grid -- <slug>` (e.g. `europapark-2024`) |
+| Start local Postgres | `npm run db:up` (`docker compose up -d --wait`) |
+| Stop local Postgres | `npm run db:down` |
+| Reset local Postgres completely | `npm run db:reset` |
+| Apply migrations (dev DB) | `npm run db:migrate` |
+| Generate a migration from `db/schema.ts` | `npm run db:generate` |
+| Inspect local DB data | `npm run db:studio` |
+
+`npm run dev` (plain `vite`) never serves `api/` — Vite knows nothing about Vercel
+Functions, so any `/api/*` request just 404s, which looks exactly like being offline once
+the frontend integration lands. Use `npm run dev:api` (`vercel dev`) whenever backend
+behavior is in question; it runs the Vite dev server and the `api/` functions together on
+one port with real routing. Two one-time project-settings gotchas, already fixed on the
+live Vercel project but worth knowing if `vercel dev` ever breaks again: the project's
+**Framework Preset must be `vite`**, not `Other` — with `Other`, Vercel doesn't pass
+`--port $PORT` to the dev command, so it can't find the server it just started
+("Failed to detect a server running on port ..."). And **local secrets for `vercel dev`'s
+functions come from the Vercel project's own *Development*-scoped environment variables
+(`vercel env add <NAME> development`), not from `.env.local`** — `.env.local` is what the
+Vite dev *command* reads, but the function runtime pulls from the cloud-stored Development
+environment instead, so a var only present in `.env.local` silently isn't there for `api/`
+handlers (`DATABASE_URL is not set`) even though the frontend works fine.
 
 `make-grid` runs `data/createGrids.ts` via `tsx` (not `node` — these are `.ts` files, not
 compiled ahead of time). It reads `data/<slug>/bingoes.csv`, writes a new auto-numbered
@@ -204,6 +226,11 @@ keep related keys grep-able as a group.
 - `.claude/rules/` holds deeper, path-scoped conventions that load automatically only when
   Claude touches matching files (keeps them out of every session's base context).
 - `docs/` holds human-facing project docs (architecture, runbooks). Not auto-loaded by Claude.
+- Non-trivial work happens on a `feat/<description>` branch off `main`, committing as it
+  progresses, merged back into `main` locally with `git merge --no-ff` (a real merge commit,
+  not a squash and not a fast-forward) once the feature's ready — keeps history essentially
+  linear (one feature at a time) while still showing each feature's individual commits and an
+  explicit "Merge branch 'feat/...' into main" marker. Delete the branch after it's merged.
 
 ## Read-only commands
 

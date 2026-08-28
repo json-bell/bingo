@@ -1,0 +1,28 @@
+import { boolean, index, integer, pgTable, text, timestamp } from "drizzle-orm/pg-core";
+
+export const checked = pgTable(
+  "checked",
+  {
+    // GridCell.id — a crypto.randomUUID() minted at placement time in
+    // data/getGrids.ts's makeGrid(). Stored as text, not uuid: it's an opaque
+    // join key that the app never parses, and text keeps it trivially
+    // comparable to the string sitting in grids/<slug>/<n>.json.
+    cellId: text("cell_id").primaryKey(),
+    checked: boolean("checked").notNull().default(false),
+    // Server-authoritative. Every successful write sets this to NOW() — see
+    // the PATCH contract in docs/backend-architecture.md §4. The client
+    // never chooses this value.
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+
+    // Scoping columns — NOT part of the key, and NOT cell content. Without
+    // these, "give me this trip's checked state" has nothing to filter by —
+    // see docs/backend-architecture.md §2.
+    tripSlug: text("trip_slug").notNull(),
+    gridVersion: integer("grid_version").notNull(),
+    person: text("person").notNull(),
+  },
+  (table) => [index("checked_trip_idx").on(table.tripSlug, table.gridVersion)]
+);
+
+export type CheckedRow = typeof checked.$inferSelect;
+export type NewCheckedRow = typeof checked.$inferInsert;

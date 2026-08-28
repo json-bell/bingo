@@ -18,4 +18,12 @@ module.exports = {
     // Props are typed via TS interfaces now, not PropTypes.
     "react/prop-types": "off",
   },
+  overrides: [
+    {
+      // Backend code: Node context, not browser, and none of it is React.
+      files: ["api/**/*.ts", "db/**/*.ts"],
+      env: { node: true, browser: false },
+      rules: { "react-refresh/only-export-components": "off" },
+    },
+  ],
 };

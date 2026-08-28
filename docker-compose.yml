@@ -1,0 +1,30 @@
+services:
+  postgres:
+    image: postgres:18-alpine
+    container_name: bingo-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: bingo
+      POSTGRES_PASSWORD: bingo
+      POSTGRES_DB: bingo_dev
+    ports:
+      # 5433, not 5432 — a host-installed Postgres on the default port would
+      # otherwise make `docker compose up` fail (or, worse, succeed while every
+      # connection silently goes to the wrong server).
+      - "5433:5432"
+    volumes:
+      # Postgres 18+'s official image expects a single mount at
+      # /var/lib/postgresql (not .../data) -- it stores data in a
+      # version-specific subdirectory beneath that now, to support
+      # pg_ctlcluster-style in-place major-version upgrades later. The old
+      # .../data mount point makes the 18+ entrypoint refuse to start.
+      - bingo-pgdata:/var/lib/postgresql
+      - ./docker/init-test-db.sql:/docker-entrypoint-initdb.d/init-test-db.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bingo -d bingo_dev"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  bingo-pgdata:

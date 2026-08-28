@@ -53,7 +53,31 @@ export default defineConfig({
     },
   },
   test: {
-    environment: "jsdom",
-    setupFiles: ["./vitest.setup.ts"],
+    // Backend tests need a "node" environment and their own setupFiles
+    // (migrate-once, truncate-per-test against bingo_test, per
+    // docs/backend-architecture.md §7) -- neither of which the existing
+    // jsdom project should carry. Vitest 4.1 uses test.projects for this;
+    // environmentMatchGlobs (≤2) and vitest.workspace.ts (≤3) are both
+    // removed in this version, so don't reach for either.
+    projects: [
+      {
+        extends: true,
+        test: {
+          name: "web",
+          environment: "jsdom",
+          setupFiles: ["./vitest.setup.ts"],
+          include: ["src/**/*.test.{ts,tsx}", "data/**/*.test.ts"],
+        },
+      },
+      {
+        extends: true,
+        test: {
+          name: "api",
+          environment: "node",
+          setupFiles: ["./api/test/setup.ts"],
+          include: ["api/**/*.test.ts", "db/**/*.test.ts"],
+        },
+      },
+    ],
   },
 });
