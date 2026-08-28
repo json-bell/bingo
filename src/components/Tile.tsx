@@ -81,7 +81,7 @@ export function Tile({ cell, person, tintsEnabled }: TileProps) {
               type="button"
               onClick={close}
               aria-label="Close"
-              className="text-ink-muted hover:text-ink text-xl leading-none"
+              className="flex items-center justify-center min-h-11 min-w-11 -mt-2 -mr-2 rounded-full text-ink-muted hover:text-ink text-2xl leading-none"
             >
               &times;
             </button>
