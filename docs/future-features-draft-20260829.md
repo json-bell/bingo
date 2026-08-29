@@ -1,3 +1,21 @@
+## Shared decisions (answered 2026-08-29, before tackling items individually)
+
+1. **Modal shell** — worth a new shared `Modal` component rather than duplicating the
+   `<dialog>` boilerplate again per feature. Shape: a static slot for content pinned above
+   the scroll (e.g. the task modal's `Name | X` header), and a scrollable body below it
+   with padding handled so the transition feels seamless, not clipped. Footer/button
+   placement (e.g. Save/Cancel — pinned vs. scrolling with content) is left as a per-consumer
+   detail to settle while building whichever feature needs it first, not speced up front.
+2. **Menu structure** — worth settling now since three items below add to it. Proposed
+   order, grouping related controls together: People (existing jump links) → Styling
+   (difficulty legend + tint toggle, existing, with the new zoom-to-fill toggle joining
+   this group) → Synchronisation info (new entry, opens the Sync Info modal) → Home (new,
+   last since it's a "leave this page" action rather than an in-page setting). Open to
+   reordering once it's actually built and looked at.
+3. **"Last synced at" + "Sync Info modal"** — combined into a single feature/branch, not
+   two. The tracking/storage layer has to exist before the modal can show anything, so
+   they're sequential stages of one feature rather than independently parallelizable.
+
 # Restyle the checked state:
 
 - Replace the strikethrough with an absolutely positioned cross on top of the tile.
@@ -11,11 +29,11 @@
 - existing set up & layout, exactly preserved (scrolling overflow, etc.)
 - Zoomed to fill - essentially scales the bingo grid to the full width, so that there's no overflow and no excess padding?
 
-Think we need to iron out the exact CSS details on this one for the actual appearance.
+The exact CSS is an unresolved implementation detail specific to this feature (not a
+blocker for anything else) — start it and verify manually as we go rather than planning
+the CSS up front.
 
-This can be toggled in the menu similar to the difficulty tinting, we can have a section for styling there in the menu
-
-In the menu (and the modals generally) - do we want a max like height of the modal and make the inside scrollable?
+This toggles in the menu, in the Styling section (see shared decision #2 above).
 
 # Restyle of the task modals / details
 
@@ -40,11 +58,20 @@ Desc
 ...
 ```
 
+`Name | X` is the static header slot, the rest is the scrollable body — this is the
+motivating case for the shared `Modal` component (see shared decision #1 above).
+
 # Back to trips (Home `/` button)
 
-Pretty simple, in the menu we want a button that goes back to the home page
+Pretty simple, in the menu we want a button that goes back to the home page. Placement:
+last item in the menu (see shared decision #2 above).
 
-# Last online at \_\_\_. Trying to connect
+# Last online at \_\_\_. Trying to connect + Sync Info modal
+
+(One feature, one branch — see shared decision #3 above; the two halves below are
+sequential stages of it, not separate items.)
+
+## Stage 1: last-synced tracking
 
 Essentially for when the queue is waiting to connect then a "Last synced at" type of flag would be good, even if there's 0 elements in the queue (so that we can keep the time of the most recent successful GET essentially, once one of them has failed)
 
@@ -53,9 +80,7 @@ This needs some further digging,
 - Localstorage? Store time everytime a successful GET for the checked status comes through - and then every time a checked status fails
 - Display - can we show this even when there's queued things or does that get too cramped?
 
-Follows into the Sync Info modal:
-
-# Sync Info modal
+## Stage 2: Sync Info modal
 
 Clicking the "N waiting to update" or directly a "Synchronisation info" in the Menu opens a "Sync info" modal with
 
@@ -67,4 +92,4 @@ Clicking the "N waiting to update" or directly a "Synchronisation info" in the M
 - List of individual awaiting PATCHes
   - When the status is offline (there aren't any pending requests) then should we have a Remove button that removes the update from the queue - so a user can then remove specific updates that weren't intentional
   - Organised by Name > turning On/Off > displaying the title of the checkbox
-- Again modal size is relevant - we probably want a max height based on % of screen height, with vertical scrolling of inner content if it overflows
+- Uses the shared `Modal` component (see shared decision #1 above) for the max-height/scroll behavior.
