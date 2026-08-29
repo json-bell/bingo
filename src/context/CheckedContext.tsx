@@ -13,6 +13,17 @@ interface CheckedContextValue {
   isChecked: (cellId: string) => boolean;
   updateChecked: (cellId: string, value: boolean) => void;
   queuedCount: number;
+  // True while a drain this context initiated is still in flight -- i.e.
+  // "at least one queued write's PATCH hasn't settled yet", not just "the
+  // queue is non-empty". QueueStatus derives its "updating" vs "queued,
+  // waiting to sync" label from this. Tracked by wrapping each of the two
+  // drain-triggering call sites (runDrain, updateChecked's saveChecked
+  // call) rather than reading checkedQueue.ts's internal draining state
+  // directly -- simpler, at the cost of a rare cosmetic-only edge case: if
+  // two triggers overlap, the second call's wrapper can flip this back to
+  // false slightly before the first call's still-running drain (silently
+  // no-op'd by checkedQueue.ts's own concurrency guard) actually finishes.
+  isSending: boolean;
 }
 
 const CheckedContext = createContext<CheckedContextValue | null>(null);
@@ -26,10 +37,20 @@ interface CheckedProviderProps {
 export function CheckedProvider({ tripSlug, version, children }: CheckedProviderProps) {
   const [cells, setCells] = useState<CheckedMap>({});
   const [queuedCount, setQueuedCount] = useState(0);
+  const [isSending, setIsSending] = useState(false);
 
   const syncQueuedCount = useCallback(() => {
     setQueuedCount(Object.keys(readQueue(tripSlug)).length);
   }, [tripSlug]);
+
+  const withSendingIndicator = useCallback(async (work: Promise<void>) => {
+    setIsSending(true);
+    try {
+      await work;
+    } finally {
+      setIsSending(false);
+    }
+  }, []);
 
   // Always the functional/updater form -- drain responses land close
   // together and out of order, and a closed-over `cells` would be stale.
@@ -42,8 +63,8 @@ export function CheckedProvider({ tripSlug, version, children }: CheckedProvider
   );
 
   const runDrain = useCallback(() => {
-    void drain(tripSlug, applyServerRow).then(syncQueuedCount);
-  }, [tripSlug, applyServerRow, syncQueuedCount]);
+    void withSendingIndicator(drain(tripSlug, applyServerRow).then(syncQueuedCount));
+  }, [tripSlug, applyServerRow, syncQueuedCount, withSendingIndicator]);
 
   useEffect(() => {
     let cancelled = false;
@@ -90,14 +111,14 @@ export function CheckedProvider({ tripSlug, version, children }: CheckedProvider
     }));
     // Trigger #1: attempt the whole queue immediately after enqueueing --
     // if it fails, everything just stays queued for triggers #2/#3.
-    void saveChecked(tripSlug, cellId, value, basisUpdatedAt, applyServerRow).then(
-      syncQueuedCount
+    void withSendingIndicator(
+      saveChecked(tripSlug, cellId, value, basisUpdatedAt, applyServerRow).then(syncQueuedCount)
     );
     syncQueuedCount();
   }
 
   return (
-    <CheckedContext.Provider value={{ isChecked, updateChecked, queuedCount }}>
+    <CheckedContext.Provider value={{ isChecked, updateChecked, queuedCount, isSending }}>
       {children}
     </CheckedContext.Provider>
   );
