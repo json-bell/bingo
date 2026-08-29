@@ -75,7 +75,7 @@ describe("TripPage: checking a cell end to end", () => {
     await user.click(findButtonByText(container, "dialog[open] button", "Save"));
 
     expect(container.querySelector("dialog[open]")).toBeNull();
-    expect(tile.querySelector("h3")).toHaveClass("line-through");
+    expect(tile.querySelector('[aria-hidden="true"]')).not.toBeNull();
 
     await waitFor(() => expect(patchedBody).toBeDefined());
     expect(patchedBody?.checked).toBe(true);
@@ -99,7 +99,7 @@ describe("TripPage: checking a cell end to end", () => {
     await user.click(findButtonByText(container, "dialog[open] button", "Cancel"));
 
     expect(container.querySelector("dialog[open]")).toBeNull();
-    expect(tile.querySelector("h3")).not.toHaveClass("line-through");
+    expect(tile.querySelector('[aria-hidden="true"]')).toBeNull();
 
     // No clean "wait for nothing to happen" idiom -- give an (incorrect)
     // PATCH a real chance to fire before asserting none did.
