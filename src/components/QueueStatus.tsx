@@ -1,10 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useChecked } from "../context/CheckedContext";
-
-// How long the "0 updates queued" success confirmation stays visible after
-// the last queued write settles, fading out continuously over that window
-// (not held solid then faded separately) before unmounting.
-const SUCCESS_FLASH_MS = 500;
+import { SUCCESS_FLASH_MS } from "./queueStatusTiming";
 
 // Replaces both periodic polling and a manual "Resync" button (see
 // docs/backend-architecture.md §9): if something's stuck, the user sees it
@@ -30,7 +26,10 @@ export function QueueStatus() {
     setShowSuccess(true);
     setFading(false);
     const fadeFrame = requestAnimationFrame(() => setFading(true));
-    const removeTimeout = setTimeout(() => setShowSuccess(false), SUCCESS_FLASH_MS);
+    const removeTimeout = setTimeout(
+      () => setShowSuccess(false),
+      SUCCESS_FLASH_MS
+    );
     return () => {
       cancelAnimationFrame(fadeFrame);
       clearTimeout(removeTimeout);
@@ -40,7 +39,14 @@ export function QueueStatus() {
   if (showSuccess) {
     return (
       <div
-        className={`fixed bottom-4 right-4 z-50 flex items-center gap-2 rounded-full bg-surface text-ink px-4 py-2 text-sm font-semibold shadow-lg transition-opacity duration-500 ${fading ? "opacity-0" : "opacity-100"}`}
+        // Tailwind scans source files for complete, static class strings at
+        // build time -- it never evaluates JS, so a template-literal class
+        // like `duration-${SUCCESS_FLASH_MS}` is never recognized as a real
+        // utility and generates no CSS at all (the fade would just snap
+        // instantly instead of animating). A value that has to stay in
+        // sync with a JS constant belongs in an inline style instead.
+        className={`fixed bottom-4 right-4 z-50 flex items-center gap-2 rounded-full bg-surface text-ink px-4 py-2 text-sm font-semibold shadow-lg transition-opacity ${fading ? "opacity-0" : "opacity-100"}`}
+        style={{ transitionDuration: `${SUCCESS_FLASH_MS}ms` }}
       >
         <span aria-hidden="true" className="text-difficulty-easy">
           ✓
@@ -55,7 +61,9 @@ export function QueueStatus() {
   return (
     <div className="fixed bottom-4 right-4 z-50 flex items-center gap-2 rounded-full bg-surface text-ink px-4 py-2 text-sm font-semibold shadow-lg">
       <span aria-hidden="true">{isSending ? "⏳" : "📡"}</span>
-      {isSending ? `Updating ${queuedCount}…` : `${queuedCount} queued, waiting to sync`}
+      {isSending
+        ? `Updating ${queuedCount}…`
+        : `${queuedCount} queued, waiting to sync`}
     </div>
   );
 }

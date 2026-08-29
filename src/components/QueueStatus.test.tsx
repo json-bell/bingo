@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { render, screen, act } from "@testing-library/react";
 import { QueueStatus } from "./QueueStatus";
+import { SUCCESS_FLASH_MS } from "./queueStatusTiming";
 import { useChecked } from "../context/CheckedContext";
 
 vi.mock("../context/CheckedContext", () => ({
@@ -45,7 +46,7 @@ describe("QueueStatus", () => {
     expect(screen.getByText("3 queued, waiting to sync")).toBeInTheDocument();
   });
 
-  it("shows the success confirmation on the >0 -> 0 transition, then unmounts after 500ms", () => {
+  it("shows the success confirmation on the >0 -> 0 transition, then unmounts after SUCCESS_FLASH_MS", () => {
     mockContext(1, true);
     const { rerender, container } = render(<QueueStatus />);
 
@@ -57,7 +58,7 @@ describe("QueueStatus", () => {
     expect(screen.getByText("0 updates queued")).toBeInTheDocument();
 
     act(() => {
-      vi.advanceTimersByTime(500);
+      vi.advanceTimersByTime(SUCCESS_FLASH_MS);
     });
 
     expect(container).toBeEmptyDOMElement();
