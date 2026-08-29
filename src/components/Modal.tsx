@@ -3,10 +3,14 @@ import type { ReactNode, RefObject } from "react";
 // Shared <dialog> shell -- see docs/future-features-draft-20260829.md's shared
 // decision #1. Everything a consumer passes as children scrolls together as
 // one body; the only thing that stays put regardless of scroll position is
-// the close button this component renders itself, absolutely positioned in
-// the top-right corner. Its own border gives it contrast over whatever's
+// the close button this component renders itself, flush in the top-right
+// corner (top-0 right-0). Its own border gives it contrast over whatever's
 // scrolling underneath, and that same shape is its (larger, more
 // distinctive) touch target -- there's no separate header slot to pass.
+// `rounded-tr-[inherit]` makes the button's outer corner pick up whatever
+// radius the consumer gave the dialog itself via `className` (rounded-lg,
+// rounded-t-3xl, ...) automatically, including across responsive variants,
+// without Modal needing a radius prop duplicating that value.
 //
 // Deliberately no `relative` (or any `position`) class on the <dialog>
 // itself: dialog:modal already gets `position: fixed` from the browser's
@@ -40,7 +44,7 @@ export function Modal({ dialogRef, children, className = "" }: ModalProps) {
         type="button"
         onClick={close}
         aria-label="Close"
-        className="absolute top-3 right-3 z-10 flex items-center justify-center h-12 w-12 rounded-full border border-ink-muted/50 bg-surface text-ink-muted hover:text-ink text-2xl leading-none"
+        className="absolute top-0 right-0 z-10 flex h-12 w-12 items-center justify-center rounded-tr-[inherit] border border-ink-muted/50 bg-surface p-3 text-ink-muted hover:text-ink text-2xl leading-none"
       >
         &times;
       </button>
