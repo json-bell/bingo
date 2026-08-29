@@ -1,6 +1,17 @@
 import "@testing-library/jest-dom/vitest";
 import { afterAll, afterEach, beforeAll } from "vitest";
+import { cleanup } from "@testing-library/react";
 import { server } from "./src/lib/msw/server";
+
+// @testing-library/react normally auto-registers this itself, but only if
+// it finds a *global* `afterEach` (checked at import time) -- this project
+// doesn't set `test.globals: true`, so that detection silently no-ops and
+// DOM from one test was leaking into the next for every test using
+// `screen`-based (whole-document) queries rather than a `container`-scoped
+// one. Existing tests never surfaced this because they all query through
+// their own render()'s `container`, not `screen` -- found via a real
+// "multiple elements found" failure once a test finally did.
+afterEach(() => cleanup());
 
 // Intercepts fetch() at the network layer (src/lib/checked.ts,
 // src/lib/checkedQueue.ts) so the real request construction and response

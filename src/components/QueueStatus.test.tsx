@@ -70,6 +70,37 @@ describe("QueueStatus", () => {
     expect(container).toBeEmptyDOMElement();
   });
 
+  it("switches back to the sending pill if a new update is queued while the success flash is still showing", () => {
+    // Regression guard: the success flash's render guard previously checked
+    // only `showSuccess`, never `queuedCount` -- so a new write queued
+    // mid-fade kept showing "All synced :D" instead of the real state,
+    // right up until the *original* flash's own timer happened to clear it.
+    mockContext(1, true);
+    const { rerender, container } = render(<QueueStatus />);
+
+    act(() => {
+      mockContext(0, false);
+      rerender(<QueueStatus />);
+    });
+    expect(screen.getByText("All synced :D")).toBeInTheDocument();
+
+    // A new update queued before the flash's own timer has elapsed.
+    act(() => {
+      mockContext(1, true);
+      rerender(<QueueStatus />);
+    });
+
+    expect(screen.queryByText("All synced :D")).not.toBeInTheDocument();
+    expect(screen.getByText("1 update sending…")).toBeInTheDocument();
+
+    // The stale flash timer (if it fired) must not resurrect the old view.
+    act(() => {
+      vi.advanceTimersByTime(SUCCESS_FLASH_MS);
+    });
+    expect(container).not.toHaveTextContent("All synced :D");
+    expect(screen.getByText("1 update sending…")).toBeInTheDocument();
+  });
+
   it("does not show the success flash when the queue was already empty (no transition happened)", () => {
     mockContext(0, false);
     const { rerender, container } = render(<QueueStatus />);

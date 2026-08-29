@@ -36,7 +36,11 @@ export function QueueStatus() {
     };
   }, [queuedCount]);
 
-  if (showSuccess) {
+  // Also require queuedCount === 0 here, not just showSuccess: if a new
+  // write gets queued while the flash is still showing (before its own
+  // timer clears it), the pill needs to reflect that immediately rather
+  // than keep claiming everything's synced until the stale timer fires.
+  if (showSuccess && queuedCount === 0) {
     return (
       <div
         // Tailwind scans source files for complete, static class strings at
