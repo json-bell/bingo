@@ -51,19 +51,21 @@ export function QueueStatus() {
         <span aria-hidden="true" className="text-difficulty-easy">
           ✓
         </span>
-        0 updates queued
+        All synced :D
       </div>
     );
   }
 
   if (queuedCount === 0) return null;
 
+  const updateWord = queuedCount === 1 ? "update" : "updates";
+
   return (
     <div className="fixed bottom-4 right-4 z-50 flex items-center gap-2 rounded-full bg-surface text-ink px-4 py-2 text-sm font-semibold shadow-lg">
       <span aria-hidden="true">{isSending ? "⏳" : "📡"}</span>
       {isSending
-        ? `Updating ${queuedCount}…`
-        : `${queuedCount} queued, waiting to sync`}
+        ? `${queuedCount} ${updateWord} sending…`
+        : `${queuedCount} ${updateWord} queued, no connection`}
     </div>
   );
 }

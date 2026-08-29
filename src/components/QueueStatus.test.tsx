@@ -34,16 +34,22 @@ describe("QueueStatus", () => {
     expect(container).toBeEmptyDOMElement();
   });
 
-  it("shows 'Updating N…' while a drain this context started is still sending", () => {
+  it("shows '{N} updates sending…' while a drain this context started is still sending", () => {
     mockContext(2, true);
     render(<QueueStatus />);
-    expect(screen.getByText("Updating 2…")).toBeInTheDocument();
+    expect(screen.getByText("2 updates sending…")).toBeInTheDocument();
   });
 
-  it("shows 'N queued, waiting to sync' when queued but nothing is currently in flight", () => {
+  it("shows '{N} updates queued, no connection' when queued but nothing is currently in flight", () => {
     mockContext(3, false);
     render(<QueueStatus />);
-    expect(screen.getByText("3 queued, waiting to sync")).toBeInTheDocument();
+    expect(screen.getByText("3 updates queued, no connection")).toBeInTheDocument();
+  });
+
+  it("uses the singular 'update' (not 'updates') for a count of exactly 1", () => {
+    mockContext(1, true);
+    render(<QueueStatus />);
+    expect(screen.getByText("1 update sending…")).toBeInTheDocument();
   });
 
   it("shows the success confirmation on the >0 -> 0 transition, then unmounts after SUCCESS_FLASH_MS", () => {
@@ -55,7 +61,7 @@ describe("QueueStatus", () => {
       rerender(<QueueStatus />);
     });
 
-    expect(screen.getByText("0 updates queued")).toBeInTheDocument();
+    expect(screen.getByText("All synced :D")).toBeInTheDocument();
 
     act(() => {
       vi.advanceTimersByTime(SUCCESS_FLASH_MS);
