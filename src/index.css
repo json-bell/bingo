@@ -1,49 +1,36 @@
 @import "tailwindcss";
 
 @theme {
-  /* Palette toggle: exactly ONE of the blocks below should be uncommented
-     at a time — CSS custom properties don't merge, the last declaration of
-     each --color-* wins, so leaving two blocks active just silently uses
-     whichever is lower in the file. Comment the active one out and
-     uncomment another to switch.
-
-     Difficulty hues (--color-difficulty-easy/medium/hard) are held fixed
-     at #4c9a4f / #e0a63c / #c0392b in every block written after that rule
-     was set (a few earlier reference blocks — Catppuccin/Nord/Gruvbox/
-     Dracula — predate it and keep their own native hues instead; their
-     --color-tile-easy/medium/hard below are blended from their own hues
-     to match, not the fixed ones).
+  /* Deep Sea, all-dark variant — background stays jet-black-950; surface is
+     jet-black-800 (a lighter deep-blue "secondary surface" panel, not a
+     light card) with white-grey text. Tiles stay a light cream
+     (jet-black-50) specifically so the difficulty tint is still visible —
+     it was nearly invisible at 10% opacity over a dark surface.
+     Contrast-checked: surface-800 vs background-950 = 1.58 (subtle
+     layering, by design — both dark); ink (#e7e9ec) on surface = 9.60;
+     ink-muted (#a3a9ae) on surface = 4.92; foreground on background =
+     16.64; tile-foreground (#17181a) on tile (#eef4f6) = 16.00.
 
      brand-foreground/secondary-foreground/tile-foreground: the text color
      used on top of the header pill (brand), nav bar (secondary), and grid
      tiles (tile) respectively — these are NOT the same as the page's
-     ambient foreground/ink, and every block must set all three explicitly.
+     ambient foreground/ink, and all three must stay set explicitly.
      Relying on inheriting foreground/ink and assuming it'll contrast is
-     what made "Ink & Paper" briefly render dark-on-dark, and what made the
-     difficulty tint nearly invisible when `surface` (and therefore the
-     tiles, which fell back to it) went dark in the "all-dark" variant.
+     what made an earlier light variant briefly render dark-on-dark, and
+     what made the difficulty tint nearly invisible when `surface` (and
+     therefore the tiles, which fell back to it) went dark.
 
      `tile` vs `surface`: surface is the per-person card panel; tile is the
      grid-cell background for the free/no-difficulty cell. They're usually
-     the same light color, but don't have to be — the all-dark variant
-     below is why this split token exists: surface went dark for a
-     "secondary surface" panel look, but cells still need a light base.
+     the same light color, but don't have to be — this variant is why the
+     split token exists: surface went dark for a "secondary surface" panel
+     look, but cells still need a light base.
 
      tile-easy/medium/hard: a solid (not alpha-transparent) blend of each
      difficulty hue with white — computed once, not `bg-difficulty-easy/10`
      over whatever's behind it. That alpha approach is what made the tint
      nearly invisible over a dark surface earlier; a precomputed solid
      color reads the same regardless of what's behind the tile. */
-
-  /* Deep Sea, all-dark variant (active) — background stays jet-black-950;
-     surface is jet-black-800 (a lighter deep-blue "secondary surface" panel,
-     not a light card) with white-grey text. Tiles stay a light cream
-     (jet-black-50) specifically so the difficulty tint is still visible —
-     it was nearly invisible at 10% opacity over a dark surface.
-     Contrast-checked: surface-800 vs background-950 = 1.58 (subtle
-     layering, by design — both dark); ink (#e7e9ec) on surface = 9.60;
-     ink-muted (#a3a9ae) on surface = 4.92; foreground on background =
-     16.64; tile-foreground (#17181a) on tile (#eef4f6) = 16.00. */
   --color-background: #0c1518;
   --color-foreground: #f2f3f4;
   --color-surface: #223c44;
@@ -62,114 +49,6 @@
   --color-difficulty-easy: #4c9a4f;
   --color-difficulty-medium: #e0a63c;
   --color-difficulty-hard: #c0392b;
-
-  /* Deep Sea, light-surface variant — the version before the one above,
-     kept for a quick toggle back. tile/tile-foreground just mirror
-     surface/ink here, since surface was already light. 
-  --color-background: #0c1518;
-  --color-foreground: #f5f6f7;
-  --color-surface: #eef4f6;
-  --color-ink: #17181a;
-  --color-ink-muted: #6b6e71;
-  --color-brand: #40798c;
-  --color-brand-foreground: #f5f6f7;
-  --color-secondary: #609f97;
-  --color-secondary-foreground: #17181a;
-  --color-accent: #77abbb;
-  --color-tile: #eef4f6;
-  --color-tile-foreground: #17181a;
-  --color-tile-easy: #c6dfc7;
-  --color-tile-medium: #f5e3c1;
-  --color-tile-hard: #ebc0bb;
-  --color-difficulty-easy: #4c9a4f;
-  --color-difficulty-medium: #e0a63c;
-  --color-difficulty-hard: #c0392b;
-*/
-
-  /* Ink & Paper — light mode, near-monochrome ink-on-paper. Header is a true
-     masthead (ink-black pill, paper-white text) and nav is a quiet neutral
-     bar, not a second competing bold hue.
-  --color-background: #ede7db;
-  --color-foreground: #2b2620;
-  --color-surface: #ffffff;
-  --color-ink: #1a1712;
-  --color-ink-muted: #6b6459;
-  --color-brand: #1a1712;
-  --color-brand-foreground: #ffffff;
-  --color-secondary: #d9d2c4;
-  --color-secondary-foreground: #1a1712;
-  --color-accent: #b23a2e;
-  --color-tile: #ffffff;
-  --color-tile-foreground: #1a1712;
-  --color-tile-easy: #c6dfc7;
-  --color-tile-medium: #f5e3c1;
-  --color-tile-hard: #ebc0bb;
-  --color-difficulty-easy: #4c9a4f;
-  --color-difficulty-medium: #e0a63c;
-  --color-difficulty-hard: #c0392b;
-*/
-  /* Concrete & Signal — dark mode, but neutral grayscale rather than a
-     multi-hue pastel set, with one bold "signal" accent doing all the work.
-  --color-background: #16181d;
-  --color-foreground: #e7e9ec;
-  --color-surface: #f4f5f7;
-  --color-ink: #1b1d22;
-  --color-ink-muted: #6e7480;
-  --color-brand: #ff6a3d;
-  --color-brand-foreground: #1b1d22;
-  --color-secondary: #4b5563;
-  --color-secondary-foreground: #e7e9ec;
-  --color-accent: #ff6a3d;
-  --color-tile: #f4f5f7;
-  --color-tile-foreground: #1b1d22;
-  --color-tile-easy: #c6dfc7;
-  --color-tile-medium: #f5e3c1;
-  --color-tile-hard: #ebc0bb;
-  --color-difficulty-easy: #4c9a4f;
-  --color-difficulty-medium: #e0a63c;
-  --color-difficulty-hard: #c0392b;
-  */
-
-  /* Sunbaked — light mode, warm terracotta/Mediterranean-poster palette.
-  --color-background: #e7d9c7;
-  --color-foreground: #3b2a20;
-  --color-surface: #fbf4ea;
-  --color-ink: #2e2016;
-  --color-ink-muted: #8a7563;
-  --color-brand: #b5482a;
-  --color-brand-foreground: #fbf4ea;
-  --color-secondary: #2f6e63;
-  --color-secondary-foreground: #fbf4ea;
-  --color-accent: #d8a13b;
-  --color-tile: #fbf4ea;
-  --color-tile-foreground: #2e2016;
-  --color-tile-easy: #c6dfc7;
-  --color-tile-medium: #f5e3c1;
-  --color-tile-hard: #ebc0bb;
-  --color-difficulty-easy: #4c9a4f;
-  --color-difficulty-medium: #e0a63c;
-  --color-difficulty-hard: #c0392b;*/
-
-  /* "Ticket stub at dusk" (original, theme-park-grounded palette)
-  --color-background: #1b1533;
-  --color-foreground: #f5efe6;
-  --color-surface: #fff6e8;
-  --color-ink: #221b2e;
-  --color-ink-muted: #5b5468;
-  --color-brand: #e8483c;
-  --color-brand-foreground: #f5efe6;
-  --color-secondary: #2fb6a3;
-  --color-secondary-foreground: #221b2e;
-  --color-accent: #f5b942;
-  --color-tile: #fff6e8;
-  --color-tile-foreground: #221b2e;
-  --color-tile-easy: #c6dfc7;
-  --color-tile-medium: #f5e3c1;
-  --color-tile-hard: #ebc0bb;
-  --color-difficulty-easy: #4c9a4f;
-  --color-difficulty-medium: #e0a63c;
-  --color-difficulty-hard: #c0392b;
-  */
 }
 
 :root {
