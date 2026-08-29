@@ -51,7 +51,15 @@ export function TripPage() {
         onTintsChange={setTintsEnabled}
         dialogRef={menuRef}
       />
-      <ul className="flex flex-wrap justify-center text-ink">
+      {/* pb-[4.25rem]: QueueStatus is `fixed bottom-4` (1rem gap) and floats
+          over whatever's beneath it -- without this, scrolling to the
+          actual bottom of the content leaves the toast sitting on top of
+          the last card instead of clear space. 4.25rem = the toast's own
+          height (py-2's 1rem + text-sm's 1.25rem line-height = 2.25rem)
+          plus 2x its bottom-4 gap (2rem), so there's room to scroll the
+          last bit of real content clear of it. Recompute if QueueStatus's
+          padding/text size or bottom-4 offset ever changes. */}
+      <ul className="flex flex-wrap justify-center text-ink pb-[4.25rem]">
         {grids.map((grid, index) => (
           <li
             key={people[index]}
