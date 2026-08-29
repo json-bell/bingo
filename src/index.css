@@ -49,6 +49,12 @@
   --color-difficulty-easy: #4c9a4f;
   --color-difficulty-medium: #e0a63c;
   --color-difficulty-hard: #c0392b;
+
+  /* Placeholder — pick to complement the palette above, swap freely once
+     there's a final choice. Checked against every light background it can
+     sit on top of (tile #eef4f6 and the three tile-easy/medium/hard
+     tints), all comfortably >7:1. */
+  --color-checked-mark: #1b3a5c;
 }
 
 :root {
