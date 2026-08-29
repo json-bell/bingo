@@ -1,16 +1,23 @@
 ## Shared decisions (answered 2026-08-29, before tackling items individually)
 
-1. **Modal shell** — worth a new shared `Modal` component rather than duplicating the
-   `<dialog>` boilerplate again per feature. Revised shape (no static header slot needed
-   after all): everything scrolls together as one body, including the Name/title — the
-   only persistently-visible thing is the close (X) button, which the `Modal` component
-   renders itself, absolutely positioned in a top corner independent of scroll. Its own
-   shadow/border gives it contrast over whatever's scrolling underneath, and that same
-   shadow/border shape doubles as its touch target (bigger, more distinctive than a bare
-   glyph) — no header/body split prop needed, consumers just pass children. Footer/button
-   placement (e.g. Save/Cancel — pinned vs. scrolling with content) is left as a
-   per-consumer detail to settle while building whichever feature needs it first, not
-   speced up front.
+1. **Modal shell** — built as `src/components/Modal.tsx`, first used in `Tile.tsx`'s task
+   modal. Everything scrolls together as one body, including the Name/title — the only
+   persistently-visible thing is the close (X) button, which `Modal` renders itself:
+   absolutely positioned top-right (`top-3 right-3`), 48px (`h-12 w-12`) circular touch
+   target, thin `ink-muted/50` border, no shadow, `bg-surface` fill so it stays legible
+   over whatever scrolls underneath. Verified to stay pinned there regardless of scroll
+   position (tested against a long, scrolled description). No header/body split prop —
+   consumers just pass children. Footer/button placement (e.g. Save/Cancel — pinned vs.
+   scrolling with content) is left as a per-consumer detail, settled per feature as built.
+
+   **Load-bearing gotcha, don't reintroduce**: the `<dialog>` element itself must get *no*
+   `position` class (no `relative`, nothing) — `dialog:modal`'s native `position: fixed`
+   (from the browser's own UA stylesheet) is what pins it to the viewport and is already a
+   valid positioning context for the absolutely-positioned close button. A `relative` class
+   was added once for exactly that positioning-context reason and silently broke the
+   background-scroll lock (author CSS overrides a UA rule regardless of specificity — same
+   class of gotcha as the `open:`/display one already documented in CLAUDE.md, just for
+   `position`). Removing it fixed the regression with no other change needed.
 2. **Menu structure** — worth settling now since three items below add to it. Proposed
    order, grouping related controls together: People (existing jump links) → Styling
    (difficulty legend + tint toggle, existing, with the new zoom-to-fill toggle joining
