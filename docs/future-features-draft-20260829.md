@@ -18,6 +18,10 @@
    background-scroll lock (author CSS overrides a UA rule regardless of specificity — same
    class of gotcha as the `open:`/display one already documented in CLAUDE.md, just for
    `position`). Removing it fixed the regression with no other change needed.
+
+   `PersonMenu.tsx` has also been migrated onto `Modal` (was still on its own bespoke
+   `<dialog>` when this was first written) — both modals in the app now share the same
+   close button, so the Sync Info modal below is the only future consumer left.
 2. **Menu structure** — worth settling now since three items below add to it. Proposed
    order, grouping related controls together: People (existing jump links) → Styling
    (difficulty legend + tint toggle, existing, with the new zoom-to-fill toggle joining
