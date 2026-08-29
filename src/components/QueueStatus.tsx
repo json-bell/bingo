@@ -49,7 +49,7 @@ export function QueueStatus() {
         // utility and generates no CSS at all (the fade would just snap
         // instantly instead of animating). A value that has to stay in
         // sync with a JS constant belongs in an inline style instead.
-        className={`fixed bottom-4 right-4 z-50 flex items-center gap-2 rounded-full bg-surface text-ink px-4 py-2 text-sm font-semibold shadow-lg transition-opacity ${fading ? "opacity-0" : "opacity-100"}`}
+        className={`fixed bottom-4 right-4 z-50 flex items-center gap-2 rounded-full bg-surface text-ink px-4 py-2 text-sm font-semibold shadow-lg transition-opacity ease-out ${fading ? "opacity-0" : "opacity-100"}`}
         style={{ transitionDuration: `${SUCCESS_FLASH_MS}ms` }}
       >
         <span aria-hidden="true" className="text-difficulty-easy">
