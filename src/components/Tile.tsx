@@ -53,9 +53,9 @@ export function Tile({ cell, person, tintsEnabled }: TileProps) {
         className={`relative cursor-pointer aspect-square flex flex-col justify-center ${bgClass} text-tile-foreground rounded-lg border-2 border-tile-foreground/20 p-[4px] md:p-[8px] text-base text-center`}
       >
         {checked && (
-          <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-            <div className="absolute top-1/2 left-1/2 h-[3px] w-[142%] -translate-x-1/2 -translate-y-1/2 rotate-45 rounded-full bg-checked-mark" />
-            <div className="absolute top-1/2 left-1/2 h-[3px] w-[142%] -translate-x-1/2 -translate-y-1/2 -rotate-45 rounded-full bg-checked-mark" />
+          <div className="absolute inset-[18%] pointer-events-none" aria-hidden="true">
+            <div className="absolute top-1/2 left-1/2 h-[6px] md:h-[10px] w-[142%] -translate-x-1/2 -translate-y-1/2 rotate-45 rounded-full bg-checked-mark" />
+            <div className="absolute top-1/2 left-1/2 h-[6px] md:h-[10px] w-[142%] -translate-x-1/2 -translate-y-1/2 -rotate-45 rounded-full bg-checked-mark" />
           </div>
         )}
         <h3
