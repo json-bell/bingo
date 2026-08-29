@@ -1,11 +1,16 @@
 ## Shared decisions (answered 2026-08-29, before tackling items individually)
 
 1. **Modal shell** — worth a new shared `Modal` component rather than duplicating the
-   `<dialog>` boilerplate again per feature. Shape: a static slot for content pinned above
-   the scroll (e.g. the task modal's `Name | X` header), and a scrollable body below it
-   with padding handled so the transition feels seamless, not clipped. Footer/button
-   placement (e.g. Save/Cancel — pinned vs. scrolling with content) is left as a per-consumer
-   detail to settle while building whichever feature needs it first, not speced up front.
+   `<dialog>` boilerplate again per feature. Revised shape (no static header slot needed
+   after all): everything scrolls together as one body, including the Name/title — the
+   only persistently-visible thing is the close (X) button, which the `Modal` component
+   renders itself, absolutely positioned in a top corner independent of scroll. Its own
+   shadow/border gives it contrast over whatever's scrolling underneath, and that same
+   shadow/border shape doubles as its touch target (bigger, more distinctive than a bare
+   glyph) — no header/body split prop needed, consumers just pass children. Footer/button
+   placement (e.g. Save/Cancel — pinned vs. scrolling with content) is left as a
+   per-consumer detail to settle while building whichever feature needs it first, not
+   speced up front.
 2. **Menu structure** — worth settling now since three items below add to it. Proposed
    order, grouping related controls together: People (existing jump links) → Styling
    (difficulty legend + tint toggle, existing, with the new zoom-to-fill toggle joining
@@ -58,8 +63,8 @@ Desc
 ...
 ```
 
-`Name | X` is the static header slot, the rest is the scrollable body — this is the
-motivating case for the shared `Modal` component (see shared decision #1 above).
+The X becomes the shared `Modal` component's own floating close button (see shared
+decision #1 above); Name scrolls with the rest of the content underneath it.
 
 # Back to trips (Home `/` button)
 
