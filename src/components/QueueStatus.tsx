@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useChecked } from "../context/CheckedContext";
-import { SUCCESS_FLASH_MS } from "./queueStatusTiming";
+import { SUCCESS_FLASH_MS, SUCCESS_HOLD_MS } from "./queueStatusTiming";
 
 // Replaces both periodic polling and a manual "Resync" button (see
 // docs/backend-architecture.md §9): if something's stuck, the user sees it
@@ -50,7 +50,10 @@ export function QueueStatus() {
         // instantly instead of animating). A value that has to stay in
         // sync with a JS constant belongs in an inline style instead.
         className={`fixed bottom-4 right-4 z-50 flex items-center gap-2 rounded-full bg-surface text-ink px-4 py-2 text-sm font-semibold shadow-lg transition-opacity ease-out ${fading ? "opacity-0" : "opacity-100"}`}
-        style={{ transitionDuration: `${SUCCESS_FLASH_MS}ms` }}
+        style={{
+          transitionDelay: `${SUCCESS_HOLD_MS}ms`,
+          transitionDuration: `${SUCCESS_FLASH_MS - SUCCESS_HOLD_MS}ms`,
+        }}
       >
         <span aria-hidden="true" className="text-difficulty-easy">
           ✓
