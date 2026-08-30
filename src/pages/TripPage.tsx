@@ -115,7 +115,18 @@ export function TripPage() {
                 // scaled copy of it would be. transform doesn't shrink the
                 // space an element reserves in flow on its own, hence
                 // needing this rather than relying on Grid's own box.
-                <div className="aspect-square w-full overflow-hidden">
+                <div className="aspect-square w-full overflow-hidden text-left">
+                  {/* text-left overrides the inherited body { text-align: center }
+                      for this subtree. Grid's own div is inline-grid (an inline-
+                      level box, kept that way for the non-zoomed mode's shrink-
+                      wrapped centering), so without this, normal layout centers
+                      its *natural* pre-transform width within this wrapper before
+                      the scale transform ever runs -- offsetting the scale's
+                      anchor away from the wrapper's true left edge and (since
+                      natural width and available width diverge across the
+                      viewport range) throwing the math off by a width-dependent
+                      amount. text-left keeps the box flush at x=0, matching the
+                      origin-top-left assumption below. */}
                   <Grid
                     grid={grid}
                     person={people[index]}
