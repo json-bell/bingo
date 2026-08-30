@@ -21,7 +21,7 @@ export function PersonMenu({ people, tintsEnabled, onTintsChange, dialogRef }: P
   return (
     <Modal
       dialogRef={dialogRef}
-      className="m-0 mt-auto mx-auto w-full max-w-none rounded-t-3xl md:m-auto md:w-auto md:min-w-80 md:max-w-md md:rounded-2xl"
+      className="m-0 mt-auto mx-auto w-full max-w-none rounded-t-[var(--modal-radius)] [--modal-radius:1.5rem] md:m-auto md:w-auto md:min-w-80 md:max-w-md md:rounded-[var(--modal-radius)] md:[--modal-radius:1rem]"
     >
       <h2 className="text-lg font-bold mb-4">People</h2>
 
