@@ -9,15 +9,21 @@ import { loadTrip } from "../lib/trips";
 import type { LoadedTrip } from "../../types/trip";
 
 const TINTS_ENABLED_STORAGE_KEY = "bingo:tintsEnabled";
+const ZOOM_TO_FILL_STORAGE_KEY = "bingo:zoomToFill";
 
 function readStoredTintsEnabled(): boolean {
   return localStorage.getItem(TINTS_ENABLED_STORAGE_KEY) !== "false";
+}
+
+function readStoredZoomToFill(): boolean {
+  return localStorage.getItem(ZOOM_TO_FILL_STORAGE_KEY) === "true";
 }
 
 export function TripPage() {
   const { slug } = useParams<{ slug: string }>();
   const [trip, setTrip] = useState<LoadedTrip | null | undefined>(undefined); // undefined = loading, null = not found
   const [tintsEnabled, setTintsEnabled] = useState<boolean>(readStoredTintsEnabled);
+  const [zoomToFill, setZoomToFill] = useState<boolean>(readStoredZoomToFill);
   const menuRef = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
@@ -36,6 +42,10 @@ export function TripPage() {
     localStorage.setItem(TINTS_ENABLED_STORAGE_KEY, String(tintsEnabled));
   }, [tintsEnabled]);
 
+  useEffect(() => {
+    localStorage.setItem(ZOOM_TO_FILL_STORAGE_KEY, String(zoomToFill));
+  }, [zoomToFill]);
+
   if (!slug) return null;
   if (trip === undefined) return <p>Loading…</p>;
   if (trip === null) return <p>No trip found for &quot;{slug}&quot;.</p>;
@@ -49,6 +59,8 @@ export function TripPage() {
         people={people}
         tintsEnabled={tintsEnabled}
         onTintsChange={setTintsEnabled}
+        zoomToFill={zoomToFill}
+        onZoomToFillChange={setZoomToFill}
         dialogRef={menuRef}
       />
       {/* pb-[4.25rem]: QueueStatus is `fixed bottom-4` (1rem gap) and floats
@@ -64,7 +76,9 @@ export function TripPage() {
           <li
             key={people[index]}
             id={people[index]}
-            className="relative min-w-0 max-w-full bg-surface m-1 md:m-8 list-none rounded-[1.5rem] text-center"
+            className={`relative min-w-0 max-w-full bg-surface list-none rounded-[1.5rem] text-center ${
+              zoomToFill ? "w-full m-1 md:m-4" : "m-1 md:m-8"
+            }`}
           >
             {/* Sticky within this card only (see AppBar.tsx's h-16) — as the page scrolls,
                 each person's name label docks under the app bar and is replaced by the next
@@ -75,8 +89,17 @@ export function TripPage() {
                 <h2 className="text-2xl font-bold">{people[index]}&apos;s grid</h2>
               </div>
             </div>
-            <div className="max-w-full overflow-x-auto p-1 md:p-8 pt-2 md:pt-4">
-              <Grid grid={grid} person={people[index]} tintsEnabled={tintsEnabled} />
+            <div
+              className={`max-w-full p-1 md:p-8 pt-2 md:pt-4 ${
+                zoomToFill ? "" : "overflow-x-auto"
+              }`}
+            >
+              <Grid
+                grid={grid}
+                person={people[index]}
+                tintsEnabled={tintsEnabled}
+                zoomToFill={zoomToFill}
+              />
             </div>
           </li>
         ))}
