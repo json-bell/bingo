@@ -59,6 +59,17 @@ export function removeIfUnchanged(tripSlug: string, write: QueuedWrite): Checked
   return queue;
 }
 
+// Unconditional, unlike removeIfUnchanged above -- this is a direct user
+// action (the Sync Info modal's "Remove" button) targeting whatever entry
+// is on screen at click time, not a drain response that needs to guard
+// against a newer re-toggle superseding it.
+export function removeQueuedWrite(tripSlug: string, cellId: string): CheckedQueue {
+  const queue = readQueue(tripSlug);
+  delete queue[cellId];
+  writeQueue(tripSlug, queue);
+  return queue;
+}
+
 // Guards against triggers 1 (enqueue), 2 (mount), and 3 (online event)
 // firing at once and double-sending -- see checked.ts/CheckedContext.tsx.
 const drainingTrips = new Set<string>();

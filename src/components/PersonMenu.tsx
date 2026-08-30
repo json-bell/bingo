@@ -10,6 +10,7 @@ interface PersonMenuProps {
   onTintsChange: (enabled: boolean) => void;
   zoomToFill: boolean;
   onZoomToFillChange: (enabled: boolean) => void;
+  onOpenSyncInfo: () => void;
   dialogRef: RefObject<HTMLDialogElement>;
 }
 
@@ -25,9 +26,14 @@ export function PersonMenu({
   onTintsChange,
   zoomToFill,
   onZoomToFillChange,
+  onOpenSyncInfo,
   dialogRef,
 }: PersonMenuProps) {
   const close = () => dialogRef.current?.close();
+  const openSyncInfo = () => {
+    close();
+    onOpenSyncInfo();
+  };
 
   return (
     <Modal
@@ -65,6 +71,16 @@ export function PersonMenu({
       <div className="border-t border-ink-muted/20 pt-4 flex flex-col gap-3">
         <TintToggle enabled={tintsEnabled} onChange={onTintsChange} />
         <ZoomToggle enabled={zoomToFill} onChange={onZoomToFillChange} />
+      </div>
+
+      <div className="border-t border-ink-muted/20 pt-4 mt-4">
+        <button
+          type="button"
+          onClick={openSyncInfo}
+          className="flex w-full items-center justify-center min-h-12 rounded-lg bg-background text-foreground px-3 py-2 text-base"
+        >
+          Synchronisation info
+        </button>
       </div>
 
       <div className="border-t border-ink-muted/20 pt-4 mt-4">

@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { http, HttpResponse } from "msw";
 import { server } from "./msw/server";
-import { drain, enqueue, readQueue } from "./checkedQueue";
+import { drain, enqueue, readQueue, removeQueuedWrite } from "./checkedQueue";
 
 describe("checkedQueue", () => {
   beforeEach(() => {
@@ -66,6 +66,27 @@ describe("checkedQueue", () => {
     // re-toggle would be silently lost.
     expect(readQueue("trip")).toEqual({
       a: { cellId: "a", checked: false, basisUpdatedAt: "2026-01-01T00:00:00.000Z", enqueuedAt: "2" },
+    });
+  });
+
+  it("removeQueuedWrite deletes only the targeted cell, unconditionally", () => {
+    enqueue("trip", { cellId: "a", checked: true, basisUpdatedAt: "2026-01-01T00:00:00.000Z", enqueuedAt: "1" });
+    enqueue("trip", { cellId: "b", checked: false, basisUpdatedAt: "2026-01-01T00:00:00.000Z", enqueuedAt: "1" });
+
+    removeQueuedWrite("trip", "a");
+
+    expect(readQueue("trip")).toEqual({
+      b: { cellId: "b", checked: false, basisUpdatedAt: "2026-01-01T00:00:00.000Z", enqueuedAt: "1" },
+    });
+  });
+
+  it("removeQueuedWrite is a no-op for a cell id that isn't queued", () => {
+    enqueue("trip", { cellId: "a", checked: true, basisUpdatedAt: "2026-01-01T00:00:00.000Z", enqueuedAt: "1" });
+
+    removeQueuedWrite("trip", "not-queued");
+
+    expect(readQueue("trip")).toEqual({
+      a: { cellId: "a", checked: true, basisUpdatedAt: "2026-01-01T00:00:00.000Z", enqueuedAt: "1" },
     });
   });
 });
