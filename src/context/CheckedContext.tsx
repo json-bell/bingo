@@ -4,7 +4,7 @@ import { fetchChecked, saveChecked } from "../lib/checked";
 import type { CheckedCell, CheckedMap } from "../lib/checked";
 import { drain, readQueue, removeQueuedWrite } from "../lib/checkedQueue";
 import type { QueuedWrite } from "../lib/checkedQueue";
-import { isSyncFailed, readSyncStatus, recordSyncFailure, recordSyncSuccess } from "../lib/syncStatus";
+import { isSyncFailed, readSyncStatus, recordSyncFailure, recordSyncOutcome } from "../lib/syncStatus";
 
 // One provider per trip page (the page renders everyone's grid at once, not
 // just "your own" -- see docs/plan.md), holding a flat map keyed by cellId.
@@ -118,12 +118,25 @@ export function CheckedProvider({ tripSlug, version, children }: CheckedProvider
   > => {
     try {
       const serverCells = await fetchChecked(tripSlug, version);
-      hasSyncedRef.current = true;
-      recordSyncSuccess(tripSlug);
       const writes = Object.values(readQueue(tripSlug));
       const merged: CheckedMap = { ...serverCells };
       for (const write of writes) {
         merged[write.cellId] = { checked: write.checked, updatedAt: write.basisUpdatedAt };
+      }
+      // The service worker's NetworkFirst rule for this GET (vite.config.ts)
+      // falls back to its own cache transparently -- a resolved fetch here
+      // can be a genuinely live response OR a stale cache hit served while
+      // offline, and there's no way to tell which from the Response alone.
+      // navigator.onLine is the same imperfect-but-already-used signal the
+      // online-event trigger relies on; recordSyncOutcome (syncStatus.ts) is
+      // the pure decision ("online -> success, offline -> failure, either
+      // way don't claim a fresh sync from a possibly-stale cache read"),
+      // kept out of this component so it's testable without mocking a
+      // browser API. hasSyncedRef only flips on a genuine online success, so
+      // the online-event retry below still runs once real connectivity
+      // returns, to record an actual fresh sync.
+      if (recordSyncOutcome(tripSlug, navigator.onLine)) {
+        hasSyncedRef.current = true;
       }
       return { merged, writes };
     } catch {

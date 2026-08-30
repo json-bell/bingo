@@ -71,7 +71,7 @@ export function SyncInfoModal({ cellLookup, people, dialogRef }: SyncInfoModalPr
                         className="flex items-center justify-between gap-3 rounded-lg bg-background px-3 py-2 text-sm"
                       >
                         <span>
-                          Turning {write.checked ? "on" : "off"}:{" "}
+                          {write.checked ? "Completed" : "Incomplete"}:{" "}
                           {cellLookup[write.cellId]?.summary ?? write.cellId}
                         </span>
                         <button

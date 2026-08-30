@@ -41,3 +41,21 @@ export function isSyncFailed(status: SyncStatus): boolean {
   if (!status.lastSuccessAt) return true;
   return status.lastFailureAt > status.lastSuccessAt;
 }
+
+// A resolved checked-state GET isn't necessarily a genuine live sync: the
+// service worker's NetworkFirst rule for this request (vite.config.ts)
+// falls back to its own cache transparently, so a fetch can resolve
+// "successfully" while the device is actually offline, serving stale
+// cached data. isOnline is the caller's own read of navigator.onLine at
+// the moment the GET resolved -- kept as a plain boolean parameter (not
+// read in here) so this decision is a pure function, testable without any
+// browser API or DOM. Returns whether it counted as a genuine success, so
+// callers can gate their own "has this ever really synced" state on it.
+export function recordSyncOutcome(tripSlug: string, isOnline: boolean): boolean {
+  if (isOnline) {
+    recordSyncSuccess(tripSlug);
+    return true;
+  }
+  recordSyncFailure(tripSlug);
+  return false;
+}
