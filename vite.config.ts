@@ -1,7 +1,25 @@
+import { execSync } from "node:child_process";
 import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import { VitePWA } from "vite-plugin-pwa";
+
+// Baked in at build time (not read at runtime -- there's no server to ask),
+// so the deployed app can show what commit it's actually running, mostly to
+// tell whether a Vercel deploy has landed yet. VERCEL_GIT_COMMIT_SHA is one
+// of Vercel's automatic build-time System Environment Variables -- no
+// project config needed, just present whenever Vercel is the one building.
+// Falls back to the local git HEAD (short SHA) for `npm run build` outside
+// Vercel, and to a literal "dev" if that also fails (e.g. no .git present).
+function resolveCommitSha(): string {
+  const vercelSha = process.env.VERCEL_GIT_COMMIT_SHA;
+  if (vercelSha) return vercelSha.slice(0, 7);
+  try {
+    return execSync("git rev-parse --short HEAD").toString().trim();
+  } catch {
+    return "dev";
+  }
+}
 
 // Trip data (grids/<slug>/<n>.json, data/<slug>/people.ts) is lazy-loaded via
 // import.meta.glob in src/lib/trips.ts and bundled as ordinary JS chunks —
@@ -19,6 +37,9 @@ function chunkFileNames(chunkInfo: { moduleIds: string[] }) {
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  define: {
+    __APP_COMMIT_SHA__: JSON.stringify(resolveCommitSha()),
+  },
   plugins: [
     react(),
     tailwindcss(),

@@ -91,6 +91,9 @@ export function PersonMenu({
         >
           Home
         </Link>
+        <p className="mt-2 text-center text-xs text-ink-muted">
+          App version: {__APP_COMMIT_SHA__}
+        </p>
       </div>
     </Modal>
   );
