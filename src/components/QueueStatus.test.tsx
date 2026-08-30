@@ -20,11 +20,15 @@ function mockContext(
     isChecked: () => false,
     updateChecked: () => {},
     queuedCount,
+    queuedWrites: [],
+    removeQueued: () => {},
     isSending,
     syncFailed,
     lastSyncedAt,
   });
 }
+
+const noop = () => {};
 
 describe("QueueStatus", () => {
   beforeEach(() => {
@@ -37,35 +41,35 @@ describe("QueueStatus", () => {
 
   it("renders nothing when the queue is empty", () => {
     mockContext(0, false);
-    const { container } = render(<QueueStatus />);
+    const { container } = render(<QueueStatus onOpenSyncInfo={noop} />);
     expect(container).toBeEmptyDOMElement();
   });
 
   it("shows '{N} updates sending…' while a drain this context started is still sending", () => {
     mockContext(2, true);
-    render(<QueueStatus />);
+    render(<QueueStatus onOpenSyncInfo={noop} />);
     expect(screen.getByText("2 updates sending…")).toBeInTheDocument();
   });
 
   it("shows '{N} updates queued, no connection' when queued but nothing is currently in flight", () => {
     mockContext(3, false);
-    render(<QueueStatus />);
+    render(<QueueStatus onOpenSyncInfo={noop} />);
     expect(screen.getByText("3 updates queued, no connection")).toBeInTheDocument();
   });
 
   it("uses the singular 'update' (not 'updates') for a count of exactly 1", () => {
     mockContext(1, true);
-    render(<QueueStatus />);
+    render(<QueueStatus onOpenSyncInfo={noop} />);
     expect(screen.getByText("1 update sending…")).toBeInTheDocument();
   });
 
   it("shows the success confirmation on the >0 -> 0 transition, then unmounts after SUCCESS_FLASH_MS", () => {
     mockContext(1, true);
-    const { rerender, container } = render(<QueueStatus />);
+    const { rerender, container } = render(<QueueStatus onOpenSyncInfo={noop} />);
 
     act(() => {
       mockContext(0, false);
-      rerender(<QueueStatus />);
+      rerender(<QueueStatus onOpenSyncInfo={noop} />);
     });
 
     expect(screen.getByText("All synced :D")).toBeInTheDocument();
@@ -83,18 +87,18 @@ describe("QueueStatus", () => {
     // mid-fade kept showing "All synced :D" instead of the real state,
     // right up until the *original* flash's own timer happened to clear it.
     mockContext(1, true);
-    const { rerender, container } = render(<QueueStatus />);
+    const { rerender, container } = render(<QueueStatus onOpenSyncInfo={noop} />);
 
     act(() => {
       mockContext(0, false);
-      rerender(<QueueStatus />);
+      rerender(<QueueStatus onOpenSyncInfo={noop} />);
     });
     expect(screen.getByText("All synced :D")).toBeInTheDocument();
 
     // A new update queued before the flash's own timer has elapsed.
     act(() => {
       mockContext(1, true);
-      rerender(<QueueStatus />);
+      rerender(<QueueStatus onOpenSyncInfo={noop} />);
     });
 
     expect(screen.queryByText("All synced :D")).not.toBeInTheDocument();
@@ -110,11 +114,11 @@ describe("QueueStatus", () => {
 
   it("does not show the success flash when the queue was already empty (no transition happened)", () => {
     mockContext(0, false);
-    const { rerender, container } = render(<QueueStatus />);
+    const { rerender, container } = render(<QueueStatus onOpenSyncInfo={noop} />);
 
     act(() => {
       mockContext(0, false);
-      rerender(<QueueStatus />);
+      rerender(<QueueStatus onOpenSyncInfo={noop} />);
     });
 
     expect(container).toBeEmptyDOMElement();
@@ -122,19 +126,19 @@ describe("QueueStatus", () => {
 
   it("shows a 'Last connected' pill when the queue is empty but the checked-state GET has failed", () => {
     mockContext(0, false, true, "2026-08-30T12:24:00.000Z");
-    render(<QueueStatus />);
+    render(<QueueStatus onOpenSyncInfo={noop} />);
     expect(screen.getByText(/Last connected/)).toBeInTheDocument();
   });
 
   it("falls back to 'Not yet connected' when the GET has failed and never once succeeded", () => {
     mockContext(0, false, true, undefined);
-    render(<QueueStatus />);
+    render(<QueueStatus onOpenSyncInfo={noop} />);
     expect(screen.getByText("Not yet connected")).toBeInTheDocument();
   });
 
   it("prefers the queued-updates pill over the failed-GET pill when both are true", () => {
     mockContext(2, false, true, "2026-08-30T12:24:00.000Z");
-    render(<QueueStatus />);
+    render(<QueueStatus onOpenSyncInfo={noop} />);
     expect(screen.getByText("2 updates queued, no connection")).toBeInTheDocument();
     expect(screen.queryByText(/Last connected/)).not.toBeInTheDocument();
   });

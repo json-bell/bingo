@@ -2,7 +2,8 @@ import { createContext, useCallback, useContext, useEffect, useRef, useState } f
 import type { ReactNode } from "react";
 import { fetchChecked, saveChecked } from "../lib/checked";
 import type { CheckedCell, CheckedMap } from "../lib/checked";
-import { drain, readQueue } from "../lib/checkedQueue";
+import { drain, readQueue, removeQueuedWrite } from "../lib/checkedQueue";
+import type { QueuedWrite } from "../lib/checkedQueue";
 import { isSyncFailed, readSyncStatus, recordSyncFailure, recordSyncSuccess } from "../lib/syncStatus";
 
 // One provider per trip page (the page renders everyone's grid at once, not
@@ -25,6 +26,15 @@ interface CheckedContextValue {
   // false slightly before the first call's still-running drain (silently
   // no-op'd by checkedQueue.ts's own concurrency guard) actually finishes.
   isSending: boolean;
+  // The full pending queue, for the Sync Info modal's per-entry list --
+  // queuedCount above stays a plain number for QueueStatus, which never
+  // needed more than a count.
+  queuedWrites: QueuedWrite[];
+  // Unconditional removal (see checkedQueue.ts's removeQueuedWrite) -- the
+  // modal only shows this control while isSending is false, since there's
+  // no way to cancel a request that's already in flight (drain() has no
+  // AbortController), only to stop one from ever being sent.
+  removeQueued: (cellId: string) => void;
   // The checked-state GET side (separate from the PATCH queue above): when the
   // last successful load happened, and whether the most recent attempt since
   // then failed. See src/lib/syncStatus.ts.
@@ -43,6 +53,7 @@ interface CheckedProviderProps {
 export function CheckedProvider({ tripSlug, version, children }: CheckedProviderProps) {
   const [cells, setCells] = useState<CheckedMap>({});
   const [queuedCount, setQueuedCount] = useState(0);
+  const [queuedWrites, setQueuedWrites] = useState<QueuedWrite[]>([]);
   const [isSending, setIsSending] = useState(false);
   const [lastSyncedAt, setLastSyncedAt] = useState<string | undefined>(undefined);
   const [syncFailed, setSyncFailed] = useState(false);
@@ -52,8 +63,18 @@ export function CheckedProvider({ tripSlug, version, children }: CheckedProvider
   const hasSyncedRef = useRef(false);
 
   const syncQueuedCount = useCallback(() => {
-    setQueuedCount(Object.keys(readQueue(tripSlug)).length);
+    const writes = Object.values(readQueue(tripSlug));
+    setQueuedCount(writes.length);
+    setQueuedWrites(writes);
   }, [tripSlug]);
+
+  const removeQueued = useCallback(
+    (cellId: string) => {
+      removeQueuedWrite(tripSlug, cellId);
+      syncQueuedCount();
+    },
+    [tripSlug, syncQueuedCount]
+  );
 
   const refreshSyncStatus = useCallback(() => {
     const status = readSyncStatus(tripSlug);
@@ -93,18 +114,18 @@ export function CheckedProvider({ tripSlug, version, children }: CheckedProvider
   // directly, so each caller can apply it only if it's still relevant (the
   // mount effect checks `cancelled`).
   const loadAndMerge = useCallback(async (): Promise<
-    { merged: CheckedMap; queueSize: number } | null
+    { merged: CheckedMap; writes: QueuedWrite[] } | null
   > => {
     try {
       const serverCells = await fetchChecked(tripSlug, version);
       hasSyncedRef.current = true;
       recordSyncSuccess(tripSlug);
-      const queue = readQueue(tripSlug);
+      const writes = Object.values(readQueue(tripSlug));
       const merged: CheckedMap = { ...serverCells };
-      for (const write of Object.values(queue)) {
+      for (const write of writes) {
         merged[write.cellId] = { checked: write.checked, updatedAt: write.basisUpdatedAt };
       }
-      return { merged, queueSize: Object.keys(queue).length };
+      return { merged, writes };
     } catch {
       recordSyncFailure(tripSlug);
       return null;
@@ -113,10 +134,11 @@ export function CheckedProvider({ tripSlug, version, children }: CheckedProvider
     }
   }, [tripSlug, version, refreshSyncStatus]);
 
-  const applyLoadResult = useCallback((result: { merged: CheckedMap; queueSize: number } | null) => {
+  const applyLoadResult = useCallback((result: { merged: CheckedMap; writes: QueuedWrite[] } | null) => {
     if (!result) return;
     setCells(result.merged);
-    setQueuedCount(result.queueSize);
+    setQueuedCount(result.writes.length);
+    setQueuedWrites(result.writes);
   }, []);
 
   useEffect(() => {
@@ -175,7 +197,16 @@ export function CheckedProvider({ tripSlug, version, children }: CheckedProvider
 
   return (
     <CheckedContext.Provider
-      value={{ isChecked, updateChecked, queuedCount, isSending, lastSyncedAt, syncFailed }}
+      value={{
+        isChecked,
+        updateChecked,
+        queuedCount,
+        queuedWrites,
+        removeQueued,
+        isSending,
+        lastSyncedAt,
+        syncFailed,
+      }}
     >
       {children}
     </CheckedContext.Provider>

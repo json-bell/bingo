@@ -1,10 +1,12 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { AppBar } from "../components/AppBar";
 import { PersonMenu } from "../components/PersonMenu";
 import { Grid } from "../components/Grid";
 import { CheckedProvider } from "../context/CheckedContext";
 import { QueueStatus } from "../components/QueueStatus";
+import { SyncInfoModal } from "../components/SyncInfoModal";
+import type { CellLookup } from "../components/SyncInfoModal";
 import { loadTrip } from "../lib/trips";
 import type { LoadedTrip } from "../../types/trip";
 
@@ -25,6 +27,7 @@ export function TripPage() {
   const [tintsEnabled, setTintsEnabled] = useState<boolean>(readStoredTintsEnabled);
   const [zoomToFill, setZoomToFill] = useState<boolean>(readStoredZoomToFill);
   const menuRef = useRef<HTMLDialogElement>(null);
+  const syncInfoRef = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
     if (!slug) return;
@@ -46,6 +49,23 @@ export function TripPage() {
     localStorage.setItem(ZOOM_TO_FILL_STORAGE_KEY, String(zoomToFill));
   }, [zoomToFill]);
 
+  // cellId -> {person, summary}, for the Sync Info modal's queue list.
+  // Computed here (not inside the modal) since it's derived from data
+  // TripPage already has loaded; must run before the early returns below
+  // (Rules of Hooks), hence the optional chaining over a possibly-missing trip.
+  const cellLookup = useMemo<CellLookup>(() => {
+    const lookup: CellLookup = {};
+    trip?.grids.forEach((grid, index) => {
+      const person = trip.people[index];
+      grid.forEach((row) => {
+        row.forEach((cell) => {
+          lookup[cell.id] = { person, summary: cell.summary };
+        });
+      });
+    });
+    return lookup;
+  }, [trip]);
+
   if (!slug) return null;
   if (trip === undefined) return <p>Loading…</p>;
   if (trip === null) return <p>No trip found for &quot;{slug}&quot;.</p>;
@@ -54,15 +74,17 @@ export function TripPage() {
   return (
     <CheckedProvider tripSlug={slug} version={version}>
       <AppBar title={title} onOpenMenu={() => menuRef.current?.showModal()} />
-      <QueueStatus />
+      <QueueStatus onOpenSyncInfo={() => syncInfoRef.current?.showModal()} />
       <PersonMenu
         people={people}
         tintsEnabled={tintsEnabled}
         onTintsChange={setTintsEnabled}
         zoomToFill={zoomToFill}
         onZoomToFillChange={setZoomToFill}
+        onOpenSyncInfo={() => syncInfoRef.current?.showModal()}
         dialogRef={menuRef}
       />
+      <SyncInfoModal cellLookup={cellLookup} people={people} dialogRef={syncInfoRef} />
       {/* pb-[4.25rem]: QueueStatus is `fixed bottom-4` (1rem gap) and floats
           over whatever's beneath it -- without this, scrolling to the
           actual bottom of the content leaves the toast sitting on top of

@@ -9,7 +9,11 @@ import { SUCCESS_FLASH_MS, SUCCESS_HOLD_MS } from "./queueStatusTiming";
 // drain triggers, so nothing else is needed. The count is derived from the
 // queue's actual size wherever it's read, never tracked as an independent
 // counter that could drift.
-export function QueueStatus() {
+interface QueueStatusProps {
+  onOpenSyncInfo: () => void;
+}
+
+export function QueueStatus({ onOpenSyncInfo }: QueueStatusProps) {
   const { queuedCount, isSending, lastSyncedAt, syncFailed } = useChecked();
   const previousCount = useRef(queuedCount);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -70,21 +74,29 @@ export function QueueStatus() {
   if (queuedCount === 0) {
     if (!syncFailed) return null;
     return (
-      <div className="fixed bottom-4 right-4 z-50 flex items-center gap-2 rounded-full bg-surface text-ink px-4 py-2 text-sm font-semibold shadow-lg">
+      <button
+        type="button"
+        onClick={onOpenSyncInfo}
+        className="fixed bottom-4 right-4 z-50 flex items-center gap-2 rounded-full bg-surface text-ink px-4 py-2 text-sm font-semibold shadow-lg"
+      >
         <span aria-hidden="true">⚠️</span>
         {lastSyncedAt ? `Last connected ${formatSyncTime(lastSyncedAt)}` : "Not yet connected"}
-      </div>
+      </button>
     );
   }
 
   const updateWord = queuedCount === 1 ? "update" : "updates";
 
   return (
-    <div className="fixed bottom-4 right-4 z-50 flex items-center gap-2 rounded-full bg-surface text-ink px-4 py-2 text-sm font-semibold shadow-lg">
+    <button
+      type="button"
+      onClick={onOpenSyncInfo}
+      className="fixed bottom-4 right-4 z-50 flex items-center gap-2 rounded-full bg-surface text-ink px-4 py-2 text-sm font-semibold shadow-lg"
+    >
       <span aria-hidden="true">{isSending ? "⏳" : "📡"}</span>
       {isSending
         ? `${queuedCount} ${updateWord} sending…`
         : `${queuedCount} ${updateWord} queued, no connection`}
-    </div>
+    </button>
   );
 }
