@@ -1,8 +1,9 @@
-import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import { fetchChecked, saveChecked } from "../lib/checked";
 import type { CheckedCell, CheckedMap } from "../lib/checked";
 import { drain, readQueue } from "../lib/checkedQueue";
+import { isSyncFailed, readSyncStatus, recordSyncFailure, recordSyncSuccess } from "../lib/syncStatus";
 
 // One provider per trip page (the page renders everyone's grid at once, not
 // just "your own" -- see docs/plan.md), holding a flat map keyed by cellId.
@@ -24,6 +25,11 @@ interface CheckedContextValue {
   // false slightly before the first call's still-running drain (silently
   // no-op'd by checkedQueue.ts's own concurrency guard) actually finishes.
   isSending: boolean;
+  // The checked-state GET side (separate from the PATCH queue above): when the
+  // last successful load happened, and whether the most recent attempt since
+  // then failed. See src/lib/syncStatus.ts.
+  lastSyncedAt?: string;
+  syncFailed: boolean;
 }
 
 const CheckedContext = createContext<CheckedContextValue | null>(null);
@@ -38,9 +44,21 @@ export function CheckedProvider({ tripSlug, version, children }: CheckedProvider
   const [cells, setCells] = useState<CheckedMap>({});
   const [queuedCount, setQueuedCount] = useState(0);
   const [isSending, setIsSending] = useState(false);
+  const [lastSyncedAt, setLastSyncedAt] = useState<string | undefined>(undefined);
+  const [syncFailed, setSyncFailed] = useState(false);
+  // Set once a GET has ever succeeded this page-load; gates the online-event
+  // retry below so a healthy load doesn't start re-fetching on every
+  // reconnect -- only a load that never succeeded gets retried.
+  const hasSyncedRef = useRef(false);
 
   const syncQueuedCount = useCallback(() => {
     setQueuedCount(Object.keys(readQueue(tripSlug)).length);
+  }, [tripSlug]);
+
+  const refreshSyncStatus = useCallback(() => {
+    const status = readSyncStatus(tripSlug);
+    setLastSyncedAt(status.lastSuccessAt);
+    setSyncFailed(isSyncFailed(status));
   }, [tripSlug]);
 
   const withSendingIndicator = useCallback(async (work: Promise<void>) => {
@@ -66,38 +84,76 @@ export function CheckedProvider({ tripSlug, version, children }: CheckedProvider
     void withSendingIndicator(drain(tripSlug, applyServerRow).then(syncQueuedCount));
   }, [tripSlug, applyServerRow, syncQueuedCount, withSendingIndicator]);
 
-  useEffect(() => {
-    let cancelled = false;
-    fetchChecked(tripSlug, version).then((serverCells) => {
-      if (cancelled) return;
-      // Reconciliation on load: seed from the last cached/live GET (the
-      // service worker's NetworkFirst lane serves the cached response when
-      // offline), then replay the persisted queue's pending values on top.
-      // The queue is never the source of truth for anything except the
-      // cells it's currently overriding.
+  // Shared by the mount effect and the online-event retry below: fetch,
+  // record success/failure for the "last synced" status, and -- on success
+  // only -- reconcile with the persisted queue (seed from the last cached/
+  // live GET, then replay the queue's pending values on top; the queue is
+  // never the source of truth for anything except the cells it's currently
+  // overriding). Returns the merge result rather than setting state
+  // directly, so each caller can apply it only if it's still relevant (the
+  // mount effect checks `cancelled`).
+  const loadAndMerge = useCallback(async (): Promise<
+    { merged: CheckedMap; queueSize: number } | null
+  > => {
+    try {
+      const serverCells = await fetchChecked(tripSlug, version);
+      hasSyncedRef.current = true;
+      recordSyncSuccess(tripSlug);
       const queue = readQueue(tripSlug);
       const merged: CheckedMap = { ...serverCells };
       for (const write of Object.values(queue)) {
         merged[write.cellId] = { checked: write.checked, updatedAt: write.basisUpdatedAt };
       }
-      setCells(merged);
-      setQueuedCount(Object.keys(queue).length);
-      runDrain(); // trigger #2: on mount, drain whatever's left over
+      return { merged, queueSize: Object.keys(queue).length };
+    } catch {
+      recordSyncFailure(tripSlug);
+      return null;
+    } finally {
+      refreshSyncStatus();
+    }
+  }, [tripSlug, version, refreshSyncStatus]);
+
+  const applyLoadResult = useCallback((result: { merged: CheckedMap; queueSize: number } | null) => {
+    if (!result) return;
+    setCells(result.merged);
+    setQueuedCount(result.queueSize);
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    loadAndMerge().then((result) => {
+      if (cancelled) return;
+      applyLoadResult(result);
+      runDrain(); // trigger #2: on mount, drain whatever's left over regardless of GET outcome
     });
     return () => {
       cancelled = true;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- runDrain intentionally excluded: it would refire this effect on every render otherwise, and mount is the only trigger this effect owns (see triggers #1/#3 below).
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- loadAndMerge/applyLoadResult/runDrain intentionally excluded: they'd refire this effect on every render otherwise, and mount is the only trigger this effect owns (see triggers #1/#3 below).
   }, [tripSlug, version]);
 
   // Trigger #3: the browser regaining connectivity. Not the sole signal --
   // navigator.onLine reflects network-interface state, not "can we reach
   // the API" -- but it's a cheap, real opportunity to retry sooner than
-  // waiting for the next mount.
+  // waiting for the next mount. If the GET has never succeeded this
+  // page-load, retry it here too (then reconcile + drain); once it has
+  // succeeded, only the PATCH queue gets retried on further reconnects --
+  // this isn't a periodic refresh, just closing the "failed and never
+  // retried" gap for the one-shot initial load.
   useEffect(() => {
-    window.addEventListener("online", runDrain);
-    return () => window.removeEventListener("online", runDrain);
-  }, [runDrain]);
+    const handleOnline = () => {
+      if (hasSyncedRef.current) {
+        runDrain();
+        return;
+      }
+      void loadAndMerge().then((result) => {
+        applyLoadResult(result);
+        runDrain();
+      });
+    };
+    window.addEventListener("online", handleOnline);
+    return () => window.removeEventListener("online", handleOnline);
+  }, [loadAndMerge, applyLoadResult, runDrain]);
 
   function isChecked(cellId: string): boolean {
     return Boolean(cells[cellId]?.checked);
@@ -118,7 +174,9 @@ export function CheckedProvider({ tripSlug, version, children }: CheckedProvider
   }
 
   return (
-    <CheckedContext.Provider value={{ isChecked, updateChecked, queuedCount, isSending }}>
+    <CheckedContext.Provider
+      value={{ isChecked, updateChecked, queuedCount, isSending, lastSyncedAt, syncFailed }}
+    >
       {children}
     </CheckedContext.Provider>
   );

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useChecked } from "../context/CheckedContext";
+import { formatSyncTime } from "../lib/formatSyncTime";
 import { SUCCESS_FLASH_MS, SUCCESS_HOLD_MS } from "./queueStatusTiming";
 
 // Replaces both periodic polling and a manual "Resync" button (see
@@ -9,7 +10,7 @@ import { SUCCESS_FLASH_MS, SUCCESS_HOLD_MS } from "./queueStatusTiming";
 // queue's actual size wherever it's read, never tracked as an independent
 // counter that could drift.
 export function QueueStatus() {
-  const { queuedCount, isSending } = useChecked();
+  const { queuedCount, isSending, lastSyncedAt, syncFailed } = useChecked();
   const previousCount = useRef(queuedCount);
   const [showSuccess, setShowSuccess] = useState(false);
   const [fading, setFading] = useState(false);
@@ -63,7 +64,18 @@ export function QueueStatus() {
     );
   }
 
-  if (queuedCount === 0) return null;
+  // Queue is empty and nothing's mid-flight -- if the checked-state GET
+  // itself is the thing that's currently failed (separate from the PATCH
+  // queue above), surface that instead of going silent.
+  if (queuedCount === 0) {
+    if (!syncFailed) return null;
+    return (
+      <div className="fixed bottom-4 right-4 z-50 flex items-center gap-2 rounded-full bg-surface text-ink px-4 py-2 text-sm font-semibold shadow-lg">
+        <span aria-hidden="true">⚠️</span>
+        {lastSyncedAt ? `Last connected ${formatSyncTime(lastSyncedAt)}` : "Not yet connected"}
+      </div>
+    );
+  }
 
   const updateWord = queuedCount === 1 ? "update" : "updates";
 

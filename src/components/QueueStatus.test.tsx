@@ -10,12 +10,19 @@ vi.mock("../context/CheckedContext", () => ({
 
 const mockedUseChecked = vi.mocked(useChecked);
 
-function mockContext(queuedCount: number, isSending: boolean) {
+function mockContext(
+  queuedCount: number,
+  isSending: boolean,
+  syncFailed = false,
+  lastSyncedAt?: string
+) {
   mockedUseChecked.mockReturnValue({
     isChecked: () => false,
     updateChecked: () => {},
     queuedCount,
     isSending,
+    syncFailed,
+    lastSyncedAt,
   });
 }
 
@@ -111,5 +118,24 @@ describe("QueueStatus", () => {
     });
 
     expect(container).toBeEmptyDOMElement();
+  });
+
+  it("shows a 'Last connected' pill when the queue is empty but the checked-state GET has failed", () => {
+    mockContext(0, false, true, "2026-08-30T12:24:00.000Z");
+    render(<QueueStatus />);
+    expect(screen.getByText(/Last connected/)).toBeInTheDocument();
+  });
+
+  it("falls back to 'Not yet connected' when the GET has failed and never once succeeded", () => {
+    mockContext(0, false, true, undefined);
+    render(<QueueStatus />);
+    expect(screen.getByText("Not yet connected")).toBeInTheDocument();
+  });
+
+  it("prefers the queued-updates pill over the failed-GET pill when both are true", () => {
+    mockContext(2, false, true, "2026-08-30T12:24:00.000Z");
+    render(<QueueStatus />);
+    expect(screen.getByText("2 updates queued, no connection")).toBeInTheDocument();
+    expect(screen.queryByText(/Last connected/)).not.toBeInTheDocument();
   });
 });
