@@ -76,7 +76,7 @@ export function Tile({ cell, person, tintsEnabled }: TileProps) {
 
       <Modal
         dialogRef={dialogRef}
-        className="m-auto w-full max-w-sm rounded-lg"
+        className="m-auto w-full max-w-sm rounded-[var(--modal-radius)] [--modal-radius:0.5rem]"
       >
         <p className="text-xl text-accent text-left">{person}</p>
         <hr className="mt-2 mb-4 border-ink-muted/20" />
