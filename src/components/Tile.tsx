@@ -51,7 +51,7 @@ export function Tile({ cell, person, tintsEnabled }: TileProps) {
             open();
           }
         }}
-        className={`relative cursor-pointer aspect-square min-h-0 overflow-hidden flex flex-col justify-center ${bgClass} text-tile-foreground rounded-lg border-2 border-tile-foreground/20 p-[4px] md:p-[8px] text-base text-center`}
+        className={`relative cursor-pointer aspect-square flex flex-col justify-center ${bgClass} text-tile-foreground rounded-lg border-2 border-tile-foreground/20 p-[4px] md:p-[8px] text-base text-center`}
       >
         {checked && (
           <div

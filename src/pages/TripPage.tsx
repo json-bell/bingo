@@ -77,6 +77,15 @@ export function TripPage() {
             key={people[index]}
             id={people[index]}
             className={`relative min-w-0 max-w-full bg-surface list-none rounded-[1.5rem] text-center ${
+              // A flex item with no explicit width sizes to its own content
+              // (flex-basis: auto) -- fine normally, since the fixed-px
+              // Grid's own natural size IS the content. But zoom-to-fill's
+              // @container div below needs a *definite* width to scale
+              // against; without one, container-type: inline-size's implied
+              // containment cuts the card off from its own content's size,
+              // and it collapses to some small fallback instead of tracking
+              // the viewport. w-full breaks that cycle by giving the card a
+              // real size to hand down.
               zoomToFill ? "w-full m-1 md:m-4" : "m-1 md:m-8"
             }`}
           >
@@ -91,15 +100,40 @@ export function TripPage() {
             </div>
             <div
               className={`max-w-full p-1 md:p-8 pt-2 md:pt-4 ${
-                zoomToFill ? "" : "overflow-x-auto"
+                zoomToFill ? "@container" : "overflow-x-auto"
               }`}
             >
-              <Grid
-                grid={grid}
-                person={people[index]}
-                tintsEnabled={tintsEnabled}
-                zoomToFill={zoomToFill}
-              />
+              {zoomToFill ? (
+                // Grid renders at its natural fixed-px size (520/1040px --
+                // see the comment on the scale-[...] classes below) and is
+                // then visually scaled down to fill the container, via
+                // container query units so no JS/ResizeObserver is needed.
+                // The aspect-square wrapper reserves the correct (scaled)
+                // box in the page's normal flow -- Grid's own natural size
+                // is a perfect square (5 equal square tiles, same gap in
+                // both axes), so aspect-square exactly matches the shape a
+                // scaled copy of it would be. transform doesn't shrink the
+                // space an element reserves in flow on its own, hence
+                // needing this rather than relying on Grid's own box.
+                <div className="aspect-square w-full overflow-hidden">
+                  <Grid
+                    grid={grid}
+                    person={people[index]}
+                    tintsEnabled={tintsEnabled}
+                    // 520px/1040px = the grid's natural unscaled width at
+                    // each breakpoint (5 * 100px/200px tiles + 4 * 5px/10px
+                    // gaps). 100cqw is the *container's* current width (the
+                    // ancestor div above, via @container), so the ratio is
+                    // exactly "how much smaller is the available space than
+                    // the grid's natural size" -- CSS division of two
+                    // lengths inside calc() yields a plain number, which is
+                    // what scale() needs.
+                    className="origin-top-left scale-[calc(100cqw/520px)] md:scale-[calc(100cqw/1040px)]"
+                  />
+                </div>
+              ) : (
+                <Grid grid={grid} person={people[index]} tintsEnabled={tintsEnabled} />
+              )}
             </div>
           </li>
         ))}
