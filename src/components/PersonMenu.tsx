@@ -1,4 +1,5 @@
 import type { RefObject } from "react";
+import { Link } from "react-router-dom";
 import { Modal } from "./Modal";
 import { TintToggle } from "./TintToggle";
 import { ZoomToggle } from "./ZoomToggle";
@@ -64,6 +65,16 @@ export function PersonMenu({
       <div className="border-t border-ink-muted/20 pt-4 flex flex-col gap-3">
         <TintToggle enabled={tintsEnabled} onChange={onTintsChange} />
         <ZoomToggle enabled={zoomToFill} onChange={onZoomToFillChange} />
+      </div>
+
+      <div className="border-t border-ink-muted/20 pt-4 mt-4">
+        <Link
+          to="/"
+          onClick={close}
+          className="flex items-center justify-center min-h-12 rounded-lg bg-background text-foreground px-3 py-2 text-base"
+        >
+          Home
+        </Link>
       </div>
     </Modal>
   );
