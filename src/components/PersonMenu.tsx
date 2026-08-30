@@ -1,11 +1,14 @@
 import type { RefObject } from "react";
 import { Modal } from "./Modal";
 import { TintToggle } from "./TintToggle";
+import { ZoomToggle } from "./ZoomToggle";
 
 interface PersonMenuProps {
   people: string[];
   tintsEnabled: boolean;
   onTintsChange: (enabled: boolean) => void;
+  zoomToFill: boolean;
+  onZoomToFillChange: (enabled: boolean) => void;
   dialogRef: RefObject<HTMLDialogElement>;
 }
 
@@ -15,7 +18,14 @@ const legend: { label: string; swatchClass: string }[] = [
   { label: "Hard", swatchClass: "bg-difficulty-hard" },
 ];
 
-export function PersonMenu({ people, tintsEnabled, onTintsChange, dialogRef }: PersonMenuProps) {
+export function PersonMenu({
+  people,
+  tintsEnabled,
+  onTintsChange,
+  zoomToFill,
+  onZoomToFillChange,
+  dialogRef,
+}: PersonMenuProps) {
   const close = () => dialogRef.current?.close();
 
   return (
@@ -51,8 +61,9 @@ export function PersonMenu({ people, tintsEnabled, onTintsChange, dialogRef }: P
         </ul>
       </div>
 
-      <div className="border-t border-ink-muted/20 pt-4">
+      <div className="border-t border-ink-muted/20 pt-4 flex flex-col gap-3">
         <TintToggle enabled={tintsEnabled} onChange={onTintsChange} />
+        <ZoomToggle enabled={zoomToFill} onChange={onZoomToFillChange} />
       </div>
     </Modal>
   );

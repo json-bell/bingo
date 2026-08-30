@@ -9,15 +9,21 @@ import { loadTrip } from "../lib/trips";
 import type { LoadedTrip } from "../../types/trip";
 
 const TINTS_ENABLED_STORAGE_KEY = "bingo:tintsEnabled";
+const ZOOM_TO_FILL_STORAGE_KEY = "bingo:zoomToFill";
 
 function readStoredTintsEnabled(): boolean {
   return localStorage.getItem(TINTS_ENABLED_STORAGE_KEY) !== "false";
+}
+
+function readStoredZoomToFill(): boolean {
+  return localStorage.getItem(ZOOM_TO_FILL_STORAGE_KEY) === "true";
 }
 
 export function TripPage() {
   const { slug } = useParams<{ slug: string }>();
   const [trip, setTrip] = useState<LoadedTrip | null | undefined>(undefined); // undefined = loading, null = not found
   const [tintsEnabled, setTintsEnabled] = useState<boolean>(readStoredTintsEnabled);
+  const [zoomToFill, setZoomToFill] = useState<boolean>(readStoredZoomToFill);
   const menuRef = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
@@ -36,6 +42,10 @@ export function TripPage() {
     localStorage.setItem(TINTS_ENABLED_STORAGE_KEY, String(tintsEnabled));
   }, [tintsEnabled]);
 
+  useEffect(() => {
+    localStorage.setItem(ZOOM_TO_FILL_STORAGE_KEY, String(zoomToFill));
+  }, [zoomToFill]);
+
   if (!slug) return null;
   if (trip === undefined) return <p>Loading…</p>;
   if (trip === null) return <p>No trip found for &quot;{slug}&quot;.</p>;
@@ -49,6 +59,8 @@ export function TripPage() {
         people={people}
         tintsEnabled={tintsEnabled}
         onTintsChange={setTintsEnabled}
+        zoomToFill={zoomToFill}
+        onZoomToFillChange={setZoomToFill}
         dialogRef={menuRef}
       />
       {/* pb-[4.25rem]: QueueStatus is `fixed bottom-4` (1rem gap) and floats
@@ -64,7 +76,18 @@ export function TripPage() {
           <li
             key={people[index]}
             id={people[index]}
-            className="relative min-w-0 max-w-full bg-surface m-1 md:m-8 list-none rounded-[1.5rem] text-center"
+            className={`relative min-w-0 max-w-full bg-surface list-none rounded-[1.5rem] text-center ${
+              // A flex item with no explicit width sizes to its own content
+              // (flex-basis: auto) -- fine normally, since the fixed-px
+              // Grid's own natural size IS the content. But zoom-to-fill's
+              // @container div below needs a *definite* width to scale
+              // against; without one, container-type: inline-size's implied
+              // containment cuts the card off from its own content's size,
+              // and it collapses to some small fallback instead of tracking
+              // the viewport. w-full breaks that cycle by giving the card a
+              // real size to hand down.
+              zoomToFill ? "w-full m-1 md:m-4" : "m-1 md:m-8"
+            }`}
           >
             {/* Sticky within this card only (see AppBar.tsx's h-16) — as the page scrolls,
                 each person's name label docks under the app bar and is replaced by the next
@@ -75,8 +98,53 @@ export function TripPage() {
                 <h2 className="text-2xl font-bold">{people[index]}&apos;s grid</h2>
               </div>
             </div>
-            <div className="max-w-full overflow-x-auto p-1 md:p-8 pt-2 md:pt-4">
-              <Grid grid={grid} person={people[index]} tintsEnabled={tintsEnabled} />
+            <div
+              className={`max-w-full p-1 md:p-8 pt-2 md:pt-4 ${
+                zoomToFill ? "@container" : "overflow-x-auto"
+              }`}
+            >
+              {zoomToFill ? (
+                // Grid renders at its natural fixed-px size (520/1040px --
+                // see the comment on the scale-[...] classes below) and is
+                // then visually scaled down to fill the container, via
+                // container query units so no JS/ResizeObserver is needed.
+                // The aspect-square wrapper reserves the correct (scaled)
+                // box in the page's normal flow -- Grid's own natural size
+                // is a perfect square (5 equal square tiles, same gap in
+                // both axes), so aspect-square exactly matches the shape a
+                // scaled copy of it would be. transform doesn't shrink the
+                // space an element reserves in flow on its own, hence
+                // needing this rather than relying on Grid's own box.
+                <div className="aspect-square w-full overflow-hidden text-left">
+                  {/* text-left overrides the inherited body { text-align: center }
+                      for this subtree. Grid's own div is inline-grid (an inline-
+                      level box, kept that way for the non-zoomed mode's shrink-
+                      wrapped centering), so without this, normal layout centers
+                      its *natural* pre-transform width within this wrapper before
+                      the scale transform ever runs -- offsetting the scale's
+                      anchor away from the wrapper's true left edge and (since
+                      natural width and available width diverge across the
+                      viewport range) throwing the math off by a width-dependent
+                      amount. text-left keeps the box flush at x=0, matching the
+                      origin-top-left assumption below. */}
+                  <Grid
+                    grid={grid}
+                    person={people[index]}
+                    tintsEnabled={tintsEnabled}
+                    // 520px/1040px = the grid's natural unscaled width at
+                    // each breakpoint (5 * 100px/200px tiles + 4 * 5px/10px
+                    // gaps). 100cqw is the *container's* current width (the
+                    // ancestor div above, via @container), so the ratio is
+                    // exactly "how much smaller is the available space than
+                    // the grid's natural size" -- CSS division of two
+                    // lengths inside calc() yields a plain number, which is
+                    // what scale() needs.
+                    className="origin-top-left scale-[calc(100cqw/520px)] md:scale-[calc(100cqw/1040px)]"
+                  />
+                </div>
+              ) : (
+                <Grid grid={grid} person={people[index]} tintsEnabled={tintsEnabled} />
+              )}
             </div>
           </li>
         ))}
