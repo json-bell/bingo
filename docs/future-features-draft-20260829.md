@@ -10,7 +10,7 @@
    consumers just pass children. Footer/button placement (e.g. Save/Cancel — pinned vs.
    scrolling with content) is left as a per-consumer detail, settled per feature as built.
 
-   **Load-bearing gotcha, don't reintroduce**: the `<dialog>` element itself must get *no*
+   **Load-bearing gotcha, don't reintroduce**: the `<dialog>` element itself must get _no_
    `position` class (no `relative`, nothing) — `dialog:modal`'s native `position: fixed`
    (from the browser's own UA stylesheet) is what pins it to the viewport and is already a
    valid positioning context for the absolutely-positioned close button. A `relative` class
@@ -22,6 +22,7 @@
    `PersonMenu.tsx` has also been migrated onto `Modal` (was still on its own bespoke
    `<dialog>` when this was first written) — both modals in the app now share the same
    close button, so the Sync Info modal below is the only future consumer left.
+
 2. **Menu structure** — worth settling now since three items below add to it. Proposed
    order, grouping related controls together: People (existing jump links) → Styling
    (difficulty legend + tint toggle, existing, with the new zoom-to-fill toggle joining
@@ -109,3 +110,7 @@ Clicking the "N waiting to update" or directly a "Synchronisation info" in the M
   - When the status is offline (there aren't any pending requests) then should we have a Remove button that removes the update from the queue - so a user can then remove specific updates that weren't intentional
   - Organised by Name > turning On/Off > displaying the title of the checkbox
 - Uses the shared `Modal` component (see shared decision #1 above) for the max-height/scroll behavior.
+
+# Added on 2026-08-30 - a (blue? black? grey? white?) StrikeThrough for completed lines
+
+Check the 5 rows, the 5 cols, the 2 diagonals, if they're all completed, and if they are then strike through with a line
