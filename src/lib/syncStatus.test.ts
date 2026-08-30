@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from "vitest";
+import { describe, it, expect, beforeEach, vi } from "vitest";
 import {
   isSyncFailed,
   readSyncStatus,
@@ -82,11 +82,21 @@ describe("syncStatus", () => {
     });
 
     it("does not overwrite an earlier genuine success's timestamp when a later offline read comes in", () => {
-      recordSyncOutcome("trip", true);
-      const { lastSuccessAt } = readSyncStatus("trip");
-      recordSyncOutcome("trip", false);
-      expect(readSyncStatus("trip").lastSuccessAt).toBe(lastSuccessAt);
-      expect(isSyncFailed(readSyncStatus("trip"))).toBe(true);
+      // Fake timers, with a real gap advanced between the two calls --
+      // isSyncFailed compares timestamps with strict `>`, so two calls
+      // fast enough to land in the same real millisecond would tie and
+      // silently pass for the wrong reason otherwise.
+      vi.useFakeTimers();
+      try {
+        recordSyncOutcome("trip", true);
+        const { lastSuccessAt } = readSyncStatus("trip");
+        vi.advanceTimersByTime(1000);
+        recordSyncOutcome("trip", false);
+        expect(readSyncStatus("trip").lastSuccessAt).toBe(lastSuccessAt);
+        expect(isSyncFailed(readSyncStatus("trip"))).toBe(true);
+      } finally {
+        vi.useRealTimers();
+      }
     });
   });
 });
