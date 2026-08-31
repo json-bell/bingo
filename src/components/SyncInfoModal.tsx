@@ -3,6 +3,7 @@ import { Modal } from "./Modal";
 import { formatSyncTime } from "../lib/formatSyncTime";
 import { useChecked } from "../context/CheckedContext";
 import type { QueuedWrite } from "../lib/checkedQueue";
+import type { DbStatus } from "../lib/useDbStatus";
 
 // cellId -> where it lives, so the queue's flat, id-keyed entries can be
 // grouped and labelled the way the future-features doc asks for ("Organised
@@ -13,7 +14,21 @@ export type CellLookup = Record<string, { person: string; summary: string }>;
 interface SyncInfoModalProps {
   cellLookup: CellLookup;
   people: string[];
+  dbStatus: DbStatus;
   dialogRef: RefObject<HTMLDialogElement>;
+}
+
+// Diagnostic-only, deliberately separate from the "Up to date" verdict
+// above -- see src/lib/dbStatus.ts.
+function formatDbStatus(dbStatus: DbStatus): string {
+  switch (dbStatus.state) {
+    case "pending":
+      return "Database: checking…";
+    case "ok":
+      return `Database: connected (${dbStatus.latencyMs}ms)`;
+    case "error":
+      return "Database: unreachable";
+  }
 }
 
 function groupByPerson(writes: QueuedWrite[], cellLookup: CellLookup): Map<string, QueuedWrite[]> {
@@ -31,7 +46,7 @@ function groupByPerson(writes: QueuedWrite[], cellLookup: CellLookup): Map<strin
   return groups;
 }
 
-export function SyncInfoModal({ cellLookup, people, dialogRef }: SyncInfoModalProps) {
+export function SyncInfoModal({ cellLookup, people, dbStatus, dialogRef }: SyncInfoModalProps) {
   const { lastSyncedAt, syncFailed, queuedCount, queuedWrites, isSending, removeQueued } = useChecked();
   const grouped = groupByPerson(queuedWrites, cellLookup);
 
@@ -49,6 +64,7 @@ export function SyncInfoModal({ cellLookup, people, dialogRef }: SyncInfoModalPr
             : "Not yet connected"
           : "Up to date ✓"}
       </p>
+      <p className="text-xs text-ink-muted mt-1">{formatDbStatus(dbStatus)}</p>
 
       <div className="border-t border-ink-muted/20 mt-4 pt-4">
         <p className="text-sm text-ink-muted mb-3">

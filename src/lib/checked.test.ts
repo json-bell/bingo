@@ -24,14 +24,16 @@ describe("checked", () => {
             slug: "europapark-2024",
             version: 2,
             cells: { "cell-1": { checked: true, updatedAt: "2026-01-01T00:00:00.000Z" } },
+            generatedAt: "2026-01-01T00:05:00.000Z",
           });
         })
       );
 
-      const cells = await fetchChecked("europapark-2024", 2);
+      const { cells, generatedAt } = await fetchChecked("europapark-2024", 2);
 
       expect(capturedUrl?.searchParams.get("version")).toBe("2");
       expect(cells).toEqual({ "cell-1": { checked: true, updatedAt: "2026-01-01T00:00:00.000Z" } });
+      expect(generatedAt).toBe("2026-01-01T00:05:00.000Z");
     });
 
     it("throws on a non-2xx response", async () => {

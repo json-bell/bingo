@@ -42,17 +42,33 @@ export function isSyncFailed(status: SyncStatus): boolean {
   return status.lastFailureAt > status.lastSuccessAt;
 }
 
-// A resolved checked-state GET isn't necessarily a genuine live sync: the
-// service worker's NetworkFirst rule for this request (vite.config.ts)
-// falls back to its own cache transparently, so a fetch can resolve
-// "successfully" while the device is actually offline, serving stale
-// cached data. isOnline is the caller's own read of navigator.onLine at
-// the moment the GET resolved -- kept as a plain boolean parameter (not
-// read in here) so this decision is a pure function, testable without any
-// browser API or DOM. Returns whether it counted as a genuine success, so
-// callers can gate their own "has this ever really synced" state on it.
-export function recordSyncOutcome(tripSlug: string, isOnline: boolean): boolean {
-  if (isOnline) {
+// Comfortably above vite.config.ts's networkTimeoutSeconds (5s) -- a
+// response actually served fresh from the network never gets close to
+// this. A genuinely stale cache hit, on the other hand, is generated as
+// long ago as the last real gap in connectivity (minutes/hours/days), not
+// merely a few seconds -- so the exact cutoff isn't sensitive, it just
+// needs to sit safely above real network latency and below "obviously old".
+const STALE_THRESHOLD_MS = 30_000;
+
+// Whether a checked-state GET response is recent enough to have plausibly
+// come from a live network request, vs. a stale hit served by the service
+// worker's NetworkFirst cache fallback (vite.config.ts) -- indistinguishable
+// from a live response at the fetch layer itself. generatedAt is the
+// response body's own server-side timestamp (api/trips/[slug]/checked.ts).
+export function isResponseFresh(generatedAt: string): boolean {
+  return Date.now() - new Date(generatedAt).getTime() < STALE_THRESHOLD_MS;
+}
+
+// A resolved checked-state GET isn't necessarily a genuine live sync: it
+// can be a stale cache hit (see isResponseFresh above) served while
+// offline, or while online but slower than the network timeout (e.g. a
+// Neon cold start). isFresh is the caller's own freshness verdict (kept as
+// a plain boolean parameter, not computed in here) so this decision stays a
+// pure function, testable without any browser API or DOM. Returns whether
+// it counted as a genuine success, so callers can gate their own "has this
+// ever really synced" state on it.
+export function recordSyncOutcome(tripSlug: string, isFresh: boolean): boolean {
+  if (isFresh) {
     recordSyncSuccess(tripSlug);
     return true;
   }

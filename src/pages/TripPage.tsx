@@ -8,6 +8,7 @@ import { QueueStatus } from "../components/QueueStatus";
 import { SyncInfoModal } from "../components/SyncInfoModal";
 import type { CellLookup } from "../components/SyncInfoModal";
 import { loadTrip } from "../lib/trips";
+import { useDbStatus } from "../lib/useDbStatus";
 import type { LoadedTrip } from "../../types/trip";
 
 const TINTS_ENABLED_STORAGE_KEY = "bingo:tintsEnabled";
@@ -28,6 +29,10 @@ export function TripPage() {
   const [zoomToFill, setZoomToFill] = useState<boolean>(readStoredZoomToFill);
   const menuRef = useRef<HTMLDialogElement>(null);
   const syncInfoRef = useRef<HTMLDialogElement>(null);
+  // Fired once here (not inside SyncInfoModal) so it's already in flight by
+  // the time the modal is opened, rather than only starting then -- see
+  // useDbStatus.ts.
+  const dbStatus = useDbStatus();
 
   useEffect(() => {
     if (!slug) return;
@@ -84,7 +89,7 @@ export function TripPage() {
         onOpenSyncInfo={() => syncInfoRef.current?.showModal()}
         dialogRef={menuRef}
       />
-      <SyncInfoModal cellLookup={cellLookup} people={people} dialogRef={syncInfoRef} />
+      <SyncInfoModal cellLookup={cellLookup} people={people} dbStatus={dbStatus} dialogRef={syncInfoRef} />
       {/* pb-[4.25rem]: QueueStatus is `fixed bottom-4` (1rem gap) and floats
           over whatever's beneath it -- without this, scrolling to the
           actual bottom of the content leaves the toast sitting on top of

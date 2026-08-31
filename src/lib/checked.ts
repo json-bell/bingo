@@ -20,13 +20,21 @@ interface CheckedResponseBody {
   slug: string;
   version: number;
   cells: CheckedMap;
+  generatedAt: string; // ISO-8601, server response time -- see syncStatus.ts's isResponseFresh
+}
+
+export interface FetchedChecked {
+  cells: CheckedMap;
+  generatedAt: string;
 }
 
 // Throws on network failure or a non-2xx response -- the service worker's
 // NetworkFirst lane (vite.config.ts) silently serves the cached response
 // first when offline, so a throw here means "offline AND never loaded this
-// trip before", not an ordinary offline visit.
-export async function fetchChecked(tripSlug: string, version: number): Promise<CheckedMap> {
+// trip before", not an ordinary offline visit. A resolved call can still be
+// a stale cache hit, though -- generatedAt is what lets a caller tell the
+// difference (see syncStatus.ts's isResponseFresh).
+export async function fetchChecked(tripSlug: string, version: number): Promise<FetchedChecked> {
   const response = await fetch(
     `/api/trips/${encodeURIComponent(tripSlug)}/checked?version=${version}`
   );
@@ -34,7 +42,7 @@ export async function fetchChecked(tripSlug: string, version: number): Promise<C
     throw new Error(`Failed to load checked state: HTTP ${response.status}`);
   }
   const body = (await response.json()) as CheckedResponseBody;
-  return body.cells;
+  return { cells: body.cells, generatedAt: body.generatedAt };
 }
 
 // The only write entry point. Writes to the persisted queue synchronously,
