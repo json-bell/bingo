@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import {
+  isResponseFresh,
   isSyncFailed,
   readSyncStatus,
   recordSyncFailure,
@@ -58,22 +59,34 @@ describe("syncStatus", () => {
     });
   });
 
+  describe("isResponseFresh", () => {
+    it("is true for a response generated just now", () => {
+      expect(isResponseFresh(new Date().toISOString())).toBe(true);
+    });
+
+    it("is false for a response generated well past the staleness threshold", () => {
+      expect(isResponseFresh(new Date(Date.now() - 60_000).toISOString())).toBe(false);
+    });
+  });
+
   describe("recordSyncOutcome", () => {
     // The bit this exists to protect: a resolved GET that happened while
-    // genuinely offline (served from the service worker's NetworkFirst
-    // cache, per vite.config.ts -- indistinguishable from a live response
-    // at the fetch layer) must NOT be recorded as a fresh success, or the
-    // UI would claim "Up to date" while actually offline. isOnline is
-    // passed in rather than read from navigator.onLine here, so this is
-    // testable without touching a browser API at all.
-    it("records a success and returns true when isOnline is true", () => {
+    // genuinely offline, or while online but slower than the network
+    // timeout (served from the service worker's NetworkFirst cache, per
+    // vite.config.ts -- indistinguishable from a live response at the
+    // fetch layer) must NOT be recorded as a fresh success, or the UI would
+    // claim "Up to date" while actually showing stale data. isFresh is
+    // passed in (normally the result of isResponseFresh above) rather than
+    // computed here, so this is testable without touching a browser API or
+    // constructing a real response.
+    it("records a success and returns true when isFresh is true", () => {
       const result = recordSyncOutcome("trip", true);
       expect(result).toBe(true);
       expect(readSyncStatus("trip").lastSuccessAt).toBeDefined();
       expect(readSyncStatus("trip").lastFailureAt).toBeUndefined();
     });
 
-    it("records a failure and returns false when isOnline is false, even though the GET resolved", () => {
+    it("records a failure and returns false when isFresh is false, even though the GET resolved", () => {
       const result = recordSyncOutcome("trip", false);
       expect(result).toBe(false);
       expect(readSyncStatus("trip").lastFailureAt).toBeDefined();
@@ -81,7 +94,7 @@ describe("syncStatus", () => {
       expect(isSyncFailed(readSyncStatus("trip"))).toBe(true);
     });
 
-    it("does not overwrite an earlier genuine success's timestamp when a later offline read comes in", () => {
+    it("does not overwrite an earlier genuine success's timestamp when a later stale read comes in", () => {
       // Fake timers, with a real gap advanced between the two calls --
       // isSyncFailed compares timestamps with strict `>`, so two calls
       // fast enough to land in the same real millisecond would tie and

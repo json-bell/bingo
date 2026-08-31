@@ -39,7 +39,10 @@ export async function GET(request: Request): Promise<Response> {
       cells[row.cellId] = { checked: row.checked, updatedAt: row.updatedAt.toISOString() };
     }
 
-    return json({ slug, version, cells });
+    // generatedAt lets the client tell a live response apart from a stale
+    // one served by the service worker's NetworkFirst cache fallback
+    // (vite.config.ts) -- see src/lib/syncStatus.ts's isResponseFresh.
+    return json({ slug, version, cells, generatedAt: new Date().toISOString() });
   } catch (error) {
     console.error(`GET /api/trips/${slug}/checked failed:`, error);
     return apiError(503, "DB_UNAVAILABLE", "Could not reach the database.");

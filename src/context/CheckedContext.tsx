@@ -4,7 +4,13 @@ import { fetchChecked, saveChecked } from "../lib/checked";
 import type { CheckedCell, CheckedMap } from "../lib/checked";
 import { drain, readQueue, removeQueuedWrite } from "../lib/checkedQueue";
 import type { QueuedWrite } from "../lib/checkedQueue";
-import { isSyncFailed, readSyncStatus, recordSyncFailure, recordSyncOutcome } from "../lib/syncStatus";
+import {
+  isResponseFresh,
+  isSyncFailed,
+  readSyncStatus,
+  recordSyncFailure,
+  recordSyncOutcome,
+} from "../lib/syncStatus";
 
 // One provider per trip page (the page renders everyone's grid at once, not
 // just "your own" -- see docs/plan.md), holding a flat map keyed by cellId.
@@ -117,7 +123,7 @@ export function CheckedProvider({ tripSlug, version, children }: CheckedProvider
     { merged: CheckedMap; writes: QueuedWrite[] } | null
   > => {
     try {
-      const serverCells = await fetchChecked(tripSlug, version);
+      const { cells: serverCells, generatedAt } = await fetchChecked(tripSlug, version);
       const writes = Object.values(readQueue(tripSlug));
       const merged: CheckedMap = { ...serverCells };
       for (const write of writes) {
@@ -126,16 +132,17 @@ export function CheckedProvider({ tripSlug, version, children }: CheckedProvider
       // The service worker's NetworkFirst rule for this GET (vite.config.ts)
       // falls back to its own cache transparently -- a resolved fetch here
       // can be a genuinely live response OR a stale cache hit served while
-      // offline, and there's no way to tell which from the Response alone.
-      // navigator.onLine is the same imperfect-but-already-used signal the
-      // online-event trigger relies on; recordSyncOutcome (syncStatus.ts) is
-      // the pure decision ("online -> success, offline -> failure, either
-      // way don't claim a fresh sync from a possibly-stale cache read"),
-      // kept out of this component so it's testable without mocking a
-      // browser API. hasSyncedRef only flips on a genuine online success, so
-      // the online-event retry below still runs once real connectivity
-      // returns, to record an actual fresh sync.
-      if (recordSyncOutcome(tripSlug, navigator.onLine)) {
+      // offline (or while online but slower than the network timeout, e.g.
+      // a Neon cold start), and there's no way to tell which from the
+      // Response alone. generatedAt (the response body's own server
+      // timestamp) is what actually distinguishes them; isResponseFresh /
+      // recordSyncOutcome (syncStatus.ts) is the pure decision ("recent
+      // enough -> success, stale -> failure, don't claim a fresh sync from
+      // a possibly-stale cache read"), kept out of this component so it's
+      // testable without mocking a browser API. hasSyncedRef only flips on
+      // a genuinely fresh success, so the online-event retry below still
+      // runs once real connectivity returns, to record an actual fresh sync.
+      if (recordSyncOutcome(tripSlug, isResponseFresh(generatedAt))) {
         hasSyncedRef.current = true;
       }
       return { merged, writes };

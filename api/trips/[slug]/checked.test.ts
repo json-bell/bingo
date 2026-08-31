@@ -28,6 +28,7 @@ describe("GET /api/trips/[slug]/checked", () => {
       slug: string;
       version: number;
       cells: Record<string, { checked: boolean; updatedAt: string }>;
+      generatedAt: string;
     };
     expect(body.slug).toBe("test-trip");
     expect(body.version).toBe(1);
@@ -36,6 +37,7 @@ describe("GET /api/trips/[slug]/checked", () => {
       expect(typeof cell.checked).toBe("boolean");
       expect(new Date(cell.updatedAt).toString()).not.toBe("Invalid Date");
     }
+    expect(new Date(body.generatedAt).toString()).not.toBe("Invalid Date");
   });
 
   it("returns 200 with an empty map for an unknown/unseeded slug", async () => {

@@ -11,6 +11,7 @@ export const defaultHandlers = [
       slug: params.slug,
       version: Number(url.searchParams.get("version")) || 1,
       cells: {},
+      generatedAt: new Date().toISOString(),
     });
   }),
   http.patch("/api/checked", async ({ request }) => {
@@ -20,5 +21,8 @@ export const defaultHandlers = [
       checked: body.checked,
       updatedAt: new Date().toISOString(),
     });
+  }),
+  http.get("/api/health/db", () => {
+    return HttpResponse.json({ status: "ok", rows: 0, latencyMs: 1 });
   }),
 ];
