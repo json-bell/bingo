@@ -4,11 +4,11 @@ import type { Person } from "./people";
 // not real numbers yet (Ciara's real one is 83, per draft-ideas.md). Hand-
 // authored directly, unlike personToSong.ts -- see docs/grid-content-pipeline.md §4.
 export const shirtNumbers: Record<Person, string> = {
-  Ben: "1", // TODO: real shirt number
-  Ciara: "2", // TODO: real shirt number (83, per draft-ideas.md)
-  James: "3", // TODO: real shirt number
-  Jason: "4", // TODO: real shirt number
-  Maria: "5", // TODO: real shirt number
-  Sarah: "6", // TODO: real shirt number
-  Thomas: "7", // TODO: real shirt number
+  Ben: "11",
+  Ciara: "83",
+  James: "55",
+  Jason: "54",
+  Maria: "38",
+  Sarah: "30",
+  Thomas: "99"
 };
