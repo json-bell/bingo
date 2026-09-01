@@ -6,7 +6,3 @@ node_modules/
 .env.local
 .env*.local
 .env*
-
-# Disposable dev-preview output from data/disney-2026/scripts/generateGrids.ts --
-# random every run, not a real promoted grid version, never committed.
-grids/*/0-dev-preview.json

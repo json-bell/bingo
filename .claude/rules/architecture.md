@@ -14,14 +14,20 @@ paths:
   never pulls in another's). Adding a new slug is data + one `config/trips.json` line, no
   code changes.
 - `config/trips.json` (shape: `{ "<slug>": { "currentVersion": <n> } }`) is the *only* place
-  "which grid version is live" is decided. Every `npm run make-grid -- <slug>` run writes a
-  new auto-numbered `grids/<slug>/<n>.json` and never overwrites an existing one — promoting
-  or rolling back a version is just editing the number in this file, no renaming step.
+  "which grid version is live" is decided. Every grid-generation run (`npm run make-grid` for
+  disney-2026, `npm run make-grid:europapark-2024` for the archived CSV pipeline — see
+  `CLAUDE.md`) writes a new auto-numbered `grids/<slug>/<n>.json` and never overwrites an
+  existing one — promoting or rolling back a version is just editing the number in this file,
+  no renaming step.
 - Grid layout (which difficulty goes in which of the 25 cells, the "jersey number" and
   "free" special cells) is generator-side logic in `data/getGrids.ts` (pure — takes
   `{data, characters, people, number}`) and `data/createGrids.ts` (CLI: reads
-  `data/<slug>/{bingoes.csv,characters.ts,people.ts}`, writes the next numbered grid file),
-  not anything in `src/`. If a grid looks wrong, that's where to look — the React
+  `data/europapark-2024/{bingoes.csv,characters.ts,people.ts}`, writes the next numbered grid
+  file) for the **archived** europapark-2024 pipeline specifically. disney-2026's equivalent
+  is `data/disney-2026/generateGrids.ts` (pure — `getDisneyGrids()`) and
+  `data/disney-2026/scripts/generateGrids.ts` (CLI), a structurally different, TS-array-based
+  pipeline — see `docs/grid-content-pipeline.md`. Neither is anything in `src/`. If a grid
+  looks wrong, that's where to look — the React
   components only render whatever shape they're handed.
 - `types/trip.ts` at the repo root is the single source of truth for the shared data shapes
   (`BingoItem`, `GridCell`, `Difficulty`, `Grid`, `TripConfig`, `TripsConfig`, `LoadedTrip`)
