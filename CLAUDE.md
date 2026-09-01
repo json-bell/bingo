@@ -34,8 +34,9 @@ These are the real, verified commands for this repo. Don't guess alternatives (`
 | Preview build  | `npm run preview`                         |
 | Lint           | `npm run lint -- --quiet`                 |
 | Tests          | `npm run test` (Vitest, run-once — not watch mode) |
-| Generate a new grid version for a slug | `npm run make-grid -- <slug>` (e.g. `europapark-2024`) — also seeds the `checked` table for that version |
-| Re-seed an existing grid version's `checked` rows | `npm run seed-grid -- <slug> <version>` — the retry path when `make-grid`'s own seed step fails; see below |
+| Generate a new grid version for a slug | `npm run make-grid -- <slug>` (e.g. `europapark-2024`) — writes the local JSON only, does **not** seed any database; see below |
+| Seed a grid version's `checked` rows (local DB) | `npm run seed-grid -- <slug> <version>` |
+| Seed a grid version's `checked` rows (**production**) | `npm run seed-grid:prod -- <slug> <version>` |
 | Start local Postgres | `npm run db:up` (`docker compose up -d --wait`) |
 | Stop local Postgres | `npm run db:down` |
 | Reset local Postgres completely | `npm run db:reset` |
@@ -68,26 +69,30 @@ Superseded CSV drafts go in `data/archive/<slug>/`, not `data/<slug>/` — keeps
 accessible without digging through git history, without cluttering the directory the
 generator actually reads from.
 
-`make-grid` seeds the `checked` table (`data/seedGrid.ts`) immediately after writing the
-grid JSON — one command generates and seeds together, so the second step can't be
-forgotten. **Which database gets seeded is whichever `DATABASE_URL` is set in the
-environment when the command runs** — a human decision at generation time, not something
-inferred; seeding production means running `make-grid` with the production `DATABASE_URL`
-set. If seeding fails, **re-running `make-grid` does not retry it** — `getGrids()` is
-unseeded-random and never overwrites, so a second run mints an entirely new version with a
-different set of cell ids, orphaning the grid file that already exists. `npm run seed-grid
--- <slug> <version>` (`data/seedGridCli.ts`) is the actual retry path: it re-seeds from the
-grid file that's already on disk instead of generating a new one.
+`make-grid` and seeding are **deliberately decoupled — `make-grid` only ever writes the local
+JSON, never touches any database.** Seeding is always a separate, explicit step: `npm run
+seed-grid -- <slug> <version>` for local, `npm run seed-grid:prod -- <slug> <version>` for
+production (`data/seedGridCli.ts` in both cases — it reads the already-written
+`grids/<slug>/<version>.json` off disk and calls `seedGrid()`, so it's the only seeding path,
+not a fallback for one). This used to be folded into `make-grid` itself (one command, so the
+step "can't be forgotten") but was deliberately split apart — always requiring the explicit
+step means there's no ambiguity about *when* seeding happens or which database it hit.
+**Which database gets seeded is whichever `DATABASE_URL` is set in the environment when
+`seed-grid` (not `make-grid`) runs** — a human decision at seed time, not something inferred.
+Re-running `make-grid` after any point does **not** retry a seed and was never meant to:
+`getGrids()` is unseeded-random and never overwrites, so a second run mints an entirely new
+version with a different set of cell ids, orphaning whatever grid file already exists —
+always re-run `seed-grid` against the existing version's file, never `make-grid`.
 
-`npm run make-grid:prod`, `npm run seed-grid:prod`, and `npm run migrate:prod` are
-convenience wrappers that source `~/.config/bingo-prod.env` (`export DATABASE_URL=<pooled>`,
-`export DATABASE_URL_UNPOOLED=<unpooled>`) before running the plain command — **that file is
+`npm run seed-grid:prod` and `npm run migrate:prod` are convenience wrappers that source
+`~/.config/bingo-prod.env` (`export DATABASE_URL=<pooled>`, `export
+DATABASE_URL_UNPOOLED=<unpooled>`) before running the plain command — **that file is
 local-only, never committed, and won't exist on a fresh clone or a different machine**; the
 scripts fail cleanly with a "no such file" error in that case, which is expected, not a sign
 anything's broken. The path is deliberately hardcoded into these scripts (not a secret
 itself, only the file's contents are) so production commands don't need the real connection
-string typed inline. `seed-grid:prod` and `migrate:prod` override to the unpooled string;
-`make-grid:prod` doesn't need to, since seeding is a regular write like any other API call.
+string typed inline. `seed-grid:prod` and `migrate:prod` both override to the unpooled
+string.
 
 Requires **Node 19+**: `data/getGrids.ts` and `data/backfillCellIds.ts` call the global
 `crypto.randomUUID()` with no import (stable in Node 19+; not present at all on older
