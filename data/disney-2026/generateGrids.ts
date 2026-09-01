@@ -11,7 +11,16 @@ import type { Person } from "./people";
 // merged into the shared BingoItem/GridCell types yet.
 
 const MAX_GENERATION_ATTEMPTS = 5;
-const MAX_POSITIONING_ATTEMPTS = 20;
+// Empirically, with 3 guaranteed items spread one-per-tier (8 candidate
+// positions each), only ~17% of random combinations avoid a shared
+// row/column/diagonal -- 20 attempts (the original estimate) has a ~15%
+// chance of falsely exhausting across a 7-grid trip on bad luck alone, not
+// because the layout is actually impossible. 100 attempts is still
+// effectively free (each check is a handful of comparisons) and drops that
+// to statistically zero while still leaving the "truly impossible" case
+// (e.g. too many guaranteed items for the layout to ever satisfy) able to
+// throw.
+const MAX_POSITIONING_ATTEMPTS = 100;
 const SLOTS_PER_TIER = 8;
 // At least this fraction of pool events must appear at least twice across
 // all 7 grids, or the whole generation is rejected and retried. Placeholder

@@ -201,10 +201,14 @@ narrow, fast rejection-sampling pass runs *after* a grid's 24 items are already 
 3. If any line has more than one, reshuffle *only* the guaranteed items' index assignments
    within their tiers (not the whole grid's item selection) and recheck.
 
-Bounded at **20 attempts**, throws on exhaustion (real config issue — e.g. too many guaranteed
-items for the layout to ever satisfy — not random bad luck). This loop is intentionally
-separate from, and doesn't consume the budget of, the outer per-generation retry in §9 — it's
-cheap (a handful of marked cells, 12 line checks) and expected to converge almost immediately.
+Bounded at **100 attempts** (raised from an original estimate of 20 once implementation testing
+measured it: with 3 guaranteed items spread one-per-tier, only ~17% of random combinations
+avoid a shared line, so 20 attempts had a ~15% chance of falsely exhausting across a 7-grid trip
+on bad luck alone — 100 drops that to statistically zero at negligible cost, since each check is
+a handful of comparisons). Throws on true exhaustion (real config issue — e.g. too many
+guaranteed items for the layout to ever satisfy — not random bad luck). This loop is
+intentionally separate from, and doesn't consume the budget of, the outer per-generation retry
+in §9.
 
 ---
 
