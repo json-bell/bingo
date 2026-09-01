@@ -48,7 +48,7 @@ export const events: DisneyEvent[] = [
   {
     summary: "placeholder ride breakdown queue", // TODO
     description: "A ride breaks down while we're queuing for it",
-    difficulty: "m",
+    difficulty: "m", // easy?
     variantGroup: VariantGroup.RIDE_BREAKDOWN
   },
   {
@@ -93,7 +93,7 @@ export const events: DisneyEvent[] = [
   {
     summary: "placeholder flight on time", // TODO
     description: "Your flight's on time (< 20 mins delay)",
-    difficulty: "m",
+    difficulty: "e",
     variantGroup: VariantGroup.FLIGHT_TIMING
   },
   {
@@ -193,7 +193,7 @@ export const events: DisneyEvent[] = [
   {
     summary: "Master focus",
     description: "We go a whole day without talking about quadball",
-    difficulty: "m"
+    difficulty: "e"
   },
   {
     summary: (inputs) => `${inputs.shirtNumber} in the wild`,
@@ -205,7 +205,7 @@ export const events: DisneyEvent[] = [
   {
     summary: "placeholder security confiscated", // TODO
     description: "Someone has something confiscated at security",
-    difficulty: "m",
+    difficulty: "h",
     variantGroup: VariantGroup.SECURITY_INCIDENT
   },
   {
@@ -242,7 +242,7 @@ export const events: DisneyEvent[] = [
   {
     summary: "Trip'd up",
     description: "We see someone faceplant",
-    difficulty: "m",
+    difficulty: "e",
     variantGroup: VariantGroup.FALL
   },
   {
@@ -271,7 +271,7 @@ export const events: DisneyEvent[] = [
   {
     summary: "Bad Smuggler",
     description: "Someone's a terrible pilot on smugglers run",
-    difficulty: "m"
+    difficulty: "h"
   },
   {
     summary: "placeholder open to close", // TODO
@@ -304,12 +304,12 @@ export const events: DisneyEvent[] = [
   {
     summary: "Worth it",
     description: "Someone's quick service meal snack points is valued over $30",
-    difficulty: "m"
+    difficulty: "e"
   },
   {
     summary: "Walk-on",
     description:
       "Less than 3 mins from entering the queue to getting onto the ride",
-    difficulty: "m"
+    difficulty: "e"
   }
 ];

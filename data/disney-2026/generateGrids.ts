@@ -9,7 +9,7 @@ import type { Person } from "./people";
 // data/disney-2026/bingoes.ts's header comment for why DisneyEvent isn't
 // merged into the shared BingoItem/GridCell types yet.
 
-const MAX_GENERATION_ATTEMPTS = 5;
+const MAX_GENERATION_ATTEMPTS = 600;
 // Empirically, with 3 guaranteed items spread one-per-tier (8 candidate
 // positions each), only ~17% of random combinations avoid a shared
 // row/column/diagonal -- 20 attempts (the original estimate) has a ~15%
@@ -25,7 +25,7 @@ const SLOTS_PER_TIER = 8;
 // all 7 grids, or the whole generation is rejected and retried. Placeholder
 // policy (docs/grid-content-pipeline.md §9's example rule) -- revisit once
 // real content/pool sizes are final.
-const BALANCE_MIN_APPEARANCE_RATIO = 0.7;
+const BALANCE_MIN_APPEARANCE_RATIO = 0.99;
 
 type EventDifficulty = "e" | "m" | "h";
 
@@ -294,7 +294,7 @@ function logDistribution(
     [];
 
   events.forEach((event, i) => {
-    if (event.guaranteed) return;
+    // if (event.guaranteed) return;
     byDifficulty[event.difficulty].push(counts[i]);
     if (counts[i] <= 1) {
       sparse.push({
@@ -356,16 +356,24 @@ function logDistribution(
 }
 
 function checkBalance(counts: number[]): { ok: boolean; reason?: string } {
+  const neverAppearing = counts.some((c) => c === 0);
+  if (neverAppearing)
+    return { ok: false, reason: "❌ At least one event never appeared" };
   const appearingAtLeastTwice = counts.filter((c) => c >= 2).length;
   const ratio = counts.length ? appearingAtLeastTwice / counts.length : 1;
   if (ratio < BALANCE_MIN_APPEARANCE_RATIO) {
     return {
       ok: false,
-      reason: `only ${(ratio * 100).toFixed(0)}% of events appeared at least twice across all grids (need ${
+      reason: `❌ ${(100 - ratio * 100).toFixed(0)}% of events (${counts.length - appearingAtLeastTwice} of ${counts.length}) appeared only once across all grids (needs ${
         BALANCE_MIN_APPEARANCE_RATIO * 100
       }%)`
     };
   }
+  console.log(
+    `✅ Succeeded with ${(ratio * 100).toFixed(0)}% of events appearing at least twice (needed ${
+      BALANCE_MIN_APPEARANCE_RATIO * 100
+    }%`
+  );
   return { ok: true };
 }
 
