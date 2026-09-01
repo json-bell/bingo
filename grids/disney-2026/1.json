@@ -3,323 +3,161 @@
     [
       {
         "difficulty": "h",
-        "summary": "Meatball-less",
-        "description": "Day with no rain",
-        "id": "bc9bf264-cfe7-4239-8820-5bc911e8f84f"
+        "summary": "Bad Smuggler",
+        "description": "Someone's a terrible pilot on smugglers run",
+        "id": "0af2728d-9bec-4b4d-ba1f-3f500b8d2311"
       },
-      {
-        "difficulty": "e",
-        "summary": "placeholder family argument",
-        "description": "We see a family arguing",
-        "id": "42d50a84-b3be-46a6-9ecc-a97d42611b26"
-      },
-      {
-        "difficulty": "m",
-        "summary": "Late night wander",
-        "description": "We lose someone during fireworks (<=2 people unintentionally split)",
-        "id": "02df9fa8-0cba-4da3-a258-1851d22de406"
-      },
-      {
-        "difficulty": "e",
-        "summary": "Hidden Mickey",
-        "description": "You find a verified Hidden Mickey",
-        "id": "afdd9271-e50b-4ff9-b00d-e7f8ac8de5d8"
-      },
-      {
-        "difficulty": "h",
-        "summary": "You're wet",
-        "description": "be wettest after a water ride",
-        "id": "b5e02836-70d4-4eb2-8ae0-9bf21c3be85e"
-      }
-    ],
-    [
       {
         "difficulty": "e",
         "summary": "Apes together strong",
         "description": "Planned group photo pose goes successfully",
-        "id": "32de941b-ca54-47e6-9c64-e4802bfd320a"
-      },
-      {
-        "difficulty": "m",
-        "summary": "Y'all British?",
-        "description": "Someone mentions that's we're British or says that they love our accent?",
-        "id": "18bb657b-55ae-4c99-9d16-b09a72fd1df7"
-      },
-      {
-        "difficulty": "h",
-        "summary": "placeholder crying photo",
-        "description": "Someone's crying in a ride photo",
-        "id": "51f481ad-8752-4ccf-8a21-b5fa78aeecd8"
+        "id": "d1a2d837-54b4-42a0-b95a-e0b7f804ce70"
       },
       {
         "difficulty": "m",
         "summary": "Meme Park",
         "description": "Make a meme about the trip/with a photo from the trip which someone laughs out loud to when they first see it",
-        "id": "f71c1295-07ec-48c8-8ce4-d277cad1fa96"
+        "id": "b1cdd41b-2cd3-459d-9e71-074efda42522"
       },
       {
         "difficulty": "e",
-        "summary": "Early Bird",
-        "description": "Someone buys merch on the 1st day (easy bc of bands)",
-        "id": "bc2b7316-f66e-48d1-9e81-256e153fa1ad"
+        "summary": "Rizzler",
+        "description": "Wave at a character and get a wave back",
+        "id": "16b568ce-8d80-4b58-8865-911929a5366d"
+      },
+      {
+        "difficulty": "h",
+        "summary": "Still got it",
+        "description": "Ben gets galactic hero on buzz (or anyone else)",
+        "id": "3530848d-cfe1-4f7a-bffa-b5684f4f18ad"
+      }
+    ],
+    [
+      {
+        "difficulty": "e",
+        "summary": "Walk-on",
+        "description": "Less than 3 mins from entering the queue to getting onto the ride",
+        "id": "ee4110ae-11ee-4c69-97e8-a199ffcf2edd"
+      },
+      {
+        "difficulty": "m",
+        "summary": "Mike Wasowski'd",
+        "description": "Your face gets blocked in a ride photo (>50%)",
+        "id": "e5e8e6ca-28bf-4fdb-bd8a-f0833a960f82"
+      },
+      {
+        "difficulty": "h",
+        "summary": "We're Famous",
+        "description": "Someone recognises our group Disney bounding",
+        "id": "e8f8c710-e55d-4223-8928-439049fa0fe6"
+      },
+      {
+        "difficulty": "m",
+        "summary": "Nap time",
+        "description": "someone falls asleep during a show",
+        "id": "f050ecb2-f7b6-4c69-8dcd-ff40e34e37e2"
+      },
+      {
+        "difficulty": "e",
+        "summary": "placeholder flight on time",
+        "description": "Your flight's on time (< 20 mins delay)",
+        "id": "caeffc42-5740-46d3-a636-23369d564c1e"
       }
     ],
     [
       {
         "difficulty": "m",
-        "summary": "Banana'd",
-        "description": "We see someone banana peel fall",
-        "id": "d4bcf88b-1fda-4ed2-9b01-eb25473f7ce7"
+        "summary": "placeholder blister",
+        "description": "Someone gets a blister",
+        "id": "81707c89-eccc-4d88-afb0-b916dee4f46c"
       },
       {
         "difficulty": "h",
-        "summary": "Never had it",
-        "description": "Someone misunderstands a shooting ride in major way (wrong targets, wrong trigger, …)",
-        "id": "eef55a25-2ec3-46f0-91e0-87de766b3c5b"
+        "summary": "Jason's tipsy",
+        "description": "Jason does something that's clearly due to being tipsy/drunk",
+        "id": "bcf1eb00-3f3b-409e-a859-1723134a534c"
       },
       {
         "difficulty": "f",
         "summary": "free",
         "description": "free",
-        "id": "f3b6d821-b4bf-40c6-a47d-c74f8da93edd"
-      },
-      {
-        "difficulty": "h",
-        "summary": "End of the world",
-        "description": "Deviate from the plan (we go to a park not planned)",
-        "id": "dc4ac14f-5574-4e86-a572-63f0fb057137"
-      },
-      {
-        "difficulty": "m",
-        "summary": "Bad Smuggler",
-        "description": "Someone's a terrible pilot on smugglers run",
-        "id": "4c663b52-2c6e-4cd1-b224-7654267867a7"
-      }
-    ],
-    [
-      {
-        "difficulty": "e",
-        "summary": "Doppelganger",
-        "description": "We see a character that we are currently Disney bounding as",
-        "id": "f9ff835a-6565-47b7-be8d-647a753b32b7"
-      },
-      {
-        "difficulty": "m",
-        "summary": "placeholder security confiscated",
-        "description": "Someone has something confiscated at security",
-        "id": "2dafea77-9bbb-4345-9965-74e9640bdef1"
+        "id": "09c51332-c4ce-4712-a68c-af3c70a16f3a"
       },
       {
         "difficulty": "h",
         "summary": "This is my jam",
         "description": "We get Song B on Guardians of the Galaxy",
-        "id": "afa42ccb-35ac-42a9-8838-fdf174a81212"
+        "id": "f499b3d5-0e33-4b99-9865-f5e7223184b4"
       },
       {
         "difficulty": "m",
-        "summary": "Nap time",
-        "description": "someone falls asleep during a show",
-        "id": "3faea3cd-97f7-48a5-8375-80e1fd4ce1a6"
-      },
-      {
-        "difficulty": "e",
-        "summary": "placeholder transport nap",
-        "description": "Someone falls asleep on transport to/from the parks (no photo no proof)",
-        "id": "102065a3-c88a-4b16-9cd8-1572218366c8"
+        "summary": "Stay hydrated",
+        "description": "You have more than 5 refills in one day",
+        "id": "8febe0a9-77c0-4daa-bbe3-5b1b9578855e"
       }
     ],
     [
-      {
-        "difficulty": "h",
-        "summary": "placeholder shooter high score",
-        "description": "You're highest scorer on a shooter",
-        "id": "f219be4f-4db1-48ff-a820-3b7ce2aaddaa"
-      },
       {
         "difficulty": "e",
         "summary": "Photographer",
         "description": "Someone asks us to take their picture",
-        "id": "6c7e5096-dfcb-49d8-8fa0-1b3a19fd856b"
+        "id": "dcdb645c-f742-40e1-a50a-5f9da56f396b"
       },
       {
         "difficulty": "m",
-        "summary": "placeholder queue jumped",
-        "description": "Someone gets queue jumped",
-        "id": "1b27605c-b574-4ba0-a537-96a197b21770"
-      },
-      {
-        "difficulty": "e",
-        "summary": "placeholder open to close",
-        "description": "We're in the park from open till close (3 days)",
-        "id": "cd6bc158-591b-48ba-b67f-caa3e2243f61"
+        "summary": "Late night wander",
+        "description": "We lose someone during fireworks (<=2 people unintentionally split)",
+        "id": "3287a4be-2758-4422-951a-b5c12c51c844"
       },
       {
         "difficulty": "h",
-        "summary": "11 in the wild",
-        "description": "Find something with your shirt number (11) on it & take a picture",
-        "id": "46162684-dafa-4511-9fb8-996a6d14fd84"
-      }
-    ]
-  ],
-  [
-    [
-      {
-        "difficulty": "h",
-        "summary": "placeholder forgot swimsuit",
-        "description": "Someone forgets their swimsuit",
-        "id": "f394ae2c-1f0a-49fc-84f2-4a9e1f631760"
-      },
-      {
-        "difficulty": "e",
-        "summary": "Rizzler",
-        "description": "Wave at a character and get a wave back",
-        "id": "83fa516f-5211-43ec-93d8-e7237d2009df"
-      },
-      {
-        "difficulty": "m",
-        "summary": "placeholder show cancelled",
-        "description": "Show that we were going to see gets cancelled for weather",
-        "id": "f208002d-9ba6-4ea8-aacb-2763a1b7a54c"
-      },
-      {
-        "difficulty": "e",
-        "summary": "placeholder open to close",
-        "description": "We're in the park from open till close (3 days)",
-        "id": "fc6db1ea-d584-4608-8717-0ca3fefb9ccb"
-      },
-      {
-        "difficulty": "h",
-        "summary": "End of the world",
-        "description": "Deviate from the plan (we go to a park not planned)",
-        "id": "aadd3311-8af7-4754-ab86-4c396869d942"
-      }
-    ],
-    [
-      {
-        "difficulty": "e",
-        "summary": "Early Bird",
-        "description": "Someone buys merch on the 1st day (easy bc of bands)",
-        "id": "1cc30d1e-43db-4074-b8f6-681abdbaff41"
-      },
-      {
-        "difficulty": "m",
-        "summary": "Meme Park",
-        "description": "Make a meme about the trip/with a photo from the trip which someone laughs out loud to when they first see it",
-        "id": "b1b44409-3909-4836-ace4-de6bff8d12ca"
-      },
-      {
-        "difficulty": "h",
-        "summary": "Never had it",
-        "description": "Someone misunderstands a shooting ride in major way (wrong targets, wrong trigger, …)",
-        "id": "5c81904b-7b18-4929-a066-28f3592259e3"
-      },
-      {
-        "difficulty": "m",
-        "summary": "Master focus",
-        "description": "We go a whole day without talking about quadball",
-        "id": "cb76f8ff-4c92-442a-8d60-2f4b31fcf54c"
-      },
-      {
-        "difficulty": "e",
-        "summary": "Photographer",
-        "description": "Someone asks us to take their picture",
-        "id": "a67811f7-e167-40d1-a737-99a7a3bed051"
-      }
-    ],
-    [
-      {
-        "difficulty": "m",
-        "summary": "Lost at sea",
-        "description": "Lose someone in a water park",
-        "id": "c515387e-e1a4-41dd-87c7-b371206d36e7"
-      },
-      {
-        "difficulty": "h",
-        "summary": "You're wet",
-        "description": "be wettest after a water ride",
-        "id": "4f5624da-d0d8-4803-9358-78a4d7380f32"
-      },
-      {
-        "difficulty": "f",
-        "summary": "free",
-        "description": "free",
-        "id": "28828908-365c-4a98-8993-3df2f8370da2"
-      },
-      {
-        "difficulty": "h",
-        "summary": "83 in the wild",
-        "description": "Find something with your shirt number (83) on it & take a picture",
-        "id": "a0b2fd69-c35a-42a2-8dc4-8c695950a4cf"
-      },
-      {
-        "difficulty": "m",
-        "summary": "Bad Smuggler",
-        "description": "Someone's a terrible pilot on smugglers run",
-        "id": "bf4f89ec-b9eb-42e4-901e-40d234aa5563"
-      }
-    ],
-    [
-      {
-        "difficulty": "e",
-        "summary": "It's your birthday!",
-        "description": "We get something free because of birthday fraud",
-        "id": "61be3d37-7885-4ba6-9704-33345338903d"
+        "summary": "placeholder miss rope drop",
+        "description": "We miss rope drop",
+        "id": "6ca5f4d6-7b21-483e-b042-92eb63767edd"
       },
       {
         "difficulty": "m",
         "summary": "placeholder ride breakdown queue",
         "description": "A ride breaks down while we're queuing for it",
-        "id": "3acbe377-8a64-4aa5-9dfc-e3cbf645026d"
-      },
-      {
-        "difficulty": "h",
-        "summary": "Jason's tipsy",
-        "description": "Jason does something that's clearly due to being tipsy/drunk",
-        "id": "a00a7cf4-c7e9-4c31-b5a3-5b0c077bed78"
-      },
-      {
-        "difficulty": "m",
-        "summary": "Banana'd",
-        "description": "We see someone banana peel fall",
-        "id": "9b8acdd3-92db-4bd5-80be-4d7c99a6dfe8"
+        "id": "acb9ddf2-1fab-4557-91e6-aa1123f984b6"
       },
       {
         "difficulty": "e",
-        "summary": "placeholder transport nap",
-        "description": "Someone falls asleep on transport to/from the parks (no photo no proof)",
-        "id": "759c6352-06d5-43eb-b228-5ca8abfadce3"
+        "summary": "Trip'd up",
+        "description": "We see someone faceplant",
+        "id": "4a901e8d-f8ba-4fc0-ac4d-02ba703b2449"
       }
     ],
     [
       {
         "difficulty": "h",
-        "summary": "This is my jam",
-        "description": "We get Song A on Guardians of the Galaxy",
-        "id": "8f2ebb34-4491-4bd2-8587-e89b5b6b4683"
+        "summary": "End of the world",
+        "description": "Deviate from the plan (we go to a park not planned)",
+        "id": "a981730c-bb04-493b-b249-f5c56c90560b"
       },
       {
         "difficulty": "e",
-        "summary": "Hidden Mickey",
-        "description": "You find a verified Hidden Mickey",
-        "id": "ebb21e89-ccc6-4f71-87de-8efb92c61a88"
+        "summary": "It's your birthday!",
+        "description": "We get something free because of birthday fraud",
+        "id": "8d95ffef-a22c-4288-ba20-41c6730c4c92"
       },
       {
         "difficulty": "m",
-        "summary": "placeholder security confiscated",
-        "description": "Someone has something confiscated at security",
-        "id": "860356af-c4f4-49a3-97cd-6b9ebdedeea4"
+        "summary": "Y'all British?",
+        "description": "Someone mentions that's we're British or says that they love our accent?",
+        "id": "b74e7456-dc49-46b9-a9ed-8029df39e661"
       },
       {
         "difficulty": "e",
-        "summary": "Apes together strong",
-        "description": "Planned group photo pose goes successfully",
-        "id": "81ae0fdb-f0b5-4e46-9134-c10093a03eec"
+        "summary": "Early Bird",
+        "description": "Someone buys merch on the 1st day (easy bc of bands)",
+        "id": "9449ac42-1760-4de7-9522-fba1e80a666c"
       },
       {
         "difficulty": "h",
-        "summary": "placeholder miss rope drop",
-        "description": "We miss rope drop",
-        "id": "d090c606-e9ab-485a-897d-a059f4df0b06"
+        "summary": "11 in the wild",
+        "description": "Find something with your shirt number (11) on it & take a picture",
+        "id": "1cd1a54f-7155-46e5-9cac-3909992308ca"
       }
     ]
   ],
@@ -327,809 +165,971 @@
     [
       {
         "difficulty": "h",
-        "summary": "placeholder miss rope drop",
-        "description": "We miss rope drop",
-        "id": "3914afdd-a4cc-4fde-a0db-6ece0070b4de"
-      },
-      {
-        "difficulty": "e",
-        "summary": "It's your birthday!",
-        "description": "We get something free because of birthday fraud",
-        "id": "fcf3d2c4-93a6-4693-b097-8e36897e88d9"
-      },
-      {
-        "difficulty": "m",
-        "summary": "placeholder blister",
-        "description": "Someone gets a blister",
-        "id": "4a401ba1-eef7-4798-98e0-d605d4149a20"
-      },
-      {
-        "difficulty": "e",
-        "summary": "Photographer",
-        "description": "Someone asks us to take their picture",
-        "id": "1aeb1bbb-0123-483c-9c52-00dfd656f3a4"
-      },
-      {
-        "difficulty": "h",
-        "summary": "55 in the wild",
-        "description": "Find something with your shirt number (55) on it & take a picture",
-        "id": "2ba96b9e-561e-453f-8415-b7bc07b1ec01"
-      }
-    ],
-    [
-      {
-        "difficulty": "e",
-        "summary": "placeholder family argument",
-        "description": "We see a family arguing",
-        "id": "1cc26425-8ded-42cf-8086-873998b2bdf2"
-      },
-      {
-        "difficulty": "m",
-        "summary": "placeholder security slowdown",
-        "description": "Someone's stuff slows us down going through park security",
-        "id": "99ea3554-87d7-4b18-93c7-af52e91c4370"
-      },
-      {
-        "difficulty": "h",
-        "summary": "This is my jam",
-        "description": "We get Song F on Guardians of the Galaxy",
-        "id": "a27852e8-4367-40ad-bee2-d1f4a865e91e"
-      },
-      {
-        "difficulty": "m",
-        "summary": "We're Athletes",
-        "description": "Someone asks us about our quadball T shirts",
-        "id": "a98ce3e6-1d11-47f8-a132-09e57b960f6f"
+        "summary": "placeholder forgot jersey",
+        "description": "Someone forgets their Jersey",
+        "id": "5c797b92-48a8-41f0-80a4-3ef71fabd920"
       },
       {
         "difficulty": "e",
         "summary": "Hidden Mickey",
         "description": "You find a verified Hidden Mickey",
-        "id": "cc60fa80-d664-4b6c-a9a6-e1f1b0e6bea2"
+        "id": "88fa56a1-80da-4301-acf9-bfb9f8dfd494"
+      },
+      {
+        "difficulty": "m",
+        "summary": "Nap time",
+        "description": "someone falls asleep during a show",
+        "id": "a742737b-d19b-42f5-b057-223cbdfbc993"
+      },
+      {
+        "difficulty": "e",
+        "summary": "Master focus",
+        "description": "We go a whole day without talking about quadball",
+        "id": "5194faa7-941d-4bcc-88d1-4025ae61bea3"
+      },
+      {
+        "difficulty": "h",
+        "summary": "This is my jam",
+        "description": "We get Song A on Guardians of the Galaxy",
+        "id": "41b20da6-28f2-45c5-a151-c1f951228b03"
       }
     ],
     [
       {
-        "difficulty": "m",
-        "summary": "Late night wander",
-        "description": "We lose someone during fireworks (<=2 people unintentionally split)",
-        "id": "9cf06dcb-ef21-426c-9c60-a20f71201528"
-      },
-      {
-        "difficulty": "h",
-        "summary": "End of the world",
-        "description": "Deviate from the plan (we go to a park not planned)",
-        "id": "2078da6f-1663-468b-9ed7-97b76af1f346"
-      },
-      {
-        "difficulty": "f",
-        "summary": "free",
-        "description": "free",
-        "id": "e35c2956-8576-4cda-a37f-03606bd555fe"
-      },
-      {
-        "difficulty": "h",
-        "summary": "Never had it",
-        "description": "Someone misunderstands a shooting ride in major way (wrong targets, wrong trigger, …)",
-        "id": "3ca2f642-ceb5-4246-b2ff-73c0c93fd6fb"
+        "difficulty": "e",
+        "summary": "placeholder transport nap",
+        "description": "Someone falls asleep on transport to/from the parks (no photo no proof)",
+        "id": "a13d7483-20af-4859-91b3-ea3bbe013b54"
       },
       {
         "difficulty": "m",
         "summary": "placeholder security pat down",
         "description": "Someone gets a pat down at security",
-        "id": "4a2ecb22-7349-464e-878d-56cf7e2a9010"
-      }
-    ],
-    [
-      {
-        "difficulty": "e",
-        "summary": "Doppelganger",
-        "description": "We see a character that we are currently Disney bounding as",
-        "id": "29323779-8161-4834-a8dc-e13cfd36a14b"
-      },
-      {
-        "difficulty": "m",
-        "summary": "Nap time",
-        "description": "someone falls asleep during a show",
-        "id": "7fc5da29-560c-4f2e-aa2a-f958088c440c"
-      },
-      {
-        "difficulty": "h",
-        "summary": "placeholder shooter high score",
-        "description": "You're highest scorer on a shooter",
-        "id": "10112fa7-50c7-445a-b7db-d38a312febd5"
-      },
-      {
-        "difficulty": "m",
-        "summary": "Meme Park",
-        "description": "Make a meme about the trip/with a photo from the trip which someone laughs out loud to when they first see it",
-        "id": "b14c5d02-255e-4610-a6c9-fafe5f8f3bc4"
-      },
-      {
-        "difficulty": "e",
-        "summary": "Early Bird",
-        "description": "Someone buys merch on the 1st day (easy bc of bands)",
-        "id": "e7f6288f-1cde-4290-b975-4076ee7519ac"
-      }
-    ],
-    [
-      {
-        "difficulty": "h",
-        "summary": "You're wet",
-        "description": "be wettest after a water ride",
-        "id": "dae3131c-52a3-4374-8068-fee4df037f0b"
-      },
-      {
-        "difficulty": "e",
-        "summary": "Rizzler",
-        "description": "Wave at a character and get a wave back",
-        "id": "7e56b2e6-d27f-4aab-ae37-3502b48c0367"
-      },
-      {
-        "difficulty": "m",
-        "summary": "Y'all British?",
-        "description": "Someone mentions that's we're British or says that they love our accent?",
-        "id": "e67cb6e2-3db7-4f29-a5b7-0945993ccdd2"
-      },
-      {
-        "difficulty": "e",
-        "summary": "placeholder open to close",
-        "description": "We're in the park from open till close (3 days)",
-        "id": "b9268cdb-c962-464c-b8bb-873e537b5a30"
-      },
-      {
-        "difficulty": "h",
-        "summary": "placeholder forgot swimsuit",
-        "description": "Someone forgets their swimsuit",
-        "id": "fe8b1b49-486e-40b8-b8a8-b7cb182496da"
-      }
-    ]
-  ],
-  [
-    [
-      {
-        "difficulty": "h",
-        "summary": "End of the world",
-        "description": "Deviate from the plan (we go to a park not planned)",
-        "id": "62b3b62c-5ac6-4d9b-b42e-38b2536a419f"
-      },
-      {
-        "difficulty": "e",
-        "summary": "It's your birthday!",
-        "description": "We get something free because of birthday fraud",
-        "id": "105d3409-ba6f-44c4-b60d-8ca62ea31107"
-      },
-      {
-        "difficulty": "m",
-        "summary": "placeholder flight on time",
-        "description": "Your flight's on time (< 20 mins delay)",
-        "id": "9f0cc445-a547-4ae6-8efb-566e193a2a8e"
-      },
-      {
-        "difficulty": "e",
-        "summary": "placeholder family argument",
-        "description": "We see a family arguing",
-        "id": "f2e15600-f542-4d9a-aa08-31e6ec59bdd9"
-      },
-      {
-        "difficulty": "h",
-        "summary": "Still got it",
-        "description": "Ben gets galactic hero on buzz (or anyone else)",
-        "id": "8ba0b629-c94e-41c5-bc68-de4e86dec3db"
-      }
-    ],
-    [
-      {
-        "difficulty": "e",
-        "summary": "placeholder transport nap",
-        "description": "Someone falls asleep on transport to/from the parks (no photo no proof)",
-        "id": "6e192cd5-e349-481b-b225-1af172c31619"
-      },
-      {
-        "difficulty": "m",
-        "summary": "We're Athletes",
-        "description": "Someone asks us about our quadball T shirts",
-        "id": "87007b1a-e75c-453f-b919-0793a51237dc"
-      },
-      {
-        "difficulty": "h",
-        "summary": "54 in the wild",
-        "description": "Find something with your shirt number (54) on it & take a picture",
-        "id": "2774c44e-dc06-4668-9250-24032d068970"
-      },
-      {
-        "difficulty": "m",
-        "summary": "placeholder blister",
-        "description": "Someone gets a blister",
-        "id": "6074d244-a174-4c0d-bdd2-9abc66bb7404"
-      },
-      {
-        "difficulty": "e",
-        "summary": "Apes together strong",
-        "description": "Planned group photo pose goes successfully",
-        "id": "81af91f7-cca7-4076-82f0-aa81a111e96e"
-      }
-    ],
-    [
-      {
-        "difficulty": "m",
-        "summary": "Meme Park",
-        "description": "Make a meme about the trip/with a photo from the trip which someone laughs out loud to when they first see it",
-        "id": "c79243ed-16c0-49d1-9986-6844dfe969ca"
-      },
-      {
-        "difficulty": "h",
-        "summary": "placeholder shooter high score",
-        "description": "You're highest scorer on a shooter",
-        "id": "ec539948-431d-48e5-8613-3bba9e55a8cb"
-      },
-      {
-        "difficulty": "f",
-        "summary": "free",
-        "description": "free",
-        "id": "e259d98a-9e7c-4e14-8519-aec296563b69"
-      },
-      {
-        "difficulty": "h",
-        "summary": "We're Famous",
-        "description": "Someone recognises our group Disney bounding",
-        "id": "3a1785df-288b-4713-a1b2-e0dc0bcd3682"
-      },
-      {
-        "difficulty": "m",
-        "summary": "Lost at sea",
-        "description": "Lose someone in a water park",
-        "id": "c1bc11ce-45d9-4a44-b623-ac565126d8ab"
-      }
-    ],
-    [
-      {
-        "difficulty": "e",
-        "summary": "Hidden Mickey",
-        "description": "You find a verified Hidden Mickey",
-        "id": "bc431582-4761-4441-8e83-2235cdafa21d"
-      },
-      {
-        "difficulty": "m",
-        "summary": "Mike Wasowski'd",
-        "description": "Your face gets blocked in a ride photo (>50%)",
-        "id": "53143894-8b6e-4110-9055-93cfb80ee521"
-      },
-      {
-        "difficulty": "h",
-        "summary": "placeholder forgot jersey",
-        "description": "Someone forgets their Jersey",
-        "id": "f4f2db47-7b2f-4c96-adf5-cda86bdd15ed"
-      },
-      {
-        "difficulty": "m",
-        "summary": "Bad Smuggler",
-        "description": "Someone's a terrible pilot on smugglers run",
-        "id": "c2087b9b-82db-4dc9-add6-fe50450660b8"
-      },
-      {
-        "difficulty": "e",
-        "summary": "placeholder open to close",
-        "description": "We're in the park from open till close (3 days)",
-        "id": "cd95de07-8b40-4ae6-af7b-f59658eed708"
-      }
-    ],
-    [
-      {
-        "difficulty": "h",
-        "summary": "Jason's tipsy",
-        "description": "Jason does something that's clearly due to being tipsy/drunk",
-        "id": "a463168e-6dd9-4519-8b0c-594a0296dd2a"
-      },
-      {
-        "difficulty": "e",
-        "summary": "Photographer",
-        "description": "Someone asks us to take their picture",
-        "id": "3ff5df08-7f06-418d-871a-2f135d198d5b"
-      },
-      {
-        "difficulty": "m",
-        "summary": "placeholder ride breakdown",
-        "description": "A ride breaks down while we're on it",
-        "id": "f704bb90-f272-4463-90c2-50eeaec80878"
-      },
-      {
-        "difficulty": "e",
-        "summary": "Rizzler",
-        "description": "Wave at a character and get a wave back",
-        "id": "66046497-d857-438a-8643-a3b2735fa94f"
-      },
-      {
-        "difficulty": "h",
-        "summary": "This is my jam",
-        "description": "We get Song C on Guardians of the Galaxy",
-        "id": "01b0027a-4f6b-4546-87e4-d26d316c0160"
-      }
-    ]
-  ],
-  [
-    [
-      {
-        "difficulty": "h",
-        "summary": "placeholder forgot swimsuit",
-        "description": "Someone forgets their swimsuit",
-        "id": "6b526883-d506-45a4-8e19-895b92470215"
-      },
-      {
-        "difficulty": "e",
-        "summary": "Apes together strong",
-        "description": "Planned group photo pose goes successfully",
-        "id": "4895f600-d581-4813-b63f-dbcf6fe50486"
-      },
-      {
-        "difficulty": "m",
-        "summary": "Big Spender",
-        "description": "Someone spends more than $100 on merch",
-        "id": "5820bb1d-56f0-4c58-b842-6ad70b253bf7"
-      },
-      {
-        "difficulty": "e",
-        "summary": "Rizzler",
-        "description": "Wave at a character and get a wave back",
-        "id": "a1ee6adf-e6ff-4c7d-90af-60fce0bbe22d"
-      },
-      {
-        "difficulty": "h",
-        "summary": "Jason's tipsy",
-        "description": "Jason does something that's clearly due to being tipsy/drunk",
-        "id": "c0dd7286-e7d7-4bec-a1a7-0ba459fceb18"
-      }
-    ],
-    [
-      {
-        "difficulty": "e",
-        "summary": "placeholder transport nap",
-        "description": "Someone falls asleep on transport to/from the parks (no photo no proof)",
-        "id": "73870558-3f0a-4a20-94c7-061d1bc5b01c"
-      },
-      {
-        "difficulty": "m",
-        "summary": "Bad Smuggler",
-        "description": "Someone's a terrible pilot on smugglers run",
-        "id": "fc928bdd-c503-4f43-908d-cd4929ffbfa6"
-      },
-      {
-        "difficulty": "h",
-        "summary": "38 in the wild",
-        "description": "Find something with your shirt number (38) on it & take a picture",
-        "id": "2388fbee-801f-4690-8053-bd114348f4ee"
-      },
-      {
-        "difficulty": "m",
-        "summary": "Trip'd up",
-        "description": "We see someone faceplant",
-        "id": "daa2e0cf-0406-41e3-8f8d-35567c842c40"
-      },
-      {
-        "difficulty": "e",
-        "summary": "placeholder open to close",
-        "description": "We're in the park from open till close (3 days)",
-        "id": "08a6c0e6-d05d-4516-b548-e7e26499c76e"
-      }
-    ],
-    [
-      {
-        "difficulty": "m",
-        "summary": "Meme Park",
-        "description": "Make a meme about the trip/with a photo from the trip which someone laughs out loud to when they first see it",
-        "id": "d3c0c3c8-2378-42b2-936f-35642eff17d5"
-      },
-      {
-        "difficulty": "h",
-        "summary": "placeholder miss rope drop",
-        "description": "We miss rope drop",
-        "id": "e86cb8ea-4a6e-4bb7-996a-efe01801b702"
-      },
-      {
-        "difficulty": "f",
-        "summary": "free",
-        "description": "free",
-        "id": "ce7aabef-1afe-4d1b-9c1d-d8eb05c4d3a0"
-      },
-      {
-        "difficulty": "h",
-        "summary": "Still got it",
-        "description": "Ben gets galactic hero on buzz (or anyone else)",
-        "id": "dfc840f7-58c5-4993-87be-1bd472fa8286"
-      },
-      {
-        "difficulty": "m",
-        "summary": "Worth it",
-        "description": "Someone's quick service meal snack points is valued over $30",
-        "id": "b594ea22-3c3e-4f84-8cd6-9bc27b98d0f0"
-      }
-    ],
-    [
-      {
-        "difficulty": "e",
-        "summary": "placeholder family argument",
-        "description": "We see a family arguing",
-        "id": "f1a2680f-0773-4ef0-92a3-1367f59c095f"
-      },
-      {
-        "difficulty": "m",
-        "summary": "Y'all British?",
-        "description": "Someone mentions that's we're British or says that they love our accent?",
-        "id": "7d1a7ff6-27b8-4c41-a844-e56552b6ee04"
+        "id": "16096ee9-6e64-4c30-98b2-e62e112852d0"
       },
       {
         "difficulty": "h",
         "summary": "placeholder crying photo",
         "description": "Someone's crying in a ride photo",
-        "id": "0396432e-823a-4113-a98d-b8cc9014739a"
-      },
-      {
-        "difficulty": "m",
-        "summary": "placeholder flight delayed",
-        "description": "Your flight gets delayed (> 20 mins)",
-        "id": "39e5e10c-542d-49f3-b4fb-7a1e39c14640"
-      },
-      {
-        "difficulty": "e",
-        "summary": "Photographer",
-        "description": "Someone asks us to take their picture",
-        "id": "f4f40520-aa01-45bb-bb98-0bf82dc7e107"
-      }
-    ],
-    [
-      {
-        "difficulty": "h",
-        "summary": "Meatball-less",
-        "description": "Day with no rain",
-        "id": "9f44886a-c23a-42a0-844e-36703cdf5ae0"
-      },
-      {
-        "difficulty": "e",
-        "summary": "It's your birthday!",
-        "description": "We get something free because of birthday fraud",
-        "id": "1ded3c7b-b3e8-4be9-8d4e-2eb8db934a58"
+        "id": "c80182cd-8f86-4a2d-bb1d-27a541d2307f"
       },
       {
         "difficulty": "m",
         "summary": "We're Athletes",
         "description": "Someone asks us about our quadball T shirts",
-        "id": "c6f16a76-7ed3-4d21-9374-3e7256b7e071"
+        "id": "8eb0a4c0-851c-4987-83bd-e5662ca23af9"
       },
       {
         "difficulty": "e",
-        "summary": "Doppelganger",
-        "description": "We see a character that we are currently Disney bounding as",
-        "id": "dc011ec9-1681-4f99-a080-362fa485c95e"
-      },
-      {
-        "difficulty": "h",
-        "summary": "This is my jam",
-        "description": "We get Song D on Guardians of the Galaxy",
-        "id": "59452183-ead2-4f87-a833-5dd70b0145f2"
-      }
-    ]
-  ],
-  [
-    [
-      {
-        "difficulty": "h",
-        "summary": "This is my jam",
-        "description": "We get Song E on Guardians of the Galaxy",
-        "id": "6a72bde7-970e-4b19-9e3c-54b4a61c66de"
-      },
-      {
-        "difficulty": "e",
-        "summary": "Doppelganger",
-        "description": "We see a character that we are currently Disney bounding as",
-        "id": "d2a4ae80-ef89-4059-9163-a365dda76a76"
-      },
-      {
-        "difficulty": "m",
-        "summary": "Late night wander",
-        "description": "We lose someone during fireworks (<=2 people unintentionally split)",
-        "id": "d14db5a6-8352-4792-96a7-43faddeafcc6"
-      },
-      {
-        "difficulty": "e",
-        "summary": "placeholder family argument",
-        "description": "We see a family arguing",
-        "id": "862364ff-65b9-41be-8a2d-b323f1a9f08b"
-      },
-      {
-        "difficulty": "h",
-        "summary": "placeholder shooter high score",
-        "description": "You're highest scorer on a shooter",
-        "id": "5b95d910-876b-4f95-8318-e0c1bab58ee5"
-      }
-    ],
-    [
-      {
-        "difficulty": "e",
-        "summary": "Apes together strong",
-        "description": "Planned group photo pose goes successfully",
-        "id": "b3a74425-611f-45cf-9242-df25d7bf9da6"
-      },
-      {
-        "difficulty": "m",
-        "summary": "Walk-on",
-        "description": "Less than 3 mins from entering the queue to getting onto the ride",
-        "id": "957a1c1f-d6da-41d5-8624-ebb7c4e95dd2"
-      },
-      {
-        "difficulty": "h",
-        "summary": "30 in the wild",
-        "description": "Find something with your shirt number (30) on it & take a picture",
-        "id": "347679aa-1259-40ec-804b-cf2856078e31"
-      },
-      {
-        "difficulty": "m",
-        "summary": "Mike Wasowski'd",
-        "description": "Your face gets blocked in a ride photo (>50%)",
-        "id": "85b07d27-c0b9-4366-8f31-26370437210d"
-      },
-      {
-        "difficulty": "e",
-        "summary": "placeholder open to close",
-        "description": "We're in the park from open till close (3 days)",
-        "id": "e2d98617-0fd9-4518-835e-291f99cf3b59"
+        "summary": "Worth it",
+        "description": "Someone's quick service meal snack points is valued over $30",
+        "id": "e5874bfb-71bf-4345-9751-40a3d63a704e"
       }
     ],
     [
       {
         "difficulty": "m",
-        "summary": "placeholder show cancelled",
-        "description": "Show that we were going to see gets cancelled for weather",
-        "id": "4002dd95-d28a-4af9-8cd1-a58df7d808ac"
+        "summary": "Banana'd",
+        "description": "We see someone banana peel fall",
+        "id": "80e03687-2713-44b4-93a7-7fd404621ee5"
       },
       {
         "difficulty": "h",
-        "summary": "Meatball-less",
-        "description": "Day with no rain",
-        "id": "b62aaf90-a65c-480a-85c0-3240e9b026a1"
+        "summary": "83 in the wild",
+        "description": "Find something with your shirt number (83) on it & take a picture",
+        "id": "f246c399-b7ed-438f-af51-9bbf6e2a3a6b"
       },
       {
         "difficulty": "f",
         "summary": "free",
         "description": "free",
-        "id": "f2ecaf3f-66d5-420b-ad7c-cedde78ce361"
-      },
-      {
-        "difficulty": "h",
-        "summary": "Never had it",
-        "description": "Someone misunderstands a shooting ride in major way (wrong targets, wrong trigger, …)",
-        "id": "e1aee3c8-141f-42b3-a17b-6d4912ca49b2"
-      },
-      {
-        "difficulty": "m",
-        "summary": "placeholder ride breakdown",
-        "description": "A ride breaks down while we're on it",
-        "id": "d149f987-e802-4e6c-aebd-2900c1aac6f6"
-      }
-    ],
-    [
-      {
-        "difficulty": "e",
-        "summary": "It's your birthday!",
-        "description": "We get something free because of birthday fraud",
-        "id": "070c7125-4069-4d30-9d1b-d31d0679e3f0"
-      },
-      {
-        "difficulty": "m",
-        "summary": "Meme Park",
-        "description": "Make a meme about the trip/with a photo from the trip which someone laughs out loud to when they first see it",
-        "id": "1b2316e2-9257-4512-9657-e522181056b0"
-      },
-      {
-        "difficulty": "h",
-        "summary": "placeholder forgot jersey",
-        "description": "Someone forgets their Jersey",
-        "id": "f0f59dc7-cf57-46ef-b93f-0facf9d2938b"
-      },
-      {
-        "difficulty": "m",
-        "summary": "placeholder queue jumped",
-        "description": "Someone gets queue jumped",
-        "id": "90ec3806-662e-40c3-b3e3-faa1e728c359"
-      },
-      {
-        "difficulty": "e",
-        "summary": "Rizzler",
-        "description": "Wave at a character and get a wave back",
-        "id": "b362e771-7360-4791-82f4-06a0bffd5076"
-      }
-    ],
-    [
-      {
-        "difficulty": "h",
-        "summary": "placeholder miss rope drop",
-        "description": "We miss rope drop",
-        "id": "d3624da1-8e86-4a9a-92f1-c177a026492d"
-      },
-      {
-        "difficulty": "e",
-        "summary": "placeholder transport nap",
-        "description": "Someone falls asleep on transport to/from the parks (no photo no proof)",
-        "id": "dcb0880e-048e-4717-bfb3-6ad892328772"
-      },
-      {
-        "difficulty": "m",
-        "summary": "placeholder security confiscated",
-        "description": "Someone has something confiscated at security",
-        "id": "e43a0aa3-8554-4070-8f62-3ff13da13e69"
-      },
-      {
-        "difficulty": "e",
-        "summary": "Photographer",
-        "description": "Someone asks us to take their picture",
-        "id": "48f472f9-9cfe-495d-996b-bc7cfac0ed35"
-      },
-      {
-        "difficulty": "h",
-        "summary": "You're wet",
-        "description": "be wettest after a water ride",
-        "id": "c6c07b22-7684-4674-9adc-8e89f0d662ec"
-      }
-    ]
-  ],
-  [
-    [
-      {
-        "difficulty": "h",
-        "summary": "Still got it",
-        "description": "Ben gets galactic hero on buzz (or anyone else)",
-        "id": "e563e040-ee3d-43c2-8935-83ff33bda3ed"
-      },
-      {
-        "difficulty": "e",
-        "summary": "Early Bird",
-        "description": "Someone buys merch on the 1st day (easy bc of bands)",
-        "id": "3dd81a05-6167-488c-b5d0-ed35a746ae30"
-      },
-      {
-        "difficulty": "m",
-        "summary": "We're Athletes",
-        "description": "Someone asks us about our quadball T shirts",
-        "id": "dba4261f-3a18-444c-aaab-4e3fc2c3b727"
-      },
-      {
-        "difficulty": "e",
-        "summary": "placeholder transport nap",
-        "description": "Someone falls asleep on transport to/from the parks (no photo no proof)",
-        "id": "e12195c3-1fb5-4e9e-82ce-0c128dc8ff12"
-      },
-      {
-        "difficulty": "h",
-        "summary": "placeholder miss rope drop",
-        "description": "We miss rope drop",
-        "id": "86a28d05-bdf0-4a60-b646-a3c872da6cbb"
-      }
-    ],
-    [
-      {
-        "difficulty": "e",
-        "summary": "placeholder family argument",
-        "description": "We see a family arguing",
-        "id": "42f2c556-9acb-48dd-9b49-9eddfc15e2b3"
-      },
-      {
-        "difficulty": "m",
-        "summary": "Meme Park",
-        "description": "Make a meme about the trip/with a photo from the trip which someone laughs out loud to when they first see it",
-        "id": "8240754c-0054-48a5-87ee-658dc1fa94a1"
-      },
-      {
-        "difficulty": "h",
-        "summary": "We're Famous",
-        "description": "Someone recognises our group Disney bounding",
-        "id": "6a05115e-567a-465e-9d37-715872ba0401"
-      },
-      {
-        "difficulty": "m",
-        "summary": "Lost at sea",
-        "description": "Lose someone in a water park",
-        "id": "3763db9c-5201-43d8-824b-f473c3bae33e"
-      },
-      {
-        "difficulty": "e",
-        "summary": "Photographer",
-        "description": "Someone asks us to take their picture",
-        "id": "56f6c70b-f76e-4074-ae3a-d1e64ad39a84"
-      }
-    ],
-    [
-      {
-        "difficulty": "m",
-        "summary": "Y'all British?",
-        "description": "Someone mentions that's we're British or says that they love our accent?",
-        "id": "945c4045-5529-4a26-8c15-199ea51765bf"
-      },
-      {
-        "difficulty": "h",
-        "summary": "Jason's tipsy",
-        "description": "Jason does something that's clearly due to being tipsy/drunk",
-        "id": "8f1e8d51-5d6b-4f16-9b08-eb0578048d62"
-      },
-      {
-        "difficulty": "f",
-        "summary": "free",
-        "description": "free",
-        "id": "3ec5a957-6ed8-4c05-88be-a5c548d35094"
-      },
-      {
-        "difficulty": "h",
-        "summary": "This is my jam",
-        "description": "We get Song E on Guardians of the Galaxy",
-        "id": "eebe4ae8-bd58-4c69-b4e7-b55eddbd2767"
-      },
-      {
-        "difficulty": "m",
-        "summary": "placeholder security confiscated",
-        "description": "Someone has something confiscated at security",
-        "id": "ce667c7b-53d1-4d90-a614-9a0c0c553bfd"
-      }
-    ],
-    [
-      {
-        "difficulty": "e",
-        "summary": "Doppelganger",
-        "description": "We see a character that we are currently Disney bounding as",
-        "id": "3d405529-edea-4a4a-8d2c-f288e8212424"
-      },
-      {
-        "difficulty": "m",
-        "summary": "placeholder blister",
-        "description": "Someone gets a blister",
-        "id": "18e13c42-a5aa-4d41-b8e1-5db0bd40c2e2"
-      },
-      {
-        "difficulty": "h",
-        "summary": "99 in the wild",
-        "description": "Find something with your shirt number (99) on it & take a picture",
-        "id": "d3052a22-502b-47e7-8a47-9fac92bf7dee"
-      },
-      {
-        "difficulty": "m",
-        "summary": "Bad Smuggler",
-        "description": "Someone's a terrible pilot on smugglers run",
-        "id": "c7fb8cf6-899d-4431-bb72-096837f3ad50"
-      },
-      {
-        "difficulty": "e",
-        "summary": "Apes together strong",
-        "description": "Planned group photo pose goes successfully",
-        "id": "5d888d2d-e7ba-47a3-a209-b0148d12816d"
-      }
-    ],
-    [
-      {
-        "difficulty": "h",
-        "summary": "placeholder shooter high score",
-        "description": "You're highest scorer on a shooter",
-        "id": "4b82b017-f909-46ab-b4bf-8d631909aaca"
-      },
-      {
-        "difficulty": "e",
-        "summary": "Hidden Mickey",
-        "description": "You find a verified Hidden Mickey",
-        "id": "b2f6ca2c-c605-41ea-bf5e-a6a415facdc0"
-      },
-      {
-        "difficulty": "m",
-        "summary": "Nap time",
-        "description": "someone falls asleep during a show",
-        "id": "4787a83c-2e0a-4003-9735-c4457db549bd"
-      },
-      {
-        "difficulty": "e",
-        "summary": "placeholder open to close",
-        "description": "We're in the park from open till close (3 days)",
-        "id": "08e2b121-4457-454b-8e7f-9bd29faecb8d"
+        "id": "024ed486-f54d-42cb-9628-2c368ff39ed1"
       },
       {
         "difficulty": "h",
         "summary": "End of the world",
         "description": "Deviate from the plan (we go to a park not planned)",
-        "id": "64849b3c-1eff-473b-9b75-a91277c11d5d"
+        "id": "37ff9a1b-eea1-41e4-a183-1d5b16601700"
+      },
+      {
+        "difficulty": "m",
+        "summary": "placeholder show cancelled",
+        "description": "Show that we were going to see gets cancelled for weather",
+        "id": "79181c3a-a029-4021-9c45-95f19a817140"
+      }
+    ],
+    [
+      {
+        "difficulty": "e",
+        "summary": "placeholder open to close",
+        "description": "We're in the park from open till close (3 days)",
+        "id": "4025b628-0f97-4edf-845d-afffbfde045d"
+      },
+      {
+        "difficulty": "m",
+        "summary": "placeholder flight delayed",
+        "description": "Your flight gets delayed (> 20 mins)",
+        "id": "a8f4360a-2ede-481c-9531-c6f40196359f"
+      },
+      {
+        "difficulty": "h",
+        "summary": "placeholder miss rope drop",
+        "description": "We miss rope drop",
+        "id": "b6dd5fa1-28b1-4956-a60b-14ab2ee2c2ed"
+      },
+      {
+        "difficulty": "m",
+        "summary": "placeholder queue jumped",
+        "description": "Someone gets queue jumped",
+        "id": "28a27ebe-d81b-4769-810f-bfa54a73cc0c"
+      },
+      {
+        "difficulty": "e",
+        "summary": "Early Bird",
+        "description": "Someone buys merch on the 1st day (easy bc of bands)",
+        "id": "50ecdf16-e3b4-4280-8a11-9ba8ab5016b6"
+      }
+    ],
+    [
+      {
+        "difficulty": "h",
+        "summary": "Never had it",
+        "description": "Someone misunderstands a shooting ride in major way (wrong targets, wrong trigger, …)",
+        "id": "fb83297b-1bdf-4535-8970-9bd4bad890fb"
+      },
+      {
+        "difficulty": "e",
+        "summary": "Rizzler",
+        "description": "Wave at a character and get a wave back",
+        "id": "fe29fcae-6548-4da0-b57e-69e5c01768cf"
+      },
+      {
+        "difficulty": "m",
+        "summary": "Meme Park",
+        "description": "Make a meme about the trip/with a photo from the trip which someone laughs out loud to when they first see it",
+        "id": "985c629e-20fa-42b4-9e71-f86241c4e8f1"
+      },
+      {
+        "difficulty": "e",
+        "summary": "Photographer",
+        "description": "Someone asks us to take their picture",
+        "id": "fd7ac77a-e3ae-43e2-9920-8ef947325631"
+      },
+      {
+        "difficulty": "h",
+        "summary": "Bad Smuggler",
+        "description": "Someone's a terrible pilot on smugglers run",
+        "id": "9e057b73-026a-44ab-b957-434b7628cf63"
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "difficulty": "h",
+        "summary": "placeholder crying photo",
+        "description": "Someone's crying in a ride photo",
+        "id": "de4185b2-15ea-4d4d-a00e-d11f06696a50"
+      },
+      {
+        "difficulty": "e",
+        "summary": "placeholder open to close",
+        "description": "We're in the park from open till close (3 days)",
+        "id": "44a57f8b-aa94-496a-beb3-ba83362e69b8"
+      },
+      {
+        "difficulty": "m",
+        "summary": "placeholder security slowdown",
+        "description": "Someone's stuff slows us down going through park security",
+        "id": "c876106c-3ba9-4740-b685-cb793c07a595"
+      },
+      {
+        "difficulty": "e",
+        "summary": "Worth it",
+        "description": "Someone's quick service meal snack points is valued over $30",
+        "id": "006f8706-67f1-4d78-87c7-b3fe39c870c7"
+      },
+      {
+        "difficulty": "h",
+        "summary": "55 in the wild",
+        "description": "Find something with your shirt number (55) on it & take a picture",
+        "id": "abdd698e-7587-4da6-bce8-91510862e54a"
+      }
+    ],
+    [
+      {
+        "difficulty": "e",
+        "summary": "Rizzler",
+        "description": "Wave at a character and get a wave back",
+        "id": "a9bb508e-f717-481c-9ebd-088ed2bb22de"
+      },
+      {
+        "difficulty": "m",
+        "summary": "We're Athletes",
+        "description": "Someone asks us about our quadball T shirts",
+        "id": "675f86ab-7ec9-4f78-bbe2-4d63bb96dc9d"
+      },
+      {
+        "difficulty": "h",
+        "summary": "This is my jam",
+        "description": "We get Song F on Guardians of the Galaxy",
+        "id": "c3a91e43-a5a7-4840-9fe5-d2e4f396973b"
+      },
+      {
+        "difficulty": "m",
+        "summary": "Mike Wasowski'd",
+        "description": "Your face gets blocked in a ride photo (>50%)",
+        "id": "1c8099ae-3d72-4894-b325-eb671d844bf5"
+      },
+      {
+        "difficulty": "e",
+        "summary": "Master focus",
+        "description": "We go a whole day without talking about quadball",
+        "id": "db2c8819-9b7f-4012-ae20-0344c8bb0880"
+      }
+    ],
+    [
+      {
+        "difficulty": "m",
+        "summary": "placeholder queue jumped",
+        "description": "Someone gets queue jumped",
+        "id": "8b090d45-9f07-4c0e-8e3c-41c600239fbc"
+      },
+      {
+        "difficulty": "h",
+        "summary": "Meatball-less",
+        "description": "Day with no rain",
+        "id": "2477255d-e898-4421-bcaf-2e68c6fe7c23"
+      },
+      {
+        "difficulty": "f",
+        "summary": "free",
+        "description": "free",
+        "id": "a32be38a-69ee-4dae-9fee-11bcf8b79a02"
+      },
+      {
+        "difficulty": "h",
+        "summary": "We're Famous",
+        "description": "Someone recognises our group Disney bounding",
+        "id": "438f5d91-2a22-495b-86e5-ddd1aed75622"
+      },
+      {
+        "difficulty": "m",
+        "summary": "Big Spender",
+        "description": "Someone spends more than $100 on merch",
+        "id": "8b0fb995-3037-468a-9ce0-b9677c9809f5"
+      }
+    ],
+    [
+      {
+        "difficulty": "e",
+        "summary": "Apes together strong",
+        "description": "Planned group photo pose goes successfully",
+        "id": "bdda5f52-a194-45d3-bb81-88cd3c693572"
+      },
+      {
+        "difficulty": "m",
+        "summary": "Lost at sea",
+        "description": "Lose someone in a water park",
+        "id": "183cfca7-a405-4810-856d-7b5c65e9872c"
+      },
+      {
+        "difficulty": "h",
+        "summary": "Never had it",
+        "description": "Someone misunderstands a shooting ride in major way (wrong targets, wrong trigger, …)",
+        "id": "f331a4c3-591f-490f-afc9-5e200fd5eb69"
+      },
+      {
+        "difficulty": "m",
+        "summary": "Meme Park",
+        "description": "Make a meme about the trip/with a photo from the trip which someone laughs out loud to when they first see it",
+        "id": "19b357ce-880b-4b9f-99f7-c970f477e31e"
+      },
+      {
+        "difficulty": "e",
+        "summary": "It's your birthday!",
+        "description": "We get something free because of birthday fraud",
+        "id": "448e3f9d-5ed1-47f6-9498-2aab71f143e1"
+      }
+    ],
+    [
+      {
+        "difficulty": "h",
+        "summary": "You're wet",
+        "description": "be wettest after a water ride",
+        "id": "8fdbc2eb-8371-4139-abf5-6e98d2f57589"
+      },
+      {
+        "difficulty": "e",
+        "summary": "Photographer",
+        "description": "Someone asks us to take their picture",
+        "id": "135bc573-1759-4881-9536-e10b7f979688"
+      },
+      {
+        "difficulty": "m",
+        "summary": "Banana'd",
+        "description": "We see someone banana peel fall",
+        "id": "7305120f-31a3-4973-a28f-ddcd1380bed2"
+      },
+      {
+        "difficulty": "e",
+        "summary": "placeholder family argument",
+        "description": "We see a family arguing",
+        "id": "8f24c8da-6962-4681-881e-e09dfb679456"
+      },
+      {
+        "difficulty": "h",
+        "summary": "placeholder security confiscated",
+        "description": "Someone has something confiscated at security",
+        "id": "58b820ce-4a9d-4587-b3bf-e4d811766cf5"
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "difficulty": "h",
+        "summary": "54 in the wild",
+        "description": "Find something with your shirt number (54) on it & take a picture",
+        "id": "c321ef80-2a47-4f6d-94fc-e27dc369f01b"
+      },
+      {
+        "difficulty": "e",
+        "summary": "Hidden Mickey",
+        "description": "You find a verified Hidden Mickey",
+        "id": "f7f8f3f8-4f08-45e7-9936-235083ad0fe2"
+      },
+      {
+        "difficulty": "m",
+        "summary": "placeholder security pat down",
+        "description": "Someone gets a pat down at security",
+        "id": "4f6eb38e-0dc6-4e68-8e4c-cc1f77620407"
+      },
+      {
+        "difficulty": "e",
+        "summary": "It's your birthday!",
+        "description": "We get something free because of birthday fraud",
+        "id": "cbd9f50c-1185-43b0-b096-f3335d92ffd4"
+      },
+      {
+        "difficulty": "h",
+        "summary": "Bad Smuggler",
+        "description": "Someone's a terrible pilot on smugglers run",
+        "id": "6707cc43-2a50-4519-a856-f9c3687ee899"
+      }
+    ],
+    [
+      {
+        "difficulty": "e",
+        "summary": "placeholder transport nap",
+        "description": "Someone falls asleep on transport to/from the parks (no photo no proof)",
+        "id": "1ace009b-9da0-4917-9c26-75c3e50c9862"
+      },
+      {
+        "difficulty": "m",
+        "summary": "We're Athletes",
+        "description": "Someone asks us about our quadball T shirts",
+        "id": "343d0764-7bf3-4671-8497-c080b7c8c850"
+      },
+      {
+        "difficulty": "h",
+        "summary": "placeholder crying photo",
+        "description": "Someone's crying in a ride photo",
+        "id": "bd30c26f-98da-4c32-8757-d7f8085c19cc"
+      },
+      {
+        "difficulty": "m",
+        "summary": "Y'all British?",
+        "description": "Someone mentions that's we're British or says that they love our accent?",
+        "id": "948f0b2e-a87a-49ed-9d55-5b410dbac45f"
+      },
+      {
+        "difficulty": "e",
+        "summary": "Master focus",
+        "description": "We go a whole day without talking about quadball",
+        "id": "8366389f-c35e-4b69-8a2e-35a45028f9fb"
+      }
+    ],
+    [
+      {
+        "difficulty": "m",
+        "summary": "placeholder security slowdown",
+        "description": "Someone's stuff slows us down going through park security",
+        "id": "acec6888-e5bd-457e-b1f5-bf353d3726ab"
+      },
+      {
+        "difficulty": "h",
+        "summary": "Meatball-less",
+        "description": "Day with no rain",
+        "id": "38363e0b-a404-46a0-ab02-dc7813b03f64"
+      },
+      {
+        "difficulty": "f",
+        "summary": "free",
+        "description": "free",
+        "id": "974502b3-7ed4-4b13-a1bd-a5c802acd26b"
+      },
+      {
+        "difficulty": "h",
+        "summary": "This is my jam",
+        "description": "We get Song C on Guardians of the Galaxy",
+        "id": "80c9aaac-a680-46a7-80fe-fe54568828f5"
+      },
+      {
+        "difficulty": "m",
+        "summary": "Mike Wasowski'd",
+        "description": "Your face gets blocked in a ride photo (>50%)",
+        "id": "4a514428-dd46-4495-bacf-0cce78589ab0"
+      }
+    ],
+    [
+      {
+        "difficulty": "e",
+        "summary": "Apes together strong",
+        "description": "Planned group photo pose goes successfully",
+        "id": "1a7e341e-3e94-40f3-85ae-8f078f97b5e1"
+      },
+      {
+        "difficulty": "m",
+        "summary": "Meme Park",
+        "description": "Make a meme about the trip/with a photo from the trip which someone laughs out loud to when they first see it",
+        "id": "5d5e1c5c-1a89-423a-8046-7a9758369c87"
+      },
+      {
+        "difficulty": "h",
+        "summary": "placeholder forgot swimsuit",
+        "description": "Someone forgets their swimsuit",
+        "id": "ccad8fd2-1e44-4563-b582-5730b5ce2bf0"
+      },
+      {
+        "difficulty": "m",
+        "summary": "Late night wander",
+        "description": "We lose someone during fireworks (<=2 people unintentionally split)",
+        "id": "61583c3f-c13c-4d4c-9ccf-dd657aaf5d54"
+      },
+      {
+        "difficulty": "e",
+        "summary": "Doppelganger",
+        "description": "We see a character that we are currently Disney bounding as",
+        "id": "14585424-a226-49e5-97f9-e1d195e261b4"
+      }
+    ],
+    [
+      {
+        "difficulty": "h",
+        "summary": "Ben's tipsy",
+        "description": "Ben does something that's clearly due to being tipsy/drunk",
+        "id": "9fef0449-3a8f-4c06-8324-bf156a9dfc5c"
+      },
+      {
+        "difficulty": "e",
+        "summary": "placeholder family argument",
+        "description": "We see a family arguing",
+        "id": "82178c1e-a9dd-429a-b1e7-7817d8fca485"
+      },
+      {
+        "difficulty": "m",
+        "summary": "Stay hydrated",
+        "description": "You have more than 5 refills in one day",
+        "id": "b887d830-d464-4bf9-8558-1f3c562360e8"
+      },
+      {
+        "difficulty": "e",
+        "summary": "Trip'd up",
+        "description": "We see someone faceplant",
+        "id": "eddc7389-963e-4ed3-9f5a-43d0597e8ef4"
+      },
+      {
+        "difficulty": "h",
+        "summary": "placeholder shooter high score",
+        "description": "You're highest scorer on a shooter",
+        "id": "2abfdece-75de-4557-afb3-b8b9c104624d"
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "difficulty": "h",
+        "summary": "placeholder forgot swimsuit",
+        "description": "Someone forgets their swimsuit",
+        "id": "e975fc39-01fd-4fc5-83b9-1d4c77e539b2"
+      },
+      {
+        "difficulty": "e",
+        "summary": "Trip'd up",
+        "description": "We see someone faceplant",
+        "id": "4d3ab700-9579-4cf6-a123-2f77f76b1157"
+      },
+      {
+        "difficulty": "m",
+        "summary": "Lost at sea",
+        "description": "Lose someone in a water park",
+        "id": "e45faa1b-9405-4954-a2b2-7b1dcd2444a2"
+      },
+      {
+        "difficulty": "e",
+        "summary": "Hidden Mickey",
+        "description": "You find a verified Hidden Mickey",
+        "id": "0a3b275a-77f9-4119-a446-698e1792e2dd"
+      },
+      {
+        "difficulty": "h",
+        "summary": "placeholder shooter high score",
+        "description": "You're highest scorer on a shooter",
+        "id": "de2503cf-d751-4649-a168-632e3f4c652d"
+      }
+    ],
+    [
+      {
+        "difficulty": "e",
+        "summary": "Master focus",
+        "description": "We go a whole day without talking about quadball",
+        "id": "60fc550b-4c54-4da7-b91e-b8a4e5d8c236"
+      },
+      {
+        "difficulty": "m",
+        "summary": "placeholder ride breakdown",
+        "description": "A ride breaks down while we're on it",
+        "id": "c5a6dc5c-4d14-4ee4-86cb-e897ed9d3eca"
+      },
+      {
+        "difficulty": "h",
+        "summary": "Never had it",
+        "description": "Someone misunderstands a shooting ride in major way (wrong targets, wrong trigger, …)",
+        "id": "fb11f936-0311-4e47-a53b-18bc533492d3"
+      },
+      {
+        "difficulty": "m",
+        "summary": "placeholder show cancelled",
+        "description": "Show that we were going to see gets cancelled for weather",
+        "id": "839d401f-3348-4cbe-9f7a-ae180a3324f3"
+      },
+      {
+        "difficulty": "e",
+        "summary": "Apes together strong",
+        "description": "Planned group photo pose goes successfully",
+        "id": "695c7a14-c8d8-4f66-9a10-751b9a91a5b4"
+      }
+    ],
+    [
+      {
+        "difficulty": "m",
+        "summary": "Stay hydrated",
+        "description": "You have more than 5 refills in one day",
+        "id": "8ef6d6f7-d09c-4576-b192-1e1fcac3282c"
+      },
+      {
+        "difficulty": "h",
+        "summary": "38 in the wild",
+        "description": "Find something with your shirt number (38) on it & take a picture",
+        "id": "07c48d47-a728-44c4-b752-39b88f4540cb"
+      },
+      {
+        "difficulty": "f",
+        "summary": "free",
+        "description": "free",
+        "id": "2fa0d724-2c09-48c8-829a-eb6f695a8ce6"
+      },
+      {
+        "difficulty": "h",
+        "summary": "placeholder security confiscated",
+        "description": "Someone has something confiscated at security",
+        "id": "8c416a5e-affe-4295-9f21-a1edb7fd548f"
+      },
+      {
+        "difficulty": "m",
+        "summary": "placeholder security slowdown",
+        "description": "Someone's stuff slows us down going through park security",
+        "id": "eb49fb5b-e0df-4d89-8d05-58ec8f69d81a"
+      }
+    ],
+    [
+      {
+        "difficulty": "e",
+        "summary": "Doppelganger",
+        "description": "We see a character that we are currently Disney bounding as",
+        "id": "b56e6ced-feae-4ab1-9d30-3f14ef0a8ed5"
+      },
+      {
+        "difficulty": "m",
+        "summary": "placeholder flight delayed",
+        "description": "Your flight gets delayed (> 20 mins)",
+        "id": "863b4f69-2279-4a33-9966-a75804b66d3f"
+      },
+      {
+        "difficulty": "h",
+        "summary": "Jason's tipsy",
+        "description": "Jason does something that's clearly due to being tipsy/drunk",
+        "id": "f756007a-da4d-4b0c-8148-62fe141ff11f"
+      },
+      {
+        "difficulty": "m",
+        "summary": "Meme Park",
+        "description": "Make a meme about the trip/with a photo from the trip which someone laughs out loud to when they first see it",
+        "id": "65e62dca-033f-47b6-90ca-8ae1eb3ab5fe"
+      },
+      {
+        "difficulty": "e",
+        "summary": "Rizzler",
+        "description": "Wave at a character and get a wave back",
+        "id": "63663a79-b294-42c0-a2de-52c4058e7b52"
+      }
+    ],
+    [
+      {
+        "difficulty": "h",
+        "summary": "This is my jam",
+        "description": "We get Song D on Guardians of the Galaxy",
+        "id": "6e2c60f1-7dca-4fa6-9c9c-533566746c4f"
+      },
+      {
+        "difficulty": "e",
+        "summary": "Early Bird",
+        "description": "Someone buys merch on the 1st day (easy bc of bands)",
+        "id": "8fad7da4-094b-44c1-9c8c-3000aefdb273"
+      },
+      {
+        "difficulty": "m",
+        "summary": "We're Athletes",
+        "description": "Someone asks us about our quadball T shirts",
+        "id": "2efb07df-0969-4815-918f-79b0300db006"
+      },
+      {
+        "difficulty": "e",
+        "summary": "Photographer",
+        "description": "Someone asks us to take their picture",
+        "id": "b0adff91-ceb0-4da1-a8a2-bed6b7ddbd46"
+      },
+      {
+        "difficulty": "h",
+        "summary": "You're wet",
+        "description": "be wettest after a water ride",
+        "id": "ff74e98c-f8c2-4464-af7d-d48b052f9696"
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "difficulty": "h",
+        "summary": "placeholder forgot swimsuit",
+        "description": "Someone forgets their swimsuit",
+        "id": "a228d188-da81-4a50-9bb3-766621e48aed"
+      },
+      {
+        "difficulty": "e",
+        "summary": "placeholder open to close",
+        "description": "We're in the park from open till close (3 days)",
+        "id": "f2cd92ac-a8ae-407b-a491-46c520b0eb7e"
+      },
+      {
+        "difficulty": "m",
+        "summary": "Big Spender",
+        "description": "Someone spends more than $100 on merch",
+        "id": "ba9a1ba1-af24-4717-9dc4-41dd523d47c4"
+      },
+      {
+        "difficulty": "e",
+        "summary": "Trip'd up",
+        "description": "We see someone faceplant",
+        "id": "affd97de-bf66-4b13-970b-7bc702c86361"
+      },
+      {
+        "difficulty": "h",
+        "summary": "placeholder security confiscated",
+        "description": "Someone has something confiscated at security",
+        "id": "9fc6dfd4-ec07-45b6-90bd-63643c619222"
+      }
+    ],
+    [
+      {
+        "difficulty": "e",
+        "summary": "It's your birthday!",
+        "description": "We get something free because of birthday fraud",
+        "id": "615d6680-a24e-4861-93a5-8b8d7cbb6a6c"
+      },
+      {
+        "difficulty": "m",
+        "summary": "Lost at sea",
+        "description": "Lose someone in a water park",
+        "id": "ad722068-215c-44a4-b216-8835f67f6111"
+      },
+      {
+        "difficulty": "h",
+        "summary": "Ben's tipsy",
+        "description": "Ben does something that's clearly due to being tipsy/drunk",
+        "id": "410f355a-7e33-40b3-91bd-250571eaaca1"
+      },
+      {
+        "difficulty": "m",
+        "summary": "placeholder ride breakdown",
+        "description": "A ride breaks down while we're on it",
+        "id": "aebe171c-11ef-46f9-afeb-62a96a575206"
+      },
+      {
+        "difficulty": "e",
+        "summary": "Master focus",
+        "description": "We go a whole day without talking about quadball",
+        "id": "69a46eb0-e65b-463e-96df-68aa2561f9c6"
+      }
+    ],
+    [
+      {
+        "difficulty": "m",
+        "summary": "Nap time",
+        "description": "someone falls asleep during a show",
+        "id": "38949242-2676-4a77-83e2-5f4e4277cc2c"
+      },
+      {
+        "difficulty": "h",
+        "summary": "You're wet",
+        "description": "be wettest after a water ride",
+        "id": "3473303f-9529-40d8-a3d7-9a329908722c"
+      },
+      {
+        "difficulty": "f",
+        "summary": "free",
+        "description": "free",
+        "id": "ea649989-9813-435d-afeb-303a408420ca"
+      },
+      {
+        "difficulty": "h",
+        "summary": "30 in the wild",
+        "description": "Find something with your shirt number (30) on it & take a picture",
+        "id": "d9cf42b2-45a2-488a-af77-65f4ecaef2ea"
+      },
+      {
+        "difficulty": "m",
+        "summary": "placeholder flight delayed",
+        "description": "Your flight gets delayed (> 20 mins)",
+        "id": "432041fe-6150-4802-be16-a0b7898965b5"
+      }
+    ],
+    [
+      {
+        "difficulty": "e",
+        "summary": "Walk-on",
+        "description": "Less than 3 mins from entering the queue to getting onto the ride",
+        "id": "bd47264d-1fcc-4822-a467-ac55c3e21e85"
+      },
+      {
+        "difficulty": "m",
+        "summary": "Meme Park",
+        "description": "Make a meme about the trip/with a photo from the trip which someone laughs out loud to when they first see it",
+        "id": "977c5e29-9c3c-4e7c-8967-36e24fd2b2a2"
+      },
+      {
+        "difficulty": "h",
+        "summary": "placeholder miss rope drop",
+        "description": "We miss rope drop",
+        "id": "0a856319-e242-47a2-85de-1897e82fc652"
+      },
+      {
+        "difficulty": "m",
+        "summary": "We're Athletes",
+        "description": "Someone asks us about our quadball T shirts",
+        "id": "77d49d94-7795-44a9-917b-7e10af49b973"
+      },
+      {
+        "difficulty": "e",
+        "summary": "Photographer",
+        "description": "Someone asks us to take their picture",
+        "id": "b5904e59-911d-4aea-bd71-f118a3c7ca55"
+      }
+    ],
+    [
+      {
+        "difficulty": "h",
+        "summary": "Meatball-less",
+        "description": "Day with no rain",
+        "id": "45858d6a-1a3c-44c9-ac37-1c502355f50c"
+      },
+      {
+        "difficulty": "e",
+        "summary": "Doppelganger",
+        "description": "We see a character that we are currently Disney bounding as",
+        "id": "13188ba3-5310-446d-a07f-1acdfba92b5f"
+      },
+      {
+        "difficulty": "m",
+        "summary": "placeholder blister",
+        "description": "Someone gets a blister",
+        "id": "c5de49b8-7e18-4814-a838-cbc9e651f39e"
+      },
+      {
+        "difficulty": "e",
+        "summary": "placeholder family argument",
+        "description": "We see a family arguing",
+        "id": "2e1843f7-eff3-49ac-8484-4d4fe45f06d4"
+      },
+      {
+        "difficulty": "h",
+        "summary": "This is my jam",
+        "description": "We get Song E on Guardians of the Galaxy",
+        "id": "9110c1f4-4165-4231-9682-72e9c965e86c"
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "difficulty": "h",
+        "summary": "Meatball-less",
+        "description": "Day with no rain",
+        "id": "9010878c-58e2-4878-875d-440775570eab"
+      },
+      {
+        "difficulty": "e",
+        "summary": "placeholder open to close",
+        "description": "We're in the park from open till close (3 days)",
+        "id": "612fa7ab-45ff-4f80-b01d-36174557e7b9"
+      },
+      {
+        "difficulty": "m",
+        "summary": "placeholder security slowdown",
+        "description": "Someone's stuff slows us down going through park security",
+        "id": "6ff40b0e-b339-4838-97e3-fcbb844efcb6"
+      },
+      {
+        "difficulty": "e",
+        "summary": "Hidden Mickey",
+        "description": "You find a verified Hidden Mickey",
+        "id": "fadd8534-3aee-4522-9e08-dc9f99c2a1a9"
+      },
+      {
+        "difficulty": "h",
+        "summary": "This is my jam",
+        "description": "We get Song E on Guardians of the Galaxy",
+        "id": "0244ce43-82f8-4efb-8a0f-98a469b4a873"
+      }
+    ],
+    [
+      {
+        "difficulty": "e",
+        "summary": "placeholder flight on time",
+        "description": "Your flight's on time (< 20 mins delay)",
+        "id": "83f141dd-1771-4143-b793-aa9657021dab"
+      },
+      {
+        "difficulty": "m",
+        "summary": "Lost at sea",
+        "description": "Lose someone in a water park",
+        "id": "9d679a8b-db39-4a9d-b12a-30ee17e97767"
+      },
+      {
+        "difficulty": "h",
+        "summary": "99 in the wild",
+        "description": "Find something with your shirt number (99) on it & take a picture",
+        "id": "90d832a1-0f77-4ea1-8518-6a33d5dbd639"
+      },
+      {
+        "difficulty": "m",
+        "summary": "placeholder ride breakdown queue",
+        "description": "A ride breaks down while we're queuing for it",
+        "id": "97451a91-07c4-467a-8791-0abc3bb309c2"
+      },
+      {
+        "difficulty": "e",
+        "summary": "Photographer",
+        "description": "Someone asks us to take their picture",
+        "id": "eb9d05e4-ee31-408a-aa90-80cd741dc0d6"
+      }
+    ],
+    [
+      {
+        "difficulty": "m",
+        "summary": "Meme Park",
+        "description": "Make a meme about the trip/with a photo from the trip which someone laughs out loud to when they first see it",
+        "id": "cb82271b-6d9d-4163-85f3-5ba5ae3ed78f"
+      },
+      {
+        "difficulty": "h",
+        "summary": "placeholder miss rope drop",
+        "description": "We miss rope drop",
+        "id": "e56681d2-974c-409c-b775-7b71dcd9193d"
+      },
+      {
+        "difficulty": "f",
+        "summary": "free",
+        "description": "free",
+        "id": "f6ee8ba2-113b-48ed-bb4e-32c6a32df782"
+      },
+      {
+        "difficulty": "h",
+        "summary": "You're wet",
+        "description": "be wettest after a water ride",
+        "id": "a1e0b1fa-da54-4513-a8a1-b7c65ab33dbc"
+      },
+      {
+        "difficulty": "m",
+        "summary": "placeholder queue jumped",
+        "description": "Someone gets queue jumped",
+        "id": "af17ca20-f415-48eb-8039-a9da51c133e4"
+      }
+    ],
+    [
+      {
+        "difficulty": "e",
+        "summary": "Apes together strong",
+        "description": "Planned group photo pose goes successfully",
+        "id": "329179ab-873d-4a72-ac30-29d8b2e8b386"
+      },
+      {
+        "difficulty": "m",
+        "summary": "Y'all British?",
+        "description": "Someone mentions that's we're British or says that they love our accent?",
+        "id": "e23451f5-9632-4637-a7c0-d43439d91dff"
+      },
+      {
+        "difficulty": "h",
+        "summary": "Still got it",
+        "description": "Ben gets galactic hero on buzz (or anyone else)",
+        "id": "e0c39e8a-5e9a-4749-ab26-9956b37bd4f8"
+      },
+      {
+        "difficulty": "m",
+        "summary": "Big Spender",
+        "description": "Someone spends more than $100 on merch",
+        "id": "524cfb3c-7b5a-45d6-a513-ee16dc97621a"
+      },
+      {
+        "difficulty": "e",
+        "summary": "placeholder transport nap",
+        "description": "Someone falls asleep on transport to/from the parks (no photo no proof)",
+        "id": "f5f2f5a0-41f0-44f3-9a00-5c0b6c9219c4"
+      }
+    ],
+    [
+      {
+        "difficulty": "h",
+        "summary": "placeholder forgot jersey",
+        "description": "Someone forgets their Jersey",
+        "id": "f144f041-21aa-4ece-a5dc-6816cafcec96"
+      },
+      {
+        "difficulty": "e",
+        "summary": "Doppelganger",
+        "description": "We see a character that we are currently Disney bounding as",
+        "id": "c01a8b0f-ce01-41cc-aa09-862f3b5c5b3c"
+      },
+      {
+        "difficulty": "m",
+        "summary": "placeholder blister",
+        "description": "Someone gets a blister",
+        "id": "0ae8cb7b-b336-4689-9dfe-6a24af95071a"
+      },
+      {
+        "difficulty": "e",
+        "summary": "Worth it",
+        "description": "Someone's quick service meal snack points is valued over $30",
+        "id": "0184b0c2-cbc1-4605-8ff1-d401feb379ae"
+      },
+      {
+        "difficulty": "h",
+        "summary": "Bad Smuggler",
+        "description": "Someone's a terrible pilot on smugglers run",
+        "id": "fe39d897-5dc4-428b-8584-6b3a19f712f5"
       }
     ]
   ]
