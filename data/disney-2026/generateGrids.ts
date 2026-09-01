@@ -181,7 +181,6 @@ function positionGuaranteedItems(tiers: Tiers): Tiers {
       }
       return current;
     }
-    console.log("  Collision in guaranteed item positioning, retrying...");
     current = {
       e: shuffleObjectArray(current.e),
       m: shuffleObjectArray(current.m),
@@ -281,9 +280,18 @@ function buildGridForPerson(
 // different pool sizes right now (10/25/14) -- a merged histogram would
 // make E look artificially healthy and M artificially thin for reasons
 // that are just pool-size math, not actual balance.
-function logDistribution(events: DisneyEvent[], counts: number[]): void {
-  const byDifficulty: Record<EventDifficulty, number[]> = { e: [], m: [], h: [] };
-  const sparse: { difficulty: EventDifficulty; name: string; count: number }[] = [];
+function logDistribution(
+  events: DisneyEvent[],
+  counts: number[],
+  maxCount: number
+): void {
+  const byDifficulty: Record<EventDifficulty, number[]> = {
+    e: [],
+    m: [],
+    h: []
+  };
+  const sparse: { difficulty: EventDifficulty; name: string; count: number }[] =
+    [];
 
   events.forEach((event, i) => {
     if (event.guaranteed) return;
@@ -291,22 +299,47 @@ function logDistribution(events: DisneyEvent[], counts: number[]): void {
     if (counts[i] <= 1) {
       sparse.push({
         difficulty: event.difficulty,
-        name: typeof event.summary === "string" ? event.summary : "(templated summary)",
-        count: counts[i],
+        name:
+          typeof event.summary === "string"
+            ? event.summary
+            : "(templated summary)",
+        count: counts[i]
       });
     }
   });
 
+  const histograms: Record<EventDifficulty, Map<number, number>> = {
+    e: new Map(),
+    m: new Map(),
+    h: new Map()
+  };
   for (const difficulty of GROUP_PRIORITY) {
-    const histogram = new Map<number, number>();
     for (const count of byDifficulty[difficulty]) {
-      histogram.set(count, (histogram.get(count) ?? 0) + 1);
+      histograms[difficulty].set(
+        count,
+        (histograms[difficulty].get(count) ?? 0) + 1
+      );
     }
-    const ordered = [...histogram.entries()]
-      .sort(([a], [b]) => a - b)
-      .map(([count, n]) => `${count}: ${n}`)
-      .join(", ");
-    console.log(`  [${difficulty}] appearance counts -- ${ordered}`);
+  }
+
+  // Table formatting: each column's content is 2 chars wide with 2 spaces
+  // of padding on each side; "." marks a zero cell rather than "0", so
+  // sparse spots in the table are visually distinct from real small counts
+  // at a glance.
+  const WIDTH = 2;
+  const PADDING = 2;
+  const cell = (content: string): string =>
+    " ".repeat(PADDING) + content.padStart(WIDTH) + " ".repeat(PADDING);
+  const segment = "-".repeat(WIDTH + PADDING * 2);
+  const columns: EventDifficulty[] = ["e", "m", "h"];
+
+  console.log(`  |${cell("#")}|${columns.map((d) => cell(d)).join("|")}|`);
+  console.log(`  |${segment}|${columns.map(() => segment).join("|")}|`);
+  for (let count = 0; count <= maxCount; count++) {
+    const row = columns
+      .map((d) => histograms[d].get(count) ?? 0)
+      .map((n) => cell(n === 0 ? "." : String(n)));
+    console.log(`  |${cell(String(count))}|${row.join("|")}|`);
   }
 
   if (sparse.length) {
@@ -367,7 +400,7 @@ export function getDisneyGrids({
         balance.ok ? "passed" : "failed"
       }${balance.reason ? ` (${balance.reason})` : ""}`
     );
-    logDistribution(events, counts);
+    logDistribution(events, counts, tripPeople.length);
     if (balance.ok) return built.map((b) => b.grid);
   }
   throw new Error(
