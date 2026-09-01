@@ -5,7 +5,7 @@
 // not left blank or null, so this file type-checks as-is and can be used to
 // unit-test makeGrid's pool-building logic before real content is ready
 // (docs/grid-content-pipeline.md §10):
-//   - summary: "placeholder <word or two>", // TODO  -- needs a real short title
+//   - summary: "?? <word or two>", // TODO  -- needs a real short title
 //   - difficulty: "e", // PLACEHOLDER - CHANGE        -- not yet difficulty-tagged
 // A difficulty with no trailing comment was an explicit tag in draft-ideas.md
 // (e.g. "(hard)"), not a guess. Placeholder difficulties are spread roughly
@@ -40,13 +40,13 @@ export interface DisneyEvent {
 
 export const events: DisneyEvent[] = [
   {
-    summary: "placeholder ride breakdown", // TODO
+    summary: "?? ride breakdown", // TODO
     description: "A ride breaks down while we're on it",
     difficulty: "m",
     variantGroup: VariantGroup.RIDE_BREAKDOWN
   },
   {
-    summary: "placeholder ride breakdown queue", // TODO
+    summary: "?? ride breakdown queue", // TODO
     description: "A ride breaks down while we're queuing for it",
     difficulty: "m", // easy?
     variantGroup: VariantGroup.RIDE_BREAKDOWN
@@ -57,7 +57,7 @@ export const events: DisneyEvent[] = [
     difficulty: "m"
   },
   {
-    summary: "placeholder shooter high score", // TODO
+    summary: "?? shooter high score", // TODO
     description: "You're highest scorer on a shooter",
     difficulty: "h"
   },
@@ -85,19 +85,19 @@ export const events: DisneyEvent[] = [
     difficulty: "h"
   },
   {
-    summary: "placeholder flight delayed", // TODO
+    summary: "?? flight delayed", // TODO
     description: "Your flight gets delayed (> 20 mins)",
     difficulty: "m",
     variantGroup: VariantGroup.FLIGHT_TIMING
   },
   {
-    summary: "placeholder flight on time", // TODO
+    summary: "?? flight on time", // TODO
     description: "Your flight's on time (< 20 mins delay)",
     difficulty: "e",
     variantGroup: VariantGroup.FLIGHT_TIMING
   },
   {
-    summary: "placeholder transport nap", // TODO
+    summary: "?? transport nap", // TODO
     description:
       "Someone falls asleep on transport to/from the parks (no photo no proof)",
     difficulty: "e"
@@ -181,7 +181,7 @@ export const events: DisneyEvent[] = [
     difficulty: "h"
   },
   {
-    summary: "placeholder show cancelled", // TODO
+    summary: "?? show cancelled", // TODO
     description: "Show that we were going to see gets cancelled for weather",
     difficulty: "m"
   },
@@ -203,19 +203,19 @@ export const events: DisneyEvent[] = [
     guaranteed: true
   },
   {
-    summary: "placeholder security confiscated", // TODO
+    summary: "?? security confiscated", // TODO
     description: "Someone has something confiscated at security",
     difficulty: "h",
     variantGroup: VariantGroup.SECURITY_INCIDENT
   },
   {
-    summary: "placeholder security pat down", // TODO
+    summary: "?? security pat down", // TODO
     description: "Someone gets a pat down at security",
     difficulty: "m",
     variantGroup: VariantGroup.SECURITY_INCIDENT
   },
   {
-    summary: "placeholder security slowdown", // TODO
+    summary: "?? security slowdown", // TODO
     description: "Someone's stuff slows us down going through park security",
     difficulty: "m"
   },
@@ -225,17 +225,17 @@ export const events: DisneyEvent[] = [
     difficulty: "h"
   },
   {
-    summary: "placeholder queue jumped", // TODO
+    summary: "?? queue jumped", // TODO
     description: "Someone gets queue jumped",
     difficulty: "m"
   },
   {
-    summary: "placeholder blister", // TODO
+    summary: "?? blister", // TODO
     description: "Someone gets a blister",
     difficulty: "m"
   },
   {
-    summary: "placeholder crying photo", // TODO
+    summary: "?? crying photo", // TODO
     description: "Someone's crying in a ride photo",
     difficulty: "h"
   },
@@ -252,7 +252,7 @@ export const events: DisneyEvent[] = [
     variantGroup: VariantGroup.FALL
   },
   {
-    summary: "placeholder family argument", // TODO
+    summary: "?? family argument", // TODO
     description: "We see a family arguing",
     difficulty: "e"
   },
@@ -264,7 +264,7 @@ export const events: DisneyEvent[] = [
     guaranteed: true
   },
   {
-    summary: "placeholder miss rope drop", // TODO
+    summary: "?? miss rope drop", // TODO
     description: "We miss rope drop",
     difficulty: "h"
   },
@@ -274,7 +274,7 @@ export const events: DisneyEvent[] = [
     difficulty: "h"
   },
   {
-    summary: "placeholder open to close", // TODO
+    summary: "?? open to close", // TODO
     description: "We're in the park from open till close (3 days)",
     difficulty: "e"
   },
@@ -285,13 +285,13 @@ export const events: DisneyEvent[] = [
     difficulty: "m"
   },
   {
-    summary: "placeholder forgot swimsuit", // TODO
+    summary: "?? forgot swimsuit", // TODO
     description: "Someone forgets their swimsuit",
     difficulty: "h",
     variantGroup: VariantGroup.FORGOT
   },
   {
-    summary: "placeholder forgot jersey", // TODO
+    summary: "?? forgot jersey", // TODO
     description: "Someone forgets their Jersey",
     difficulty: "h",
     variantGroup: VariantGroup.FORGOT

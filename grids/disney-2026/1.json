@@ -9,7 +9,7 @@
       },
       {
         "difficulty": "e",
-        "summary": "Apes together strong",
+        "summary": "Go Team",
         "description": "Planned group photo pose goes successfully",
         "id": "d1a2d837-54b4-42a0-b95a-e0b7f804ce70"
       },
@@ -59,7 +59,7 @@
       },
       {
         "difficulty": "e",
-        "summary": "placeholder flight on time",
+        "summary": "?? flight on time",
         "description": "Your flight's on time (< 20 mins delay)",
         "id": "caeffc42-5740-46d3-a636-23369d564c1e"
       }
@@ -67,7 +67,7 @@
     [
       {
         "difficulty": "m",
-        "summary": "placeholder blister",
+        "summary": "?? blister",
         "description": "Someone gets a blister",
         "id": "81707c89-eccc-4d88-afb0-b916dee4f46c"
       },
@@ -111,13 +111,13 @@
       },
       {
         "difficulty": "h",
-        "summary": "placeholder miss rope drop",
+        "summary": "?? miss rope drop",
         "description": "We miss rope drop",
         "id": "6ca5f4d6-7b21-483e-b042-92eb63767edd"
       },
       {
         "difficulty": "m",
-        "summary": "placeholder ride breakdown queue",
+        "summary": "?? ride breakdown queue",
         "description": "A ride breaks down while we're queuing for it",
         "id": "acb9ddf2-1fab-4557-91e6-aa1123f984b6"
       },
@@ -165,7 +165,7 @@
     [
       {
         "difficulty": "h",
-        "summary": "placeholder forgot jersey",
+        "summary": "?? forgot jersey",
         "description": "Someone forgets their Jersey",
         "id": "5c797b92-48a8-41f0-80a4-3ef71fabd920"
       },
@@ -197,19 +197,19 @@
     [
       {
         "difficulty": "e",
-        "summary": "placeholder transport nap",
+        "summary": "?? transport nap",
         "description": "Someone falls asleep on transport to/from the parks (no photo no proof)",
         "id": "a13d7483-20af-4859-91b3-ea3bbe013b54"
       },
       {
         "difficulty": "m",
-        "summary": "placeholder security pat down",
+        "summary": "?? security pat down",
         "description": "Someone gets a pat down at security",
         "id": "16096ee9-6e64-4c30-98b2-e62e112852d0"
       },
       {
         "difficulty": "h",
-        "summary": "placeholder crying photo",
+        "summary": "?? crying photo",
         "description": "Someone's crying in a ride photo",
         "id": "c80182cd-8f86-4a2d-bb1d-27a541d2307f"
       },
@@ -253,7 +253,7 @@
       },
       {
         "difficulty": "m",
-        "summary": "placeholder show cancelled",
+        "summary": "?? show cancelled",
         "description": "Show that we were going to see gets cancelled for weather",
         "id": "79181c3a-a029-4021-9c45-95f19a817140"
       }
@@ -261,25 +261,25 @@
     [
       {
         "difficulty": "e",
-        "summary": "placeholder open to close",
+        "summary": "?? open to close",
         "description": "We're in the park from open till close (3 days)",
         "id": "4025b628-0f97-4edf-845d-afffbfde045d"
       },
       {
         "difficulty": "m",
-        "summary": "placeholder flight delayed",
+        "summary": "?? flight delayed",
         "description": "Your flight gets delayed (> 20 mins)",
         "id": "a8f4360a-2ede-481c-9531-c6f40196359f"
       },
       {
         "difficulty": "h",
-        "summary": "placeholder miss rope drop",
+        "summary": "?? miss rope drop",
         "description": "We miss rope drop",
         "id": "b6dd5fa1-28b1-4956-a60b-14ab2ee2c2ed"
       },
       {
         "difficulty": "m",
-        "summary": "placeholder queue jumped",
+        "summary": "?? queue jumped",
         "description": "Someone gets queue jumped",
         "id": "28a27ebe-d81b-4769-810f-bfa54a73cc0c"
       },
@@ -327,19 +327,19 @@
     [
       {
         "difficulty": "h",
-        "summary": "placeholder crying photo",
+        "summary": "?? crying photo",
         "description": "Someone's crying in a ride photo",
         "id": "de4185b2-15ea-4d4d-a00e-d11f06696a50"
       },
       {
         "difficulty": "e",
-        "summary": "placeholder open to close",
+        "summary": "?? open to close",
         "description": "We're in the park from open till close (3 days)",
         "id": "44a57f8b-aa94-496a-beb3-ba83362e69b8"
       },
       {
         "difficulty": "m",
-        "summary": "placeholder security slowdown",
+        "summary": "?? security slowdown",
         "description": "Someone's stuff slows us down going through park security",
         "id": "c876106c-3ba9-4740-b685-cb793c07a595"
       },
@@ -391,7 +391,7 @@
     [
       {
         "difficulty": "m",
-        "summary": "placeholder queue jumped",
+        "summary": "?? queue jumped",
         "description": "Someone gets queue jumped",
         "id": "8b090d45-9f07-4c0e-8e3c-41c600239fbc"
       },
@@ -423,7 +423,7 @@
     [
       {
         "difficulty": "e",
-        "summary": "Apes together strong",
+        "summary": "Go Team",
         "description": "Planned group photo pose goes successfully",
         "id": "bdda5f52-a194-45d3-bb81-88cd3c693572"
       },
@@ -473,13 +473,13 @@
       },
       {
         "difficulty": "e",
-        "summary": "placeholder family argument",
+        "summary": "?? family argument",
         "description": "We see a family arguing",
         "id": "8f24c8da-6962-4681-881e-e09dfb679456"
       },
       {
         "difficulty": "h",
-        "summary": "placeholder security confiscated",
+        "summary": "?? security confiscated",
         "description": "Someone has something confiscated at security",
         "id": "58b820ce-4a9d-4587-b3bf-e4d811766cf5"
       }
@@ -501,7 +501,7 @@
       },
       {
         "difficulty": "m",
-        "summary": "placeholder security pat down",
+        "summary": "?? security pat down",
         "description": "Someone gets a pat down at security",
         "id": "4f6eb38e-0dc6-4e68-8e4c-cc1f77620407"
       },
@@ -521,7 +521,7 @@
     [
       {
         "difficulty": "e",
-        "summary": "placeholder transport nap",
+        "summary": "?? transport nap",
         "description": "Someone falls asleep on transport to/from the parks (no photo no proof)",
         "id": "1ace009b-9da0-4917-9c26-75c3e50c9862"
       },
@@ -533,7 +533,7 @@
       },
       {
         "difficulty": "h",
-        "summary": "placeholder crying photo",
+        "summary": "?? crying photo",
         "description": "Someone's crying in a ride photo",
         "id": "bd30c26f-98da-4c32-8757-d7f8085c19cc"
       },
@@ -553,7 +553,7 @@
     [
       {
         "difficulty": "m",
-        "summary": "placeholder security slowdown",
+        "summary": "?? security slowdown",
         "description": "Someone's stuff slows us down going through park security",
         "id": "acec6888-e5bd-457e-b1f5-bf353d3726ab"
       },
@@ -585,7 +585,7 @@
     [
       {
         "difficulty": "e",
-        "summary": "Apes together strong",
+        "summary": "Go Team",
         "description": "Planned group photo pose goes successfully",
         "id": "1a7e341e-3e94-40f3-85ae-8f078f97b5e1"
       },
@@ -597,7 +597,7 @@
       },
       {
         "difficulty": "h",
-        "summary": "placeholder forgot swimsuit",
+        "summary": "?? forgot swimsuit",
         "description": "Someone forgets their swimsuit",
         "id": "ccad8fd2-1e44-4563-b582-5730b5ce2bf0"
       },
@@ -623,7 +623,7 @@
       },
       {
         "difficulty": "e",
-        "summary": "placeholder family argument",
+        "summary": "?? family argument",
         "description": "We see a family arguing",
         "id": "82178c1e-a9dd-429a-b1e7-7817d8fca485"
       },
@@ -641,7 +641,7 @@
       },
       {
         "difficulty": "h",
-        "summary": "placeholder shooter high score",
+        "summary": "?? shooter high score",
         "description": "You're highest scorer on a shooter",
         "id": "2abfdece-75de-4557-afb3-b8b9c104624d"
       }
@@ -651,7 +651,7 @@
     [
       {
         "difficulty": "h",
-        "summary": "placeholder forgot swimsuit",
+        "summary": "?? forgot swimsuit",
         "description": "Someone forgets their swimsuit",
         "id": "e975fc39-01fd-4fc5-83b9-1d4c77e539b2"
       },
@@ -675,7 +675,7 @@
       },
       {
         "difficulty": "h",
-        "summary": "placeholder shooter high score",
+        "summary": "?? shooter high score",
         "description": "You're highest scorer on a shooter",
         "id": "de2503cf-d751-4649-a168-632e3f4c652d"
       }
@@ -689,7 +689,7 @@
       },
       {
         "difficulty": "m",
-        "summary": "placeholder ride breakdown",
+        "summary": "?? ride breakdown",
         "description": "A ride breaks down while we're on it",
         "id": "c5a6dc5c-4d14-4ee4-86cb-e897ed9d3eca"
       },
@@ -701,13 +701,13 @@
       },
       {
         "difficulty": "m",
-        "summary": "placeholder show cancelled",
+        "summary": "?? show cancelled",
         "description": "Show that we were going to see gets cancelled for weather",
         "id": "839d401f-3348-4cbe-9f7a-ae180a3324f3"
       },
       {
         "difficulty": "e",
-        "summary": "Apes together strong",
+        "summary": "Go Team",
         "description": "Planned group photo pose goes successfully",
         "id": "695c7a14-c8d8-4f66-9a10-751b9a91a5b4"
       }
@@ -733,13 +733,13 @@
       },
       {
         "difficulty": "h",
-        "summary": "placeholder security confiscated",
+        "summary": "?? security confiscated",
         "description": "Someone has something confiscated at security",
         "id": "8c416a5e-affe-4295-9f21-a1edb7fd548f"
       },
       {
         "difficulty": "m",
-        "summary": "placeholder security slowdown",
+        "summary": "?? security slowdown",
         "description": "Someone's stuff slows us down going through park security",
         "id": "eb49fb5b-e0df-4d89-8d05-58ec8f69d81a"
       }
@@ -753,7 +753,7 @@
       },
       {
         "difficulty": "m",
-        "summary": "placeholder flight delayed",
+        "summary": "?? flight delayed",
         "description": "Your flight gets delayed (> 20 mins)",
         "id": "863b4f69-2279-4a33-9966-a75804b66d3f"
       },
@@ -813,13 +813,13 @@
     [
       {
         "difficulty": "h",
-        "summary": "placeholder forgot swimsuit",
+        "summary": "?? forgot swimsuit",
         "description": "Someone forgets their swimsuit",
         "id": "a228d188-da81-4a50-9bb3-766621e48aed"
       },
       {
         "difficulty": "e",
-        "summary": "placeholder open to close",
+        "summary": "?? open to close",
         "description": "We're in the park from open till close (3 days)",
         "id": "f2cd92ac-a8ae-407b-a491-46c520b0eb7e"
       },
@@ -837,7 +837,7 @@
       },
       {
         "difficulty": "h",
-        "summary": "placeholder security confiscated",
+        "summary": "?? security confiscated",
         "description": "Someone has something confiscated at security",
         "id": "9fc6dfd4-ec07-45b6-90bd-63643c619222"
       }
@@ -863,7 +863,7 @@
       },
       {
         "difficulty": "m",
-        "summary": "placeholder ride breakdown",
+        "summary": "?? ride breakdown",
         "description": "A ride breaks down while we're on it",
         "id": "aebe171c-11ef-46f9-afeb-62a96a575206"
       },
@@ -901,7 +901,7 @@
       },
       {
         "difficulty": "m",
-        "summary": "placeholder flight delayed",
+        "summary": "?? flight delayed",
         "description": "Your flight gets delayed (> 20 mins)",
         "id": "432041fe-6150-4802-be16-a0b7898965b5"
       }
@@ -921,7 +921,7 @@
       },
       {
         "difficulty": "h",
-        "summary": "placeholder miss rope drop",
+        "summary": "?? miss rope drop",
         "description": "We miss rope drop",
         "id": "0a856319-e242-47a2-85de-1897e82fc652"
       },
@@ -953,13 +953,13 @@
       },
       {
         "difficulty": "m",
-        "summary": "placeholder blister",
+        "summary": "?? blister",
         "description": "Someone gets a blister",
         "id": "c5de49b8-7e18-4814-a838-cbc9e651f39e"
       },
       {
         "difficulty": "e",
-        "summary": "placeholder family argument",
+        "summary": "?? family argument",
         "description": "We see a family arguing",
         "id": "2e1843f7-eff3-49ac-8484-4d4fe45f06d4"
       },
@@ -981,13 +981,13 @@
       },
       {
         "difficulty": "e",
-        "summary": "placeholder open to close",
+        "summary": "?? open to close",
         "description": "We're in the park from open till close (3 days)",
         "id": "612fa7ab-45ff-4f80-b01d-36174557e7b9"
       },
       {
         "difficulty": "m",
-        "summary": "placeholder security slowdown",
+        "summary": "?? security slowdown",
         "description": "Someone's stuff slows us down going through park security",
         "id": "6ff40b0e-b339-4838-97e3-fcbb844efcb6"
       },
@@ -1007,7 +1007,7 @@
     [
       {
         "difficulty": "e",
-        "summary": "placeholder flight on time",
+        "summary": "?? flight on time",
         "description": "Your flight's on time (< 20 mins delay)",
         "id": "83f141dd-1771-4143-b793-aa9657021dab"
       },
@@ -1025,7 +1025,7 @@
       },
       {
         "difficulty": "m",
-        "summary": "placeholder ride breakdown queue",
+        "summary": "?? ride breakdown queue",
         "description": "A ride breaks down while we're queuing for it",
         "id": "97451a91-07c4-467a-8791-0abc3bb309c2"
       },
@@ -1045,7 +1045,7 @@
       },
       {
         "difficulty": "h",
-        "summary": "placeholder miss rope drop",
+        "summary": "?? miss rope drop",
         "description": "We miss rope drop",
         "id": "e56681d2-974c-409c-b775-7b71dcd9193d"
       },
@@ -1063,7 +1063,7 @@
       },
       {
         "difficulty": "m",
-        "summary": "placeholder queue jumped",
+        "summary": "?? queue jumped",
         "description": "Someone gets queue jumped",
         "id": "af17ca20-f415-48eb-8039-a9da51c133e4"
       }
@@ -1071,7 +1071,7 @@
     [
       {
         "difficulty": "e",
-        "summary": "Apes together strong",
+        "summary": "Go Team",
         "description": "Planned group photo pose goes successfully",
         "id": "329179ab-873d-4a72-ac30-29d8b2e8b386"
       },
@@ -1095,7 +1095,7 @@
       },
       {
         "difficulty": "e",
-        "summary": "placeholder transport nap",
+        "summary": "?? transport nap",
         "description": "Someone falls asleep on transport to/from the parks (no photo no proof)",
         "id": "f5f2f5a0-41f0-44f3-9a00-5c0b6c9219c4"
       }
@@ -1103,7 +1103,7 @@
     [
       {
         "difficulty": "h",
-        "summary": "placeholder forgot jersey",
+        "summary": "?? forgot jersey",
         "description": "Someone forgets their Jersey",
         "id": "f144f041-21aa-4ece-a5dc-6816cafcec96"
       },
@@ -1115,7 +1115,7 @@
       },
       {
         "difficulty": "m",
-        "summary": "placeholder blister",
+        "summary": "?? blister",
         "description": "Someone gets a blister",
         "id": "0ae8cb7b-b336-4689-9dfe-6a24af95071a"
       },
