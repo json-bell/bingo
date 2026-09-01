@@ -59,7 +59,7 @@ export const events: DisneyEvent[] = [
   {
     summary: "placeholder shooter high score", // TODO
     description: "You're highest scorer on a shooter",
-    difficulty: "m" // hard?
+    difficulty: "h"
   },
   {
     summary: "Still got it",
@@ -82,7 +82,7 @@ export const events: DisneyEvent[] = [
   {
     summary: "You're wet",
     description: "be wettest after a water ride",
-    difficulty: "m" // hard? ~3 winners
+    difficulty: "h"
   },
   {
     summary: "placeholder flight delayed", // TODO
@@ -93,7 +93,7 @@ export const events: DisneyEvent[] = [
   {
     summary: "placeholder flight on time", // TODO
     description: "Your flight's on time (< 20 mins delay)",
-    difficulty: "e",
+    difficulty: "m",
     variantGroup: VariantGroup.FLIGHT_TIMING
   },
   {
@@ -106,12 +106,14 @@ export const events: DisneyEvent[] = [
     summary: "Late night wander",
     description:
       "We lose someone during fireworks (<=2 people unintentionally split)",
-    difficulty: "e"
+    difficulty: "m",
+    variantGroup: VariantGroup.LOST
   },
   {
     summary: "Lost at sea",
     description: "Lose someone in a water park",
-    difficulty: "e"
+    difficulty: "m",
+    variantGroup: VariantGroup.LOST
   },
   {
     summary: "Big Spender",
@@ -133,7 +135,7 @@ export const events: DisneyEvent[] = [
   {
     summary: "Mike Wasowski'd",
     description: "Your face gets blocked in a ride photo (>50%)",
-    difficulty: "e" // medium?
+    difficulty: "m"
   },
   {
     summary: "Apes together strong",
@@ -143,7 +145,7 @@ export const events: DisneyEvent[] = [
   {
     summary: "Stay hydrated",
     description: "You have more than 5 refills in one day",
-    difficulty: "m", // PLACEHOLDER - CHANGE & make better difficulty
+    difficulty: "m",
     eligiblePeople: ["Maria", "Ben", "Jason", "Ciara"]
   },
   {
@@ -176,7 +178,7 @@ export const events: DisneyEvent[] = [
   {
     summary: "End of the world",
     description: "Deviate from the plan (we go to a park not planned)",
-    difficulty: "h" // medium?
+    difficulty: "h"
   },
   {
     summary: "placeholder show cancelled", // TODO
@@ -191,13 +193,13 @@ export const events: DisneyEvent[] = [
   {
     summary: "Master focus",
     description: "We go a whole day without talking about quadball",
-    difficulty: "e" // medium?
+    difficulty: "m"
   },
   {
     summary: (inputs) => `${inputs.shirtNumber} in the wild`,
     description: (inputs) =>
       `Find something with your shirt number (${inputs.shirtNumber}) on it & take a picture`,
-    difficulty: "m",
+    difficulty: "h",
     guaranteed: true
   },
   {
@@ -215,44 +217,44 @@ export const events: DisneyEvent[] = [
   {
     summary: "placeholder security slowdown", // TODO
     description: "Someone's stuff slows us down going through park security",
-    difficulty: "m" // easy?
+    difficulty: "m"
   },
   {
     summary: "Meatball-less",
     description: "Day with no rain",
-    difficulty: "h" // medium?
+    difficulty: "h"
   },
   {
     summary: "placeholder queue jumped", // TODO
     description: "Someone gets queue jumped",
-    difficulty: "m" // hard?
+    difficulty: "m"
   },
   {
     summary: "placeholder blister", // TODO
     description: "Someone gets a blister",
-    difficulty: "m" // easy?
+    difficulty: "m"
   },
   {
     summary: "placeholder crying photo", // TODO
     description: "Someone's crying in a ride photo",
-    difficulty: "h" // medium?
+    difficulty: "h"
   },
   {
     summary: "Trip'd up",
     description: "We see someone faceplant",
-    difficulty: "m", // PLACEHOLDER - CHANGE
+    difficulty: "m",
     variantGroup: VariantGroup.FALL
   },
   {
     summary: "Banana'd",
     description: "We see someone banana peel fall",
-    difficulty: "m", // PLACEHOLDER - CHANGE
+    difficulty: "m",
     variantGroup: VariantGroup.FALL
   },
   {
     summary: "placeholder family argument", // TODO
     description: "We see a family arguing",
-    difficulty: "m" // easy?
+    difficulty: "e"
   },
   {
     summary: "Meme Park",
@@ -264,12 +266,12 @@ export const events: DisneyEvent[] = [
   {
     summary: "placeholder miss rope drop", // TODO
     description: "We miss rope drop",
-    difficulty: "h" // medium?
+    difficulty: "h"
   },
   {
     summary: "Bad Smuggler",
     description: "Someone's a terrible pilot on smugglers run",
-    difficulty: "h" // PLACEHOLDER - CHANGE
+    difficulty: "m"
   },
   {
     summary: "placeholder open to close", // TODO
@@ -295,9 +297,9 @@ export const events: DisneyEvent[] = [
     variantGroup: VariantGroup.FORGOT
   },
   {
-    summary: "placeholder hidden mickey", // TODO
+    summary: "Hidden Mickey",
     description: "You find a verified Hidden Mickey",
-    difficulty: "e" // medium?
+    difficulty: "e"
   },
   {
     summary: "Worth it",
@@ -308,6 +310,6 @@ export const events: DisneyEvent[] = [
     summary: "Walk-on",
     description:
       "Less than 3 mins from entering the queue to getting onto the ride",
-    difficulty: "e" // medium? Adjustable mins
+    difficulty: "m"
   }
 ];

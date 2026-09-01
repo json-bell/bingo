@@ -10,7 +10,8 @@ export const VariantGroup = {
   SECURITY_INCIDENT: "security-incident",
   SHOOTER: "shooter",
   FALL: "fall",
-  FORGOT: "forgot"
+  FORGOT: "forgot",
+  LOST: "lost"
 } as const;
 
 export type VariantGroupId = (typeof VariantGroup)[keyof typeof VariantGroup];
