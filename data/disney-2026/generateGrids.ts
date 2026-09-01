@@ -57,7 +57,10 @@ function selectAllTiers(pool: Tiers, gridOwner: Person): Tiers {
   for (const difficulty of GROUP_PRIORITY) {
     for (const item of pool[difficulty]) {
       if (!item.event.guaranteed) continue;
-      if (item.event.eligiblePeople && !item.event.eligiblePeople.includes(gridOwner)) {
+      if (
+        item.event.eligiblePeople &&
+        !item.event.eligiblePeople.includes(gridOwner)
+      ) {
         throw new Error(
           `A guaranteed "${difficulty}" event is also restricted to eligiblePeople not including ${gridOwner} -- guaranteed and eligiblePeople can't conflict.`
         );
@@ -78,7 +81,8 @@ function selectAllTiers(pool: Tiers, gridOwner: Person): Tiers {
     const eligible = pool[difficulty].filter(
       (item) =>
         !item.event.guaranteed &&
-        (!item.event.eligiblePeople || item.event.eligiblePeople.includes(gridOwner))
+        (!item.event.eligiblePeople ||
+          item.event.eligiblePeople.includes(gridOwner))
     );
     candidates[difficulty] = shuffleObjectArray(eligible);
   }
@@ -86,7 +90,11 @@ function selectAllTiers(pool: Tiers, gridOwner: Person): Tiers {
   // Walk the merged priority order once: keep the first occurrence of each
   // variantGroup, drop the rest. A group-less item is always kept.
   const kept: Tiers = { e: [], m: [], h: [] };
-  const maxLen = Math.max(candidates.e.length, candidates.m.length, candidates.h.length);
+  const maxLen = Math.max(
+    candidates.e.length,
+    candidates.m.length,
+    candidates.h.length
+  );
   for (let i = 0; i < maxLen; i++) {
     for (const difficulty of GROUP_PRIORITY) {
       const item = candidates[difficulty][i];
@@ -103,19 +111,29 @@ function selectAllTiers(pool: Tiers, gridOwner: Person): Tiers {
   const result: Tiers = { e: [], m: [], h: [] };
   for (const difficulty of GROUP_PRIORITY) {
     const need = SLOTS_PER_TIER - guaranteed[difficulty].length;
-    const filled = [...guaranteed[difficulty], ...kept[difficulty].slice(0, need)];
+    const filled = [
+      ...guaranteed[difficulty],
+      ...kept[difficulty].slice(0, need)
+    ];
     if (filled.length < SLOTS_PER_TIER) {
-      throw new Error(
-        `Not enough eligible "${difficulty}" events for ${gridOwner}'s grid (have ${filled.length}, need ${SLOTS_PER_TIER}) -- add more content, or loosen eligibility/variant-group restrictions.`
-      );
+      const message = `Not enough eligible "${difficulty}" events for ${gridOwner}'s grid (have ${filled.length}, need ${SLOTS_PER_TIER}) -- add more content, or loosen eligibility/variant-group restrictions.`;
+      console.error(message);
+      throw new Error(message);
     }
     result[difficulty] = filled;
   }
   return result;
 }
 
-function computePositionsByDifficulty(): Record<EventDifficulty, [number, number][]> {
-  const positions: Record<EventDifficulty, [number, number][]> = { e: [], m: [], h: [] };
+function computePositionsByDifficulty(): Record<
+  EventDifficulty,
+  [number, number][]
+> {
+  const positions: Record<EventDifficulty, [number, number][]> = {
+    e: [],
+    m: [],
+    h: []
+  };
   difficultyKey.forEach((row, r) =>
     row.forEach((d, c) => {
       if (d !== "f") positions[d as EventDifficulty].push([r, c]);
@@ -145,7 +163,8 @@ function guaranteedLocations(tiers: Tiers): [number, number][] {
   const locations: [number, number][] = [];
   (["e", "m", "h"] as const).forEach((difficulty) => {
     tiers[difficulty].forEach(({ event }, index) => {
-      if (event.guaranteed) locations.push(positionsByDifficulty[difficulty][index]);
+      if (event.guaranteed)
+        locations.push(positionsByDifficulty[difficulty][index]);
     });
   });
   return locations;
@@ -154,11 +173,19 @@ function guaranteedLocations(tiers: Tiers): [number, number][] {
 function positionGuaranteedItems(tiers: Tiers): Tiers {
   let current = tiers;
   for (let attempt = 1; attempt <= MAX_POSITIONING_ATTEMPTS; attempt++) {
-    if (!hasLineCollision(guaranteedLocations(current))) return current;
+    if (!hasLineCollision(guaranteedLocations(current))) {
+      if (attempt > 1) {
+        console.log(
+          `  Positioned guaranteed items (attempt ${attempt}/${MAX_POSITIONING_ATTEMPTS})`
+        );
+      }
+      return current;
+    }
+    console.log("  Collision in guaranteed item positioning, retrying...");
     current = {
       e: shuffleObjectArray(current.e),
       m: shuffleObjectArray(current.m),
-      h: shuffleObjectArray(current.h),
+      h: shuffleObjectArray(current.h)
     };
   }
   throw new Error(
@@ -173,20 +200,31 @@ function resolveEvent(
   songFromPerson: Record<Person, string>,
   shirtNumbers: Record<Person, string>
 ): { summary: string; description: string } {
-  const needsInputs = typeof event.summary === "function" || typeof event.description === "function";
+  const needsInputs =
+    typeof event.summary === "function" ||
+    typeof event.description === "function";
   if (!needsInputs) {
-    return { summary: event.summary as string, description: event.description as string };
+    return {
+      summary: event.summary as string,
+      description: event.description as string
+    };
   }
   const inputs: DisneySeedingInputs = {
     gridOwner,
     drinker: Math.random() < 0.5 ? "Ben" : "Jason",
     randomPerson: tripPeople[Math.floor(Math.random() * tripPeople.length)],
     song: songFromPerson[gridOwner],
-    shirtNumber: shirtNumbers[gridOwner],
+    shirtNumber: shirtNumbers[gridOwner]
   };
   return {
-    summary: typeof event.summary === "function" ? event.summary(inputs) : event.summary,
-    description: typeof event.description === "function" ? event.description(inputs) : event.description,
+    summary:
+      typeof event.summary === "function"
+        ? event.summary(inputs)
+        : event.summary,
+    description:
+      typeof event.description === "function"
+        ? event.description(inputs)
+        : event.description
   };
 }
 
@@ -197,6 +235,7 @@ function buildGridForPerson(
   songFromPerson: Record<Person, string>,
   shirtNumbers: Record<Person, string>
 ): { grid: Grid; sourceIndices: number[] } {
+  console.log(`Generating ${gridOwner}'s grid...`);
   const tiers = selectAllTiers(pool, gridOwner);
   const positioned = positionGuaranteedItems(tiers);
   const index = { e: 0, m: 0, h: 0 };
@@ -205,17 +244,78 @@ function buildGridForPerson(
   const grid: Grid = difficultyKey.map((row) =>
     row.map((difficulty): GridCell => {
       if (difficulty === "f") {
-        return { difficulty: "f", summary: "free", description: "free", id: crypto.randomUUID() };
+        return {
+          difficulty: "f",
+          summary: "free",
+          description: "free",
+          id: crypto.randomUUID()
+        };
       }
       const tierDifficulty = difficulty as EventDifficulty;
-      const { event, sourceIndex } = positioned[tierDifficulty][index[tierDifficulty]++];
+      const { event, sourceIndex } =
+        positioned[tierDifficulty][index[tierDifficulty]++];
       sourceIndices.push(sourceIndex);
-      const resolved = resolveEvent(event, gridOwner, tripPeople, songFromPerson, shirtNumbers);
-      return { difficulty: event.difficulty, ...resolved, id: crypto.randomUUID() };
+      const resolved = resolveEvent(
+        event,
+        gridOwner,
+        tripPeople,
+        songFromPerson,
+        shirtNumbers
+      );
+      return {
+        difficulty: event.difficulty,
+        ...resolved,
+        id: crypto.randomUUID()
+      };
     })
   );
 
   return { grid, sourceIndices };
+}
+
+// Diagnostic only -- doesn't feed into checkBalance's pass/fail decision.
+// Guaranteed events are excluded: they always appear on all 7 grids by
+// construction, so including them just pads the "appeared often" end with
+// entries that were never actually subject to randomness. Split by
+// difficulty rather than one merged histogram, since the tiers have very
+// different pool sizes right now (10/25/14) -- a merged histogram would
+// make E look artificially healthy and M artificially thin for reasons
+// that are just pool-size math, not actual balance.
+function logDistribution(events: DisneyEvent[], counts: number[]): void {
+  const byDifficulty: Record<EventDifficulty, number[]> = { e: [], m: [], h: [] };
+  const sparse: { difficulty: EventDifficulty; name: string; count: number }[] = [];
+
+  events.forEach((event, i) => {
+    if (event.guaranteed) return;
+    byDifficulty[event.difficulty].push(counts[i]);
+    if (counts[i] <= 1) {
+      sparse.push({
+        difficulty: event.difficulty,
+        name: typeof event.summary === "string" ? event.summary : "(templated summary)",
+        count: counts[i],
+      });
+    }
+  });
+
+  for (const difficulty of GROUP_PRIORITY) {
+    const histogram = new Map<number, number>();
+    for (const count of byDifficulty[difficulty]) {
+      histogram.set(count, (histogram.get(count) ?? 0) + 1);
+    }
+    const ordered = [...histogram.entries()]
+      .sort(([a], [b]) => a - b)
+      .map(([count, n]) => `${count}: ${n}`)
+      .join(", ");
+    console.log(`  [${difficulty}] appearance counts -- ${ordered}`);
+  }
+
+  if (sparse.length) {
+    console.log(
+      `  Appeared 0-1 times: ${sparse
+        .map((s) => `${s.name} (${s.difficulty}, ${s.count}x)`)
+        .join("; ")}`
+    );
+  }
 }
 
 function checkBalance(counts: number[]): { ok: boolean; reason?: string } {
@@ -226,7 +326,7 @@ function checkBalance(counts: number[]): { ok: boolean; reason?: string } {
       ok: false,
       reason: `only ${(ratio * 100).toFixed(0)}% of events appeared at least twice across all grids (need ${
         BALANCE_MIN_APPEARANCE_RATIO * 100
-      }%)`,
+      }%)`
     };
   }
   return { ok: true };
@@ -236,18 +336,21 @@ export function getDisneyGrids({
   events,
   people: tripPeople,
   songFromPerson,
-  shirtNumbers,
+  shirtNumbers
 }: {
   events: DisneyEvent[];
   people: Person[];
   songFromPerson: Record<Person, string>;
   shirtNumbers: Record<Person, string>;
 }): Grid[] {
-  const indexed: IndexedEvent[] = events.map((event, sourceIndex) => ({ event, sourceIndex }));
+  const indexed: IndexedEvent[] = events.map((event, sourceIndex) => ({
+    event,
+    sourceIndex
+  }));
   const pool: Tiers = {
     e: indexed.filter((e) => e.event.difficulty === "e"),
     m: indexed.filter((e) => e.event.difficulty === "m"),
-    h: indexed.filter((e) => e.event.difficulty === "h"),
+    h: indexed.filter((e) => e.event.difficulty === "h")
   };
 
   for (let attempt = 1; attempt <= MAX_GENERATION_ATTEMPTS; attempt++) {
@@ -264,7 +367,10 @@ export function getDisneyGrids({
         balance.ok ? "passed" : "failed"
       }${balance.reason ? ` (${balance.reason})` : ""}`
     );
+    logDistribution(events, counts);
     if (balance.ok) return built.map((b) => b.grid);
   }
-  throw new Error(`Failed to produce a balanced set of grids after ${MAX_GENERATION_ATTEMPTS} attempts.`);
+  throw new Error(
+    `Failed to produce a balanced set of grids after ${MAX_GENERATION_ATTEMPTS} attempts.`
+  );
 }
