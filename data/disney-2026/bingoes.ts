@@ -8,7 +8,11 @@
 //   - summary: "placeholder <word or two>", // TODO  -- needs a real short title
 //   - difficulty: "e", // PLACEHOLDER - CHANGE        -- not yet difficulty-tagged
 // A difficulty with no trailing comment was an explicit tag in draft-ideas.md
-// (e.g. "(hard)"), not a guess.
+// (e.g. "(hard)"), not a guess. Placeholder difficulties are spread roughly
+// evenly across e/m/h (not all defaulted to "e") so there's enough of each
+// to actually build a test grid (8 per difficulty, docs/grid-content-pipeline.md
+// §7) -- the specific e/m/h split per placeholder is arbitrary, not a real
+// judgment, same as the summary placeholders.
 //
 // NOT YET wired into createGrids.ts/getGrids.ts -- teaching makeGrid() to
 // consume guaranteed/eligiblePeople/variantGroup and to resolve
@@ -135,13 +139,13 @@ export const events: DisneyEvent[] = [
   {
     summary: "Stay hydrated",
     description: "You have more than 5 refills in one day",
-    difficulty: "e", // PLACEHOLDER - CHANGE
+    difficulty: "m", // PLACEHOLDER - CHANGE
     eligiblePeople: ["Maria", "Ben", "Jason", "Ciara"],
   },
   {
     summary: "We're Athletes",
     description: "Someone asks us about our quadball T shirts",
-    difficulty: "e", // PLACEHOLDER - CHANGE
+    difficulty: "m", // PLACEHOLDER - CHANGE
   },
   {
     summary: "We're Famous",
@@ -158,22 +162,22 @@ export const events: DisneyEvent[] = [
     summary: (inputs) => `${inputs.drinker}'s tipsy`,
     description: (inputs) =>
       `${inputs.drinker} does something that's clearly due to being tipsy/drunk`,
-    difficulty: "e", // PLACEHOLDER - CHANGE
+    difficulty: "m", // PLACEHOLDER - CHANGE
   },
   {
     summary: "Doppelganger",
     description: "We see a character that we are Disney bounding as",
-    difficulty: "e", // PLACEHOLDER - CHANGE
+    difficulty: "m", // PLACEHOLDER - CHANGE
   },
   {
     summary: "End of the world",
     description: "Deviate from the plan (we go to a park not planned)",
-    difficulty: "e", // PLACEHOLDER - CHANGE
+    difficulty: "m", // PLACEHOLDER - CHANGE
   },
   {
     summary: "placeholder show cancelled", // TODO
     description: "Show that we were going to see gets cancelled for weather",
-    difficulty: "e", // PLACEHOLDER - CHANGE
+    difficulty: "m", // PLACEHOLDER - CHANGE
   },
   {
     summary: "Rizzler",
@@ -183,7 +187,7 @@ export const events: DisneyEvent[] = [
   {
     summary: "Master focus",
     description: "We go a whole day without talking about quadball",
-    difficulty: "e", // PLACEHOLDER - CHANGE
+    difficulty: "m", // PLACEHOLDER - CHANGE
   },
   {
     // Draft notes not yet incorporated: "can't be a list of numbers", and an
@@ -191,82 +195,82 @@ export const events: DisneyEvent[] = [
     summary: "placeholder shirt number find", // TODO
     description: (inputs) =>
       `Find something with your shirt number (${inputs.shirtNumber}) on it & take a picture`,
-    difficulty: "e", // PLACEHOLDER - CHANGE
+    difficulty: "m", // PLACEHOLDER - CHANGE
     guaranteed: true,
   },
   {
     summary: "placeholder security confiscated", // TODO
     description: "Someone has something confiscated at security",
-    difficulty: "e", // PLACEHOLDER - CHANGE
+    difficulty: "m", // PLACEHOLDER - CHANGE
     variantGroup: VariantGroup.SECURITY_INCIDENT,
   },
   {
     summary: "placeholder security pat down", // TODO
     description: "Someone gets a pat down at security",
-    difficulty: "e", // PLACEHOLDER - CHANGE
+    difficulty: "m", // PLACEHOLDER - CHANGE
     variantGroup: VariantGroup.SECURITY_INCIDENT,
   },
   {
     summary: "placeholder security slowdown", // TODO
     description: "Someone's stuff slows us down going through park security",
-    difficulty: "e", // PLACEHOLDER - CHANGE
+    difficulty: "m", // PLACEHOLDER - CHANGE
   },
   {
     summary: "Meatball-less",
     description: "Day with no rain",
-    difficulty: "e", // PLACEHOLDER - CHANGE
+    difficulty: "m", // PLACEHOLDER - CHANGE
   },
   {
     summary: "placeholder queue jumped", // TODO
     description: "Someone gets queue jumped",
-    difficulty: "e", // PLACEHOLDER - CHANGE
+    difficulty: "m", // PLACEHOLDER - CHANGE
   },
   {
     summary: "placeholder blister", // TODO
     description: "Someone gets a blister",
-    difficulty: "e", // PLACEHOLDER - CHANGE
+    difficulty: "m", // PLACEHOLDER - CHANGE
   },
   {
     summary: "placeholder crying photo", // TODO
     description: "Someone's crying in a ride photo",
-    difficulty: "e", // PLACEHOLDER - CHANGE
+    difficulty: "h", // PLACEHOLDER - CHANGE
   },
   {
     summary: "placeholder faceplant", // TODO
     description: "We see someone faceplant",
-    difficulty: "e", // PLACEHOLDER - CHANGE
+    difficulty: "h", // PLACEHOLDER - CHANGE
   },
   {
     summary: "placeholder banana fall", // TODO
     description: "We see someone banana peel fall",
-    difficulty: "e", // PLACEHOLDER - CHANGE
+    difficulty: "h", // PLACEHOLDER - CHANGE
   },
   {
     summary: "placeholder family argument", // TODO
     description: "We see a Disney family argument",
-    difficulty: "e", // PLACEHOLDER - CHANGE
+    difficulty: "h", // PLACEHOLDER - CHANGE
   },
   {
     summary: "placeholder trip meme", // TODO
     description:
       "Make a meme about the trip/with a photo from the trip which someone laughs out loud to when they first see it",
-    difficulty: "e", // PLACEHOLDER - CHANGE
+    difficulty: "h", // PLACEHOLDER - CHANGE
     guaranteed: true,
   },
   {
     summary: "placeholder miss rope drop", // TODO
     description: "We miss rope drop",
-    difficulty: "e", // PLACEHOLDER - CHANGE
+    difficulty: "h", // PLACEHOLDER - CHANGE
   },
   {
     summary: "Bad Smuggler",
     description: "Someone's a terrible pilot on smugglers run",
-    difficulty: "e", // PLACEHOLDER - CHANGE
+    difficulty: "h", // PLACEHOLDER - CHANGE
   },
   {
     summary: "placeholder open to close", // TODO
     description: "We're in the park from open till close (3 days)",
-    difficulty: "e", // PLACEHOLDER - CHANGE
+    difficulty: "h", // PLACEHOLDER - CHANGE
   },
   {
     summary: "Y'all British?",
@@ -286,7 +290,7 @@ export const events: DisneyEvent[] = [
   {
     summary: "placeholder hidden mickey", // TODO
     description: "You find a verified Hidden Mickey",
-    difficulty: "e", // PLACEHOLDER - CHANGE
+    difficulty: "h", // PLACEHOLDER - CHANGE
   },
   {
     summary: "Worth it",
@@ -296,6 +300,6 @@ export const events: DisneyEvent[] = [
   {
     summary: "Walk-on",
     description: "Less than 3 mins from entering the queue to getting onto the ride",
-    difficulty: "e", // PLACEHOLDER - CHANGE
+    difficulty: "h", // PLACEHOLDER - CHANGE
   },
 ];
