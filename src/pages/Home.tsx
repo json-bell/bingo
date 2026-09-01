@@ -17,6 +17,7 @@ export function Home() {
           </li>
         ))}
       </ul>
+      <p className="mt-6 text-center text-xs text-ink-muted">App version: {__APP_COMMIT_SHA__}</p>
     </main>
   );
 }
