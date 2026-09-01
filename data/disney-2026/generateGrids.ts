@@ -36,40 +36,82 @@ interface IndexedEvent {
 
 type Tiers = Record<EventDifficulty, IndexedEvent[]>;
 
-function canAdd(candidate: IndexedEvent, selected: IndexedEvent[], gridOwner: Person): boolean {
-  const { eligiblePeople, variantGroup } = candidate.event;
-  if (eligiblePeople && !eligiblePeople.includes(gridOwner)) return false;
-  if (variantGroup && selected.some((s) => s.event.variantGroup === variantGroup)) return false;
-  return true;
-}
+// Priority order for resolving cross-tier (and same-tier) variantGroup
+// duplicates: whichever candidate is encountered first in this order --
+// index ascending, hard before medium before easy at each index -- survives;
+// any later duplicate is dropped before either tier is ever trimmed to 8.
+// This is deliberately done between shuffling and slicing to 8, never after
+// -- resolving duplicates against a pre-trimmed 8 would mean the tier that
+// loses one has nothing left to backfill from without a separate mechanism.
+const GROUP_PRIORITY: EventDifficulty[] = ["h", "m", "e"];
 
-function selectTierItems(
-  pool: IndexedEvent[],
-  gridOwner: Person,
-  difficulty: EventDifficulty
-): IndexedEvent[] {
-  const guaranteed = pool.filter((e) => e.event.guaranteed);
-  for (const { event } of guaranteed) {
-    if (event.eligiblePeople && !event.eligiblePeople.includes(gridOwner)) {
-      throw new Error(
-        `A guaranteed "${difficulty}" event is also restricted to eligiblePeople not including ${gridOwner} -- guaranteed and eligiblePeople can't conflict.`
-      );
+function selectAllTiers(pool: Tiers, gridOwner: Person): Tiers {
+  const seenGroups = new Set<string>();
+
+  // Guaranteed items first, regardless of shuffle -- always kept. A
+  // guaranteed event can't also have a variantGroup: "always included" and
+  // "one of a mutually-exclusive set" are contradictory on the same item,
+  // so this is a single-item data-authoring check, not a comparison against
+  // any other event.
+  const guaranteed: Tiers = { e: [], m: [], h: [] };
+  for (const difficulty of GROUP_PRIORITY) {
+    for (const item of pool[difficulty]) {
+      if (!item.event.guaranteed) continue;
+      if (item.event.eligiblePeople && !item.event.eligiblePeople.includes(gridOwner)) {
+        throw new Error(
+          `A guaranteed "${difficulty}" event is also restricted to eligiblePeople not including ${gridOwner} -- guaranteed and eligiblePeople can't conflict.`
+        );
+      }
+      if (item.event.variantGroup) {
+        throw new Error(
+          `A guaranteed "${difficulty}" event can't also have a variantGroup ("${item.event.variantGroup}") -- guaranteed means always included, which conflicts with being one of a mutually-exclusive set.`
+        );
+      }
+      guaranteed[difficulty].push(item);
     }
   }
 
-  const selected: IndexedEvent[] = [...guaranteed];
-  const candidates = shuffleObjectArray(pool.filter((e) => !e.event.guaranteed));
-  for (const candidate of candidates) {
-    if (selected.length >= SLOTS_PER_TIER) break;
-    if (canAdd(candidate, selected, gridOwner)) selected.push(candidate);
+  // Eligible, non-guaranteed candidates, shuffled per tier -- the full pool,
+  // not trimmed to 8 yet.
+  const candidates: Tiers = { e: [], m: [], h: [] };
+  for (const difficulty of GROUP_PRIORITY) {
+    const eligible = pool[difficulty].filter(
+      (item) =>
+        !item.event.guaranteed &&
+        (!item.event.eligiblePeople || item.event.eligiblePeople.includes(gridOwner))
+    );
+    candidates[difficulty] = shuffleObjectArray(eligible);
   }
 
-  if (selected.length < SLOTS_PER_TIER) {
-    throw new Error(
-      `Not enough eligible "${difficulty}" events for ${gridOwner}'s grid (have ${selected.length}, need ${SLOTS_PER_TIER}) -- add more content, or loosen eligibility/variant-group restrictions.`
-    );
+  // Walk the merged priority order once: keep the first occurrence of each
+  // variantGroup, drop the rest. A group-less item is always kept.
+  const kept: Tiers = { e: [], m: [], h: [] };
+  const maxLen = Math.max(candidates.e.length, candidates.m.length, candidates.h.length);
+  for (let i = 0; i < maxLen; i++) {
+    for (const difficulty of GROUP_PRIORITY) {
+      const item = candidates[difficulty][i];
+      if (!item) continue;
+      const group = item.event.variantGroup;
+      if (group) {
+        if (seenGroups.has(group)) continue;
+        seenGroups.add(group);
+      }
+      kept[difficulty].push(item);
+    }
   }
-  return selected;
+
+  const result: Tiers = { e: [], m: [], h: [] };
+  for (const difficulty of GROUP_PRIORITY) {
+    const need = SLOTS_PER_TIER - guaranteed[difficulty].length;
+    const filled = [...guaranteed[difficulty], ...kept[difficulty].slice(0, need)];
+    if (filled.length < SLOTS_PER_TIER) {
+      throw new Error(
+        `Not enough eligible "${difficulty}" events for ${gridOwner}'s grid (have ${filled.length}, need ${SLOTS_PER_TIER}) -- add more content, or loosen eligibility/variant-group restrictions.`
+      );
+    }
+    result[difficulty] = filled;
+  }
+  return result;
 }
 
 function computePositionsByDifficulty(): Record<EventDifficulty, [number, number][]> {
@@ -155,11 +197,7 @@ function buildGridForPerson(
   songFromPerson: Record<Person, string>,
   shirtNumbers: Record<Person, string>
 ): { grid: Grid; sourceIndices: number[] } {
-  const tiers: Tiers = {
-    e: selectTierItems(pool.e, gridOwner, "e"),
-    m: selectTierItems(pool.m, gridOwner, "m"),
-    h: selectTierItems(pool.h, gridOwner, "h"),
-  };
+  const tiers = selectAllTiers(pool, gridOwner);
   const positioned = positionGuaranteedItems(tiers);
   const index = { e: 0, m: 0, h: 0 };
   const sourceIndices: number[] = [];

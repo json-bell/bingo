@@ -76,6 +76,31 @@ describe("getDisneyGrids", () => {
     }
   });
 
+  it("never draws two members of the same variantGroup across different difficulty tiers", () => {
+    // Regression guard: the original implementation checked variantGroup
+    // exclusivity independently per tier (each tier's own selection loop
+    // only compared against itself), so a group split across two
+    // difficulties -- like disney-2026's real FLIGHT_TIMING and MERCH
+    // groups -- was never actually enforced. One member here is "e", the
+    // other "m".
+    const events = buildEvents({
+      e: [
+        ...makeFiller("e", 15, "easy"),
+        { summary: "flight A", description: "A", difficulty: "e", variantGroup: VariantGroup.FLIGHT_TIMING },
+      ],
+      m: [
+        ...makeFiller("m", 15, "med"),
+        { summary: "flight B", description: "B", difficulty: "m", variantGroup: VariantGroup.FLIGHT_TIMING },
+      ],
+    });
+    const grids = getDisneyGrids({ events, people: [...people], songFromPerson, shirtNumbers });
+
+    for (const grid of grids) {
+      const summaries = grid.flat().map((c) => c.summary);
+      expect(summaries.includes("flight A") && summaries.includes("flight B")).toBe(false);
+    }
+  });
+
   it("never draws an eligiblePeople-restricted event onto an ineligible person's grid", () => {
     const [eligible] = people;
     const events = buildEvents({
@@ -208,6 +233,29 @@ describe("getDisneyGrids", () => {
 
     expect(() => getDisneyGrids({ events, people: [ineligible], songFromPerson, shirtNumbers })).toThrow(
       /guaranteed.*eligiblePeople/i
+    );
+  });
+
+  it("throws a clear error when a guaranteed event also has a variantGroup", () => {
+    // Single-item data-authoring check, not a comparison against another
+    // event -- "always included" and "one of a mutually-exclusive set" are
+    // contradictory on the same item regardless of whether anything else
+    // actually shares the group.
+    const events = buildEvents({
+      e: [
+        ...makeFiller("e", 7, "easy"),
+        {
+          summary: "guaranteed but grouped",
+          description: "x",
+          difficulty: "e",
+          guaranteed: true,
+          variantGroup: VariantGroup.RIDE_BREAKDOWN,
+        },
+      ],
+    });
+
+    expect(() => getDisneyGrids({ events, people: [...people], songFromPerson, shirtNumbers })).toThrow(
+      /guaranteed.*variantgroup/i
     );
   });
 
