@@ -2,7 +2,6 @@ import type { Grid, GridCell } from "../../types/trip";
 import { difficultyKey, shuffleObjectArray } from "../getGrids";
 import type { DisneyEvent } from "./bingoes";
 import type { DisneySeedingInputs } from "./seedingInputs";
-import { people } from "./people";
 import type { Person } from "./people";
 
 // disney-2026's grid-building pipeline (docs/grid-content-pipeline.md §5-9).
@@ -128,6 +127,7 @@ function positionGuaranteedItems(tiers: Tiers): Tiers {
 function resolveEvent(
   event: DisneyEvent,
   gridOwner: Person,
+  tripPeople: Person[],
   songFromPerson: Record<Person, string>,
   shirtNumbers: Record<Person, string>
 ): { summary: string; description: string } {
@@ -138,7 +138,7 @@ function resolveEvent(
   const inputs: DisneySeedingInputs = {
     gridOwner,
     drinker: Math.random() < 0.5 ? "Ben" : "Jason",
-    randomPerson: people[Math.floor(Math.random() * people.length)],
+    randomPerson: tripPeople[Math.floor(Math.random() * tripPeople.length)],
     song: songFromPerson[gridOwner],
     shirtNumber: shirtNumbers[gridOwner],
   };
@@ -151,6 +151,7 @@ function resolveEvent(
 function buildGridForPerson(
   pool: Tiers,
   gridOwner: Person,
+  tripPeople: Person[],
   songFromPerson: Record<Person, string>,
   shirtNumbers: Record<Person, string>
 ): { grid: Grid; sourceIndices: number[] } {
@@ -171,7 +172,7 @@ function buildGridForPerson(
       const tierDifficulty = difficulty as EventDifficulty;
       const { event, sourceIndex } = positioned[tierDifficulty][index[tierDifficulty]++];
       sourceIndices.push(sourceIndex);
-      const resolved = resolveEvent(event, gridOwner, songFromPerson, shirtNumbers);
+      const resolved = resolveEvent(event, gridOwner, tripPeople, songFromPerson, shirtNumbers);
       return { difficulty: event.difficulty, ...resolved, id: crypto.randomUUID() };
     })
   );
@@ -212,7 +213,9 @@ export function getDisneyGrids({
   };
 
   for (let attempt = 1; attempt <= MAX_GENERATION_ATTEMPTS; attempt++) {
-    const built = tripPeople.map((person) => buildGridForPerson(pool, person, songFromPerson, shirtNumbers));
+    const built = tripPeople.map((person) =>
+      buildGridForPerson(pool, person, tripPeople, songFromPerson, shirtNumbers)
+    );
     const counts = new Array(events.length).fill(0) as number[];
     for (const { sourceIndices } of built) {
       for (const idx of sourceIndices) counts[idx]++;
