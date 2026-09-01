@@ -194,7 +194,7 @@ export const events: DisneyEvent[] = [
     difficulty: "e" // medium?
   },
   {
-    summary: (inputs) => `${inputs.shirtNumber} in its natural habitat`,
+    summary: (inputs) => `${inputs.shirtNumber} in the wild`,
     description: (inputs) =>
       `Find something with your shirt number (${inputs.shirtNumber}) on it & take a picture`,
     difficulty: "m",
@@ -238,24 +238,24 @@ export const events: DisneyEvent[] = [
     difficulty: "h" // medium?
   },
   {
-    summary: "placeholder faceplant", // TODO
+    summary: "Trip'd up",
     description: "We see someone faceplant",
     difficulty: "m", // PLACEHOLDER - CHANGE
     variantGroup: VariantGroup.FALL
   },
   {
-    summary: "placeholder banana fall", // TODO
+    summary: "Banana'd",
     description: "We see someone banana peel fall",
     difficulty: "m", // PLACEHOLDER - CHANGE
     variantGroup: VariantGroup.FALL
   },
   {
     summary: "placeholder family argument", // TODO
-    description: "We see a Disney family argument",
+    description: "We see a family arguing",
     difficulty: "m" // easy?
   },
   {
-    summary: "placeholder trip meme", // TODO
+    summary: "Meme Park",
     description:
       "Make a meme about the trip/with a photo from the trip which someone laughs out loud to when they first see it",
     difficulty: "m",
@@ -285,12 +285,14 @@ export const events: DisneyEvent[] = [
   {
     summary: "placeholder forgot swimsuit", // TODO
     description: "Someone forgets their swimsuit",
-    difficulty: "h"
+    difficulty: "h",
+    variantGroup: VariantGroup.FORGOT
   },
   {
     summary: "placeholder forgot jersey", // TODO
     description: "Someone forgets their Jersey",
-    difficulty: "h"
+    difficulty: "h",
+    variantGroup: VariantGroup.FORGOT
   },
   {
     summary: "placeholder hidden mickey", // TODO
