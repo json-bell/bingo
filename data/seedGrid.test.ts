@@ -9,7 +9,6 @@ import type { BingoItem, Difficulty } from "../types/trip";
 // Same fixture pattern as data/getGrids.test.ts.
 function makeEvents(difficulty: Difficulty, count: number, prefix: string): BingoItem[] {
   return Array.from({ length: count }, (_, i) => ({
-    type: "filler",
     difficulty,
     summary: `${prefix}-${i}`,
     description: `Filler event ${prefix}-${i}`,

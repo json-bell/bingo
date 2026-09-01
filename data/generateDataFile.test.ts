@@ -43,9 +43,9 @@ describe("generateDataFile", () => {
     };
 
     expect(data.rows).toEqual([
-      { type: "travel", difficulty: "e", summary: "flight on time", description: "Flight is on time" },
-      { type: "travel", difficulty: "m", summary: "airport pat down", description: "Someone gets a pat down" },
-      { type: "travel", difficulty: "h", summary: "throw up", description: "Someone throws up" },
+      { difficulty: "e", summary: "flight on time", description: "Flight is on time" },
+      { difficulty: "m", summary: "airport pat down", description: "Someone gets a pat down" },
+      { difficulty: "h", summary: "throw up", description: "Someone throws up" },
     ]);
   });
 });

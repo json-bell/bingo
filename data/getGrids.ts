@@ -39,7 +39,6 @@ function makeGrid(
   const medLength = medOrder.length;
   const jerseyIndex = medLength - 1 - [0, 3, 4, 7][edgeIndex];
   medOrder[jerseyIndex] = {
-    type: "challenge",
     difficulty: "m",
     summary: "jersey number",
     description:
@@ -50,7 +49,7 @@ function makeGrid(
     m: medOrder,
     h: hardOrder,
     f: [
-      { type: "free", difficulty: "f", summary: "free", description: "free" },
+      { difficulty: "f", summary: "free", description: "free" },
     ],
   };
   return difficultyKey.map((row) =>

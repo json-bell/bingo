@@ -22,8 +22,7 @@ export async function generateDataFile(slug: string): Promise<void> {
     .split("\r\n")
     .map((row) => row.split(","))
     .filter((row) => isEventDifficulty(row[1]))
-    .map(([type, difficulty, summary, description]) => ({
-      type,
+    .map(([, difficulty, summary, description]) => ({
       difficulty: difficulty as Difficulty,
       summary,
       description,
