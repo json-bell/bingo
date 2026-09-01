@@ -11,10 +11,13 @@ function shuffle<T>(arr: readonly T[]): T[] {
 // song, with which song/which pair is doubled both uniform (docs/grid-content-pipeline.md
 // §4). Pulled out of scripts/generatePersonToSong.ts so the algorithm itself
 // is unit-testable without touching the filesystem.
-export function assignSongs(people: readonly string[], songs: readonly string[]): Record<string, string> {
-  if (people.length !== songs.length + 1) {
+export function assignSongs(
+  people: readonly string[],
+  songs: readonly string[]
+): Record<string, string> {
+  if (people.length !== 7 || songs.length !== 6) {
     throw new Error(
-      `Cyclic assignment needs exactly one more person than songs -- got ${people.length} people, ${songs.length} songs.`
+      `Wrong number of people or songs -- got ${people.length} people, ${songs.length} songs.`
     );
   }
 

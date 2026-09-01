@@ -5,9 +5,13 @@ const people = ["Ben", "Ciara", "James", "Jason", "Maria", "Sarah", "Thomas"];
 const songs = ["Song A", "Song B", "Song C", "Song D", "Song E", "Song F"];
 
 describe("assignSongs", () => {
-  it("throws unless there's exactly one more person than songs", () => {
-    expect(() => assignSongs(people, songs.slice(0, 5))).toThrow(/one more person than songs/i);
-    expect(() => assignSongs(people.slice(0, 6), songs)).toThrow(/one more person than songs/i);
+  it("throws unless there's 7 ppl 6 songs", () => {
+    expect(() => assignSongs(people, songs.slice(0, 5))).toThrow(
+      /Wrong number/i
+    );
+    expect(() => assignSongs(people.slice(0, 6), songs)).toThrow(
+      /Wrong number/i
+    );
   });
 
   it("assigns every person a real song from the list", () => {
