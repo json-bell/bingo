@@ -343,11 +343,10 @@ function logDistribution(
   }
 
   if (sparse.length) {
-    console.log(
-      `  Appeared 0-1 times: ${sparse
-        .map((s) => `${s.name} (${s.difficulty}, ${s.count}x)`)
-        .join("; ")}`
-    );
+    console.log("  Appeared 0-1 times:");
+    for (const s of sparse) {
+      console.log(`    - ${s.name} (${s.difficulty}, ${s.count}x)`);
+    }
   }
 }
 
