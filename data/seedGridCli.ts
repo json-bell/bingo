@@ -3,12 +3,13 @@ import path from "path";
 import { seedGrid, dbLabel } from "./seedGrid";
 import type { Grid } from "../types/trip";
 
-// The only safe retry path after a failed seed -- see
-// docs/backend-architecture.md §5. Re-running `make-grid` does NOT retry:
-// makeGrid() is unseeded-random and never overwrites, so a second run mints
-// an entirely new version with a different set of cell ids, orphaning the
-// grid file that already exists. This reads the already-written grid file
-// and re-seeds from it instead of generating anything new.
+// The only seeding path, always -- make-grid never seeds on its own (see
+// docs/backend-architecture.md §5). Also the only safe way to retry after a
+// failed seed: re-running `make-grid` does NOT retry, since makeGrid() is
+// unseeded-random and never overwrites -- a second run mints an entirely new
+// version with a different set of cell ids, orphaning the grid file that
+// already exists. This reads the already-written grid file and seeds from
+// it directly instead of generating anything new.
 const slug = process.argv[2];
 const versionArg = process.argv[3];
 if (!slug || !versionArg) {

@@ -1,6 +1,6 @@
 import type { BingoItem, Difficulty, Grid, GridCell } from "../types/trip";
 
-function shuffleObjectArray<T extends object>(arr: T[]): T[] {
+export function shuffleObjectArray<T extends object>(arr: T[]): T[] {
   return arr
     .map((obj) => ({ ...obj, place: Math.random() }))
     .sort((a, b) => a.place - b.place)
@@ -17,7 +17,7 @@ function getShuffledCharArray(characters: string[]): string[] {
   ];
 }
 
-const difficultyKey: Difficulty[][] = [
+export const difficultyKey: Difficulty[][] = [
   ["h", "e", "m", "e", "h"],
   ["e", "m", "h", "m", "e"],
   ["m", "h", "f", "h", "m"],
@@ -39,7 +39,6 @@ function makeGrid(
   const medLength = medOrder.length;
   const jerseyIndex = medLength - 1 - [0, 3, 4, 7][edgeIndex];
   medOrder[jerseyIndex] = {
-    type: "challenge",
     difficulty: "m",
     summary: "jersey number",
     description:
@@ -50,7 +49,7 @@ function makeGrid(
     m: medOrder,
     h: hardOrder,
     f: [
-      { type: "free", difficulty: "f", summary: "free", description: "free" },
+      { difficulty: "f", summary: "free", description: "free" },
     ],
   };
   return difficultyKey.map((row) =>

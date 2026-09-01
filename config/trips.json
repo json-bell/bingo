@@ -1,3 +1,7 @@
 {
-  "europapark-2024": { "currentVersion": 2, "title": "Europapark 2024 Bingo!!" }
+  "europapark-2024": {
+    "currentVersion": 2,
+    "title": "Europapark 2024 Bingo!!"
+  },
+  "disney-2026": { "currentVersion": 1, "title": "Disney 2026!!" }
 }

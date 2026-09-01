@@ -4,7 +4,6 @@ import type { BingoItem, Difficulty } from "../types/trip";
 
 function makeEvents(difficulty: Difficulty, count: number, prefix: string): BingoItem[] {
   return Array.from({ length: count }, (_, i) => ({
-    type: "filler",
     difficulty,
     summary: `${prefix}-${i}`,
     description: `Filler event ${prefix}-${i}`,
@@ -77,7 +76,7 @@ describe("getGrids", () => {
   it("appends a character name to hug/fistbump events", () => {
     const rows = buildFixtureRows({
       e: [
-        { type: "social", difficulty: "e", summary: "hug", description: "hug" },
+        { difficulty: "e", summary: "hug", description: "hug" },
         ...makeEvents("e", 7, "easy"),
       ],
     });

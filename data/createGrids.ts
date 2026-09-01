@@ -2,7 +2,6 @@ import fs from "fs/promises";
 import path from "path";
 import { generateDataFile } from "./generateDataFile";
 import { getGrids } from "./getGrids";
-import { seedGrid, dbLabel } from "./seedGrid";
 import type { BingoItem, Grid } from "../types/trip";
 
 const slug = process.argv[2];
@@ -41,16 +40,11 @@ await fs.writeFile(
   JSON.stringify(grids, null, 2) + "\n"
 );
 console.log(`Wrote grids/${slug}/${nextVersion}.json`);
-
-try {
-  const seeded = await seedGrid(slug, nextVersion, grids, people);
-  console.log(`Seeded ${seeded} checked rows into ${dbLabel()}.`);
-} catch (error) {
-  console.error(`Grid file written, but seeding failed:`, error);
-  console.error(`Re-run: npm run seed-grid -- ${slug} ${nextVersion}`);
-  process.exitCode = 1;
-}
-
+console.log();
+console.log(`This only wrote the local JSON -- seeding is a separate, deliberate step:`);
+console.log(`  npm run seed-grid -- ${slug} ${nextVersion}       (local DATABASE_URL)`);
+console.log(`  npm run seed-grid:prod -- ${slug} ${nextVersion}  (production)`);
+console.log();
 console.log(
-  `Set config/trips.json's "${slug}".currentVersion to ${nextVersion} to make it live.`
+  `Then set config/trips.json's "${slug}".currentVersion to ${nextVersion} to make it live.`
 );

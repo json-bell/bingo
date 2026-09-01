@@ -1,7 +1,6 @@
 export type Difficulty = "e" | "m" | "h" | "f";
 
 export interface BingoItem {
-  type: string;
   difficulty: Difficulty;
   summary: string;
   description: string;

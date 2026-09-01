@@ -71,9 +71,9 @@ reach for `db.transaction()` in a route without checking this first.
 ### Where the files live
 
 `db/schema.ts` and `db/client.ts` sit at the **repo root**, not inside `api/` — deliberately
-mirroring `types/trip.ts`. Both `api/` (the routes) and `data/` (the `make-grid` seeding step)
-import them, and a shape imported by two contexts belongs at the root in this repo, same
-argument as the `BingoItem`/`GridCell` types.
+mirroring `types/trip.ts`. Both `api/` (the routes) and `data/` (the `seed-grid` step) import
+them, and a shape imported by two contexts belongs at the root in this repo, same argument as
+the `BingoItem`/`GridCell` types.
 
 ```
 db/
@@ -135,7 +135,7 @@ export type NewCheckedRow = typeof checked.$inferInsert;
 `data/getGrids.ts` assigns `id: crypto.randomUUID()` per *placed* cell (line 89), not per
 source `BingoItem`, so the same CSV row appearing in nine people's grids produces nine
 distinct ids. Confirmed against the live data: `grids/europapark-2024/2.json` holds 225 cells
-across 9 grids with 225 distinct ids, and every `make-grid` run mints an entirely fresh set.
+across 9 grids with 225 distinct ids, and every `make-grid:europapark-2024` run mints an entirely fresh set.
 No composite `(trip_slug, person, cell_id)` key is needed and none should be added — a person
 name in a primary key would also make renaming a person a data migration.
 
@@ -399,9 +399,20 @@ nothing even though the response wasn't a `200`.
 
 ## 5. Seeding
 
-Folded into `make-grid`, per `temp-plan.md` — one command generates and seeds, so the second
-step can't be forgotten. `data/createGrids.ts` currently ends by writing the JSON and printing
-the `config/trips.json` line to edit; it gains a seed call after the write.
+**Deliberately decoupled from grid generation** — `data/createGrids.ts` (the archived
+europapark-2024 pipeline, `npm run make-grid:europapark-2024`; disney-2026's
+`data/disney-2026/scripts/generateGrids.ts` behaves the same way) only ever writes the local
+grid JSON and prints next-step instructions; neither touches a database. Seeding is always a
+separate, explicit step via `npm run seed-grid -- <slug> <version>` (local) or `npm run
+seed-grid:prod -- <slug> <version>` (production), both `data/seedGridCli.ts`.
+
+This was originally folded into `make-grid` itself (one command generates and seeds, so the
+step "can't be forgotten" — see the git history for that version), but was deliberately split
+apart: always requiring the explicit seed step means there's no ambiguity about *when*
+seeding happens or which database it hit, and it removes the failure mode where a partial
+seed left the grid file and the database out of sync with no clear signal. `seedGrid()`
+itself (below) is unchanged by this — it's called from `seedGridCli.ts` either way, the only
+thing that moved is *when* it's called.
 
 ```ts
 // data/seedGrid.ts
@@ -448,39 +459,36 @@ export async function seedGrid(
 }
 ```
 
-`data/createGrids.ts` (existing code unchanged above this point — the `nextVersion`
-computation, `getGrids({ data, characters, people, number: people.length })`, and the
-`fs.writeFile`):
+`data/createGrids.ts` ends by writing the JSON and printing the next steps — it never imports
+`seedGrid` at all:
 
 ```ts
 console.log(`Wrote grids/${slug}/${nextVersion}.json`);
-
-try {
-  const seeded = await seedGrid(slug, nextVersion, grids, people);
-  console.log(`Seeded ${seeded} checked rows into ${dbLabel()}.`);
-} catch (error) {
-  console.error(`Grid file written, but seeding failed:`, error);
-  console.error(`Re-run: npm run seed-grid -- ${slug} ${nextVersion}`);
-  process.exitCode = 1;
-}
-
-console.log(`Set config/trips.json's "${slug}".currentVersion to ${nextVersion} to make it live.`);
+console.log();
+console.log(`This only wrote the local JSON -- seeding is a separate, deliberate step:`);
+console.log(`  npm run seed-grid -- ${slug} ${nextVersion}       (local DATABASE_URL)`);
+console.log(`  npm run seed-grid:prod -- ${slug} ${nextVersion}  (production)`);
+console.log();
+console.log(`Then set config/trips.json's "${slug}".currentVersion to ${nextVersion} to make it live.`);
 ```
 
-**The separate `npm run seed-grid -- <slug> <version>` entry point is not optional
-convenience — it is the only safe retry path.** Re-running `make-grid` after a failed seed does
-*not* retry: `makeGrid()` is unseeded-random and never overwrites, so a second run produces a
-*new numbered version with a completely different set of cell ids*. The grid file that was
-already written would be orphaned, and you'd be seeding a grid nobody is looking at. `seedGridCli.ts`
-reads the already-written `grids/<slug>/<version>.json` plus `data/<slug>/people.ts` and calls the
-same `seedGrid()`.
+**`npm run seed-grid -- <slug> <version>` is the only seeding path, always — there is no
+"seed automatically, retry manually on failure" fallback anymore.** It reads the
+already-written `grids/<slug>/<version>.json` plus `data/<slug>/people.ts` off disk and calls
+`seedGrid()`. This also means re-running either `make-grid` command is never the right
+response to a seeding problem: grid generation is unseeded-random and never overwrites, so a
+second run produces a *new numbered version with a completely different set of cell ids* —
+the grid file that was already written (and whatever you already seeded from it) would be
+orphaned. Always re-run `seed-grid`/`seed-grid:prod` against the existing version instead.
 
-**Which database does `make-grid` seed?** Whatever `DATABASE_URL` is when it runs — the same
-env var the routes use. A grid destined for production must be seeded against the production
-(Neon) URL, which means running `make-grid` with the production `DATABASE_URL` in the
-environment. Print the target host in the "Seeded N rows" line (`dbLabel()` above — host only,
-never the credentials) so it's impossible to seed dev and then wonder why production is empty.
-This is a **human decision point at grid-generation time**, not something to infer.
+**Which database does `seed-grid` seed?** Whatever `DATABASE_URL` is when *it* runs — the same
+env var the routes use, and neither `make-grid` command touches this at all. A grid destined
+for production must be seeded with `npm run seed-grid:prod`. Print the target host in the
+"Seeded N rows" line (`dbLabel()` above — host only, never the credentials) so it's impossible
+to seed dev and then wonder why production is empty. This is a **human decision point at seed
+time**, not something to infer, and not something either `make-grid` command can accidentally
+get wrong on your behalf anymore since neither has access to `DATABASE_URL` in the first
+place.
 
 Rows must exist before the API can serve them: `PATCH` on a missing `cell_id` returns `404`
 and the frontend drops the write (§9). Seeding is not an optimization.
@@ -754,9 +762,10 @@ blocks the phase it appears in.
 5. **Confirm the Node version for functions** (Vercel → Settings → General → Node.js Version):
    22.x. The repo already requires Node 19+ for `crypto.randomUUID()`; don't let the function
    runtime drift below the local one.
-6. **Seed production data.** Once the API is live, run `npm run seed-grid -- europapark-2024 2`
-   with the production `DATABASE_URL` in the environment, to backfill the currently-live grid
-   (225 rows). New grids seed themselves via `make-grid` from then on. Blocks Phase 4 being
+6. **Seed production data.** Once the API is live, run `npm run seed-grid:prod --
+   europapark-2024 2` to backfill the currently-live grid (225 rows). Every future grid
+   version needs the same explicit seed step (`seed-grid`/`seed-grid:prod` — grid generation
+   never seeds on its own, §5). Blocks Phase 4 being
    testable against real data.
 
 ### The `vercel.json` rewrite — already fixed, and for a bigger reason than expected
