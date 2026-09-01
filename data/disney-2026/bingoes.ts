@@ -257,7 +257,7 @@ export const events: DisneyEvent[] = [
     difficulty: "e"
   },
   {
-    summary: "Meme Park",
+    summary: "Dis-knee Slapper",
     description:
       "Make a meme about the trip/with a photo from the trip which someone laughs out loud to when they first see it",
     difficulty: "m",
