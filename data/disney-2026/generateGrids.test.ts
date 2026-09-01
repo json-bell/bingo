@@ -37,7 +37,13 @@ const shirtNumbers: Record<Person, string> = Object.fromEntries(
 describe("getDisneyGrids", () => {
   it("produces one 5x5 grid per person with the standard 8/8/8/1 difficulty split", () => {
     const events = buildEvents();
-    const grids = getDisneyGrids({ events, people: [...people], songFromPerson, shirtNumbers });
+    const grids = getDisneyGrids({
+      events,
+      people: [...people],
+      songFromPerson,
+      shirtNumbers,
+      balanceMinAppearanceRatio: 0,
+    });
 
     expect(grids).toHaveLength(people.length);
     for (const grid of grids) {
@@ -68,7 +74,13 @@ describe("getDisneyGrids", () => {
         },
       ],
     });
-    const grids = getDisneyGrids({ events, people: [...people], songFromPerson, shirtNumbers });
+    const grids = getDisneyGrids({
+      events,
+      people: [...people],
+      songFromPerson,
+      shirtNumbers,
+      balanceMinAppearanceRatio: 0,
+    });
 
     for (const grid of grids) {
       const summaries = grid.flat().map((c) => c.summary);
@@ -93,7 +105,13 @@ describe("getDisneyGrids", () => {
         { summary: "flight B", description: "B", difficulty: "m", variantGroup: VariantGroup.FLIGHT_TIMING },
       ],
     });
-    const grids = getDisneyGrids({ events, people: [...people], songFromPerson, shirtNumbers });
+    const grids = getDisneyGrids({
+      events,
+      people: [...people],
+      songFromPerson,
+      shirtNumbers,
+      balanceMinAppearanceRatio: 0,
+    });
 
     for (const grid of grids) {
       const summaries = grid.flat().map((c) => c.summary);
@@ -109,7 +127,18 @@ describe("getDisneyGrids", () => {
         { summary: "vip only", description: "vip", difficulty: "e", eligiblePeople: [eligible] },
       ],
     });
-    const grids = getDisneyGrids({ events, people: [...people], songFromPerson, shirtNumbers });
+    // balanceMinAppearanceRatio: 0 -- eligiblePeople caps how many grids an
+    // event could ever appear on (restricted to one person here, so at most
+    // 1), which would otherwise conflict with whatever balance ratio
+    // production happens to be tuned to. This test is about exclusion, not
+    // balance, so it shouldn't be coupled to that setting at all.
+    const grids = getDisneyGrids({
+      events,
+      people: [...people],
+      songFromPerson,
+      shirtNumbers,
+      balanceMinAppearanceRatio: 0,
+    });
 
     grids.forEach((grid, i) => {
       if (people[i] === eligible) return;
@@ -145,7 +174,13 @@ describe("getDisneyGrids", () => {
         { summary: "always here", description: "x", difficulty: "e", guaranteed: true },
       ],
     });
-    const grids = getDisneyGrids({ events, people: [...people], songFromPerson, shirtNumbers });
+    const grids = getDisneyGrids({
+      events,
+      people: [...people],
+      songFromPerson,
+      shirtNumbers,
+      balanceMinAppearanceRatio: 0,
+    });
 
     for (const grid of grids) {
       expect(grid.flat().filter((c) => c.summary === "always here")).toHaveLength(1);
@@ -167,7 +202,13 @@ describe("getDisneyGrids", () => {
         { summary: "guaranteed-h", description: "x", difficulty: "h", guaranteed: true },
       ],
     });
-    const grids = getDisneyGrids({ events, people: [...people], songFromPerson, shirtNumbers });
+    const grids = getDisneyGrids({
+      events,
+      people: [...people],
+      songFromPerson,
+      shirtNumbers,
+      balanceMinAppearanceRatio: 0,
+    });
 
     for (const grid of grids) {
       const positions: [number, number][] = [];
@@ -197,7 +238,13 @@ describe("getDisneyGrids", () => {
       ...makeFiller("m", 8, "med"),
       ...makeFiller("h", 8, "hard"),
     ];
-    const grids = getDisneyGrids({ events, people: [...people], songFromPerson, shirtNumbers });
+    const grids = getDisneyGrids({
+      events,
+      people: [...people],
+      songFromPerson,
+      shirtNumbers,
+      balanceMinAppearanceRatio: 0,
+    });
 
     for (const grid of grids) {
       const cell = grid.flat().find((c) => c.description.startsWith("drinker was"));

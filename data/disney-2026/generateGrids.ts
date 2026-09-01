@@ -355,23 +355,28 @@ function logDistribution(
   }
 }
 
-function checkBalance(counts: number[]): { ok: boolean; reason?: string } {
+// minRatio <= 0 disables balance checking entirely (including the
+// zero-appearances hard fail below) -- the escape hatch for callers that
+// don't care about balance, e.g. structural/mechanism tests that shouldn't
+// be coupled to whatever ratio production happens to be tuned to.
+function checkBalance(counts: number[], minRatio: number): { ok: boolean; reason?: string } {
+  if (minRatio <= 0) return { ok: true };
   const neverAppearing = counts.some((c) => c === 0);
   if (neverAppearing)
     return { ok: false, reason: "❌ At least one event never appeared" };
   const appearingAtLeastTwice = counts.filter((c) => c >= 2).length;
   const ratio = counts.length ? appearingAtLeastTwice / counts.length : 1;
-  if (ratio < BALANCE_MIN_APPEARANCE_RATIO) {
+  if (ratio < minRatio) {
     return {
       ok: false,
       reason: `❌ ${(100 - ratio * 100).toFixed(0)}% of events (${counts.length - appearingAtLeastTwice} of ${counts.length}) appeared only once across all grids (needs ${
-        BALANCE_MIN_APPEARANCE_RATIO * 100
+        minRatio * 100
       }%)`
     };
   }
   console.log(
     `✅ Succeeded with ${(ratio * 100).toFixed(0)}% of events appearing at least twice (needed ${
-      BALANCE_MIN_APPEARANCE_RATIO * 100
+      minRatio * 100
     }%`
   );
   return { ok: true };
@@ -381,12 +386,14 @@ export function getDisneyGrids({
   events,
   people: tripPeople,
   songFromPerson,
-  shirtNumbers
+  shirtNumbers,
+  balanceMinAppearanceRatio = BALANCE_MIN_APPEARANCE_RATIO
 }: {
   events: DisneyEvent[];
   people: Person[];
   songFromPerson: Record<Person, string>;
   shirtNumbers: Record<Person, string>;
+  balanceMinAppearanceRatio?: number;
 }): Grid[] {
   const indexed: IndexedEvent[] = events.map((event, sourceIndex) => ({
     event,
@@ -406,7 +413,7 @@ export function getDisneyGrids({
     for (const { sourceIndices } of built) {
       for (const idx of sourceIndices) counts[idx]++;
     }
-    const balance = checkBalance(counts);
+    const balance = checkBalance(counts, balanceMinAppearanceRatio);
     console.log(
       `[disney-2026] generation attempt ${attempt}/${MAX_GENERATION_ATTEMPTS}: ${
         balance.ok ? "passed" : "failed"
