@@ -343,9 +343,14 @@ function logDistribution(
   }
 
   if (sparse.length) {
-    console.log("  Appeared 0-1 times:");
-    for (const s of sparse) {
-      console.log(`    - ${s.name} (${s.difficulty}, ${s.count}x)`);
+    const sorted = [...sparse].sort(
+      (a, b) =>
+        a.count - b.count ||
+        columns.indexOf(a.difficulty) - columns.indexOf(b.difficulty)
+    );
+    console.log("  Appeared 0 or 1 times:");
+    for (const s of sorted) {
+      console.log(`    - ${s.count} times: ${s.name} (${s.difficulty})`);
     }
   }
 }
