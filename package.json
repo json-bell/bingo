@@ -11,6 +11,7 @@
     "preview": "vite preview",
     "make-grid": "tsx data/disney-2026/scripts/generateGrids.ts",
     "make-grid:europapark-2024": "tsx data/createGrids.ts europapark-2024",
+    "assign-songs:disney-2026": "tsx data/disney-2026/scripts/generatePersonToSong.ts",
     "seed-grid": "tsx data/seedGridCli.ts",
     "seed-grid:dev": "npm run seed-grid --",
     "seed-grid:prod": ". ~/.config/bingo-prod.env && DATABASE_URL=$DATABASE_URL_UNPOOLED npm run seed-grid --",

@@ -38,6 +38,7 @@ These are the real, verified commands for this repo. Don't guess alternatives (`
 | Generate a new europapark-2024 grid version (archived CSV pipeline) | `npm run make-grid:europapark-2024` — same JSON-only behavior |
 | Seed a grid version's `checked` rows (local DB) | `npm run seed-grid -- <slug> <version>` or `npm run seed-grid:dev -- <slug> <version>` (identical) |
 | Seed a grid version's `checked` rows (**production**) | `npm run seed-grid:prod -- <slug> <version>` |
+| Assign each disney-2026 person a song (one-time, committed artifact) | `npm run assign-songs:disney-2026` — refuses to overwrite an existing `personToSong.ts`; re-run with `npm run assign-songs:disney-2026 -- --force` (the `--` is required — see below) |
 | Start local Postgres | `npm run db:up` (`docker compose up -d --wait`) |
 | Stop local Postgres | `npm run db:down` |
 | Reset local Postgres completely | `npm run db:reset` |
@@ -114,6 +115,17 @@ anything's broken. The path is deliberately hardcoded into these scripts (not a 
 itself, only the file's contents are) so production commands don't need the real connection
 string typed inline. `seed-grid:prod` and `migrate:prod` both override to the unpooled
 string.
+
+`npm run assign-songs:disney-2026` runs `data/disney-2026/scripts/generatePersonToSong.ts`,
+which writes the committed `data/disney-2026/personToSong.ts` (the fixed, one-time person→song
+table `getDisneyGrids()` reads as an input — see `docs/grid-content-pipeline.md` §4) and
+refuses to overwrite an existing file unless a literal `--force` argument reaches the script.
+**Passing `--force` requires the `--` separator**: `npm run assign-songs:disney-2026 --force`
+(no `--`) does NOT forward `--force` to the script at all — npm consumes it as npm's own global
+`--force` flag instead (silently, with only an "npm warn using --force" line), and the
+underlying script never sees it, so it still refuses to overwrite. The correct invocation is
+`npm run assign-songs:disney-2026 -- --force`, same convention as `seed-grid`'s own `npm run
+seed-grid -- <slug> <version>`.
 
 Requires **Node 19+**: `data/getGrids.ts` and `data/backfillCellIds.ts` call the global
 `crypto.randomUUID()` with no import (stable in Node 19+; not present at all on older
