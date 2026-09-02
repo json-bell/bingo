@@ -41,7 +41,7 @@ export interface DisneyEvent {
 
 export const events: DisneyEvent[] = [
   {
-    summary: "?? ride breakdown", // TODO
+    summary: "Let me break it down for you", // TODO
     description: "A ride breaks down while we're on it",
     difficulty: "m",
     variantGroup: VariantGroup.RIDE_BREAKDOWN
@@ -92,7 +92,7 @@ export const events: DisneyEvent[] = [
     variantGroup: VariantGroup.FLIGHT_TIMING
   },
   {
-    summary: "?? flight on time", // TODO
+    summary: "Ka-Chow",
     description: "Your flight's on time (< 20 mins delay)",
     difficulty: "e",
     variantGroup: VariantGroup.FLIGHT_TIMING
@@ -198,8 +198,7 @@ export const events: DisneyEvent[] = [
   },
   {
     summary: (inputs) => `${inputs.shirtNumber} in the wild`,
-    description: (inputs) =>
-      `Find something with your shirt number (${inputs.shirtNumber}) on it & take a picture`,
+    description: `Find something with your shirt number on it and take a picture`,
     difficulty: "h",
     guaranteed: true
   },
@@ -226,12 +225,12 @@ export const events: DisneyEvent[] = [
     difficulty: "h"
   },
   {
-    summary: "?? queue jumped", // TODO
+    summary: "OU𐞥C",
     description: "Someone gets queue jumped",
     difficulty: "m"
   },
   {
-    summary: "?? blister", // TODO
+    summary: "Blister?",
     description: "Someone gets a blister",
     difficulty: "m"
   },
@@ -253,7 +252,7 @@ export const events: DisneyEvent[] = [
     variantGroup: VariantGroup.FALL
   },
   {
-    summary: "?? family argument", // TODO
+    summary: "Family Feud",
     description: "We see a family arguing",
     difficulty: "e"
   },

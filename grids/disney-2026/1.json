@@ -59,7 +59,7 @@
       },
       {
         "difficulty": "e",
-        "summary": "?? flight on time",
+        "summary": "Ka-Chow",
         "description": "Your flight's on time (< 20 mins delay)",
         "id": "caeffc42-5740-46d3-a636-23369d564c1e"
       }
@@ -67,7 +67,7 @@
     [
       {
         "difficulty": "m",
-        "summary": "?? blister",
+        "summary": "Blister?",
         "description": "Someone gets a blister",
         "id": "81707c89-eccc-4d88-afb0-b916dee4f46c"
       },
@@ -156,7 +156,7 @@
       {
         "difficulty": "h",
         "summary": "11 in the wild",
-        "description": "Find something with your shirt number (11) on it & take a picture",
+        "description": "Find something with your shirt number on it and take a picture",
         "id": "1cd1a54f-7155-46e5-9cac-3909992308ca"
       }
     ]
@@ -236,7 +236,7 @@
       {
         "difficulty": "h",
         "summary": "83 in the wild",
-        "description": "Find something with your shirt number (83) on it & take a picture",
+        "description": "Find something with your shirt number on it and take a picture",
         "id": "f246c399-b7ed-438f-af51-9bbf6e2a3a6b"
       },
       {
@@ -279,7 +279,7 @@
       },
       {
         "difficulty": "m",
-        "summary": "?? queue jumped",
+        "summary": "OUꟴC",
         "description": "Someone gets queue jumped",
         "id": "28a27ebe-d81b-4769-810f-bfa54a73cc0c"
       },
@@ -352,7 +352,7 @@
       {
         "difficulty": "h",
         "summary": "55 in the wild",
-        "description": "Find something with your shirt number (55) on it & take a picture",
+        "description": "Find something with your shirt number on it and take a picture",
         "id": "abdd698e-7587-4da6-bce8-91510862e54a"
       }
     ],
@@ -391,7 +391,7 @@
     [
       {
         "difficulty": "m",
-        "summary": "?? queue jumped",
+        "summary": "OUꟴC",
         "description": "Someone gets queue jumped",
         "id": "8b090d45-9f07-4c0e-8e3c-41c600239fbc"
       },
@@ -473,7 +473,7 @@
       },
       {
         "difficulty": "e",
-        "summary": "?? family argument",
+        "summary": "Family Feud",
         "description": "We see a family arguing",
         "id": "8f24c8da-6962-4681-881e-e09dfb679456"
       },
@@ -490,7 +490,7 @@
       {
         "difficulty": "h",
         "summary": "54 in the wild",
-        "description": "Find something with your shirt number (54) on it & take a picture",
+        "description": "Find something with your shirt number on it and take a picture",
         "id": "c321ef80-2a47-4f6d-94fc-e27dc369f01b"
       },
       {
@@ -623,7 +623,7 @@
       },
       {
         "difficulty": "e",
-        "summary": "?? family argument",
+        "summary": "Family Feud",
         "description": "We see a family arguing",
         "id": "82178c1e-a9dd-429a-b1e7-7817d8fca485"
       },
@@ -689,7 +689,7 @@
       },
       {
         "difficulty": "m",
-        "summary": "?? ride breakdown",
+        "summary": "Let me break it down for you",
         "description": "A ride breaks down while we're on it",
         "id": "c5a6dc5c-4d14-4ee4-86cb-e897ed9d3eca"
       },
@@ -722,7 +722,7 @@
       {
         "difficulty": "h",
         "summary": "38 in the wild",
-        "description": "Find something with your shirt number (38) on it & take a picture",
+        "description": "Find something with your shirt number on it and take a picture",
         "id": "07c48d47-a728-44c4-b752-39b88f4540cb"
       },
       {
@@ -863,7 +863,7 @@
       },
       {
         "difficulty": "m",
-        "summary": "?? ride breakdown",
+        "summary": "Let me break it down for you",
         "description": "A ride breaks down while we're on it",
         "id": "aebe171c-11ef-46f9-afeb-62a96a575206"
       },
@@ -896,7 +896,7 @@
       {
         "difficulty": "h",
         "summary": "30 in the wild",
-        "description": "Find something with your shirt number (30) on it & take a picture",
+        "description": "Find something with your shirt number on it and take a picture",
         "id": "d9cf42b2-45a2-488a-af77-65f4ecaef2ea"
       },
       {
@@ -953,13 +953,13 @@
       },
       {
         "difficulty": "m",
-        "summary": "?? blister",
+        "summary": "Blister?",
         "description": "Someone gets a blister",
         "id": "c5de49b8-7e18-4814-a838-cbc9e651f39e"
       },
       {
         "difficulty": "e",
-        "summary": "?? family argument",
+        "summary": "Family Feud",
         "description": "We see a family arguing",
         "id": "2e1843f7-eff3-49ac-8484-4d4fe45f06d4"
       },
@@ -1000,14 +1000,14 @@
       {
         "difficulty": "h",
         "summary": "This is my jam",
-        "description": "We get Song E on Guardians of the Galaxy",
+        "description": "We get 'I Ran (So Far Away)' on Guardians of the Galaxy",
         "id": "0244ce43-82f8-4efb-8a0f-98a469b4a873"
       }
     ],
     [
       {
         "difficulty": "e",
-        "summary": "?? flight on time",
+        "summary": "Ka-Chow",
         "description": "Your flight's on time (< 20 mins delay)",
         "id": "83f141dd-1771-4143-b793-aa9657021dab"
       },
@@ -1020,7 +1020,7 @@
       {
         "difficulty": "h",
         "summary": "99 in the wild",
-        "description": "Find something with your shirt number (99) on it & take a picture",
+        "description": "Find something with your shirt number on it and take a picture",
         "id": "90d832a1-0f77-4ea1-8518-6a33d5dbd639"
       },
       {
@@ -1063,7 +1063,7 @@
       },
       {
         "difficulty": "m",
-        "summary": "?? queue jumped",
+        "summary": "OUꟴC",
         "description": "Someone gets queue jumped",
         "id": "af17ca20-f415-48eb-8039-a9da51c133e4"
       }
@@ -1115,7 +1115,7 @@
       },
       {
         "difficulty": "m",
-        "summary": "?? blister",
+        "summary": "Blister?",
         "description": "Someone gets a blister",
         "id": "0ae8cb7b-b336-4689-9dfe-6a24af95071a"
       },
