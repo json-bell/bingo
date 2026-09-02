@@ -82,7 +82,7 @@ export const events: DisneyEvent[] = [
   },
   {
     summary: "You're wet",
-    description: "be wettest after a water ride",
+    description: "Be wettest after a water ride",
     difficulty: "h"
   },
   {
