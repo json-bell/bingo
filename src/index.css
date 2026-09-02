@@ -55,6 +55,14 @@
      sit on top of (tile #eef4f6 and the three tile-easy/medium/hard
      tints), all comfortably >7:1. */
   --color-checked-mark: #1b3a5c;
+
+  /* Light blue, placeholder -- tune by eye (docs/visual-verification.md).
+     Watch contrast against every light tile background it can cross (tile,
+     tile-easy, tile-medium, tile-hard) -- --color-checked-mark deliberately
+     went dark navy for exactly this reason (see its own comment above), and
+     a line crossing 5 cells is even more likely to cross a light background
+     than a single checked-mark sitting inside one cell. */
+  --color-bingo-line: #4a9fd8;
 }
 
 :root {
