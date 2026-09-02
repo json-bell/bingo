@@ -41,24 +41,24 @@ export interface DisneyEvent {
 
 export const events: DisneyEvent[] = [
   {
-    summary: "Let me break it down for you", // TODO
+    summary: "Let me break it down for you",
     description: "A ride breaks down while we're on it",
     difficulty: "m",
     variantGroup: VariantGroup.RIDE_BREAKDOWN
   },
   {
-    summary: "?? ride breakdown queue", // TODO
+    summary: "Should I stay or should I go",
     description: "A ride breaks down while we're queuing for it",
     difficulty: "m", // easy?
     variantGroup: VariantGroup.RIDE_BREAKDOWN
   },
   {
-    summary: "Nap time",
-    description: "someone falls asleep during a show",
+    summary: "Spontaneous nap",
+    description: "Someone falls asleep during a show",
     difficulty: "m"
   },
   {
-    summary: "?? shooter high score", // TODO
+    summary: "New High Score",
     description: "You're highest scorer on a shooter",
     difficulty: "h"
   },
@@ -86,7 +86,7 @@ export const events: DisneyEvent[] = [
     difficulty: "h"
   },
   {
-    summary: "?? flight delayed", // TODO
+    summary: "Walmart at risk",
     description: "Your flight gets delayed (> 20 mins)",
     difficulty: "m",
     variantGroup: VariantGroup.FLIGHT_TIMING
@@ -98,7 +98,7 @@ export const events: DisneyEvent[] = [
     variantGroup: VariantGroup.FLIGHT_TIMING
   },
   {
-    summary: "?? transport nap", // TODO
+    summary: "Scheduled nap",
     description:
       "Someone falls asleep on transport to/from the parks (no photo no proof)",
     difficulty: "e"
@@ -182,7 +182,7 @@ export const events: DisneyEvent[] = [
     difficulty: "h"
   },
   {
-    summary: "?? show cancelled", // TODO
+    summary: "Too Weathered",
     description: "Show that we were going to see gets cancelled for weather",
     difficulty: "m"
   },
@@ -203,19 +203,19 @@ export const events: DisneyEvent[] = [
     guaranteed: true
   },
   {
-    summary: "Mine, mine, mine", // TODO
+    summary: "Mine, mine, mine",
     description: "Someone has something confiscated at security",
     difficulty: "h",
     variantGroup: VariantGroup.SECURITY_INCIDENT
   },
   {
-    summary: "?? security pat down", // TODO
+    summary: "What's in my pocket",
     description: "Someone gets a pat down at security",
     difficulty: "m",
     variantGroup: VariantGroup.SECURITY_INCIDENT
   },
   {
-    summary: "?? security slowdown", // TODO
+    summary: "Beep beep beep",
     description: "Someone's stuff slows us down going through park security",
     difficulty: "m"
   },
@@ -235,7 +235,7 @@ export const events: DisneyEvent[] = [
     difficulty: "m"
   },
   {
-    summary: "?? crying photo", // TODO
+    summary: "Ride breakdown",
     description: "Someone's crying in a ride photo",
     difficulty: "h"
   },
@@ -264,7 +264,7 @@ export const events: DisneyEvent[] = [
     guaranteed: true
   },
   {
-    summary: "?? miss rope drop", // TODO
+    summary: "Dropped the ball not the rope",
     description: "We miss rope drop",
     difficulty: "h"
   },
@@ -274,7 +274,7 @@ export const events: DisneyEvent[] = [
     difficulty: "h"
   },
   {
-    summary: "What a way to make a living", // TODO
+    summary: "What a way to make a living",
     description:
       "We're in the park from open till close (3 days, probably longer than 9 to 5) (3 days)",
     difficulty: "e"
@@ -286,13 +286,13 @@ export const events: DisneyEvent[] = [
     difficulty: "m"
   },
   {
-    summary: "?? forgot swimsuit", // TODO
+    summary: "Forgot Swimsuit",
     description: "Someone forgets their swimsuit",
     difficulty: "h",
     variantGroup: VariantGroup.FORGOT
   },
   {
-    summary: "?? forgot jersey", // TODO
+    summary: "Forgot Jersey",
     description: "Someone forgets their Jersey",
     difficulty: "h",
     variantGroup: VariantGroup.FORGOT

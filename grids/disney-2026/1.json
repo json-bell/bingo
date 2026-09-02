@@ -53,8 +53,8 @@
       },
       {
         "difficulty": "m",
-        "summary": "Nap time",
-        "description": "someone falls asleep during a show",
+        "summary": "Spontaneous nap",
+        "description": "Someone falls asleep during a show",
         "id": "f050ecb2-f7b6-4c69-8dcd-ff40e34e37e2"
       },
       {
@@ -111,13 +111,13 @@
       },
       {
         "difficulty": "h",
-        "summary": "?? miss rope drop",
+        "summary": "Dropped the ball not the rope",
         "description": "We miss rope drop",
         "id": "6ca5f4d6-7b21-483e-b042-92eb63767edd"
       },
       {
         "difficulty": "m",
-        "summary": "?? ride breakdown queue",
+        "summary": "Should I stay or should I go",
         "description": "A ride breaks down while we're queuing for it",
         "id": "acb9ddf2-1fab-4557-91e6-aa1123f984b6"
       },
@@ -165,7 +165,7 @@
     [
       {
         "difficulty": "h",
-        "summary": "?? forgot jersey",
+        "summary": "Forgot Jersey",
         "description": "Someone forgets their Jersey",
         "id": "5c797b92-48a8-41f0-80a4-3ef71fabd920"
       },
@@ -177,8 +177,8 @@
       },
       {
         "difficulty": "m",
-        "summary": "Nap time",
-        "description": "someone falls asleep during a show",
+        "summary": "Spontaneous nap",
+        "description": "Someone falls asleep during a show",
         "id": "a742737b-d19b-42f5-b057-223cbdfbc993"
       },
       {
@@ -197,19 +197,19 @@
     [
       {
         "difficulty": "e",
-        "summary": "?? transport nap",
+        "summary": "Scheduled nap",
         "description": "Someone falls asleep on transport to/from the parks (no photo no proof)",
         "id": "a13d7483-20af-4859-91b3-ea3bbe013b54"
       },
       {
         "difficulty": "m",
-        "summary": "?? security pat down",
+        "summary": "What's in my pocket",
         "description": "Someone gets a pat down at security",
         "id": "16096ee9-6e64-4c30-98b2-e62e112852d0"
       },
       {
         "difficulty": "h",
-        "summary": "?? crying photo",
+        "summary": "Ride breakdown",
         "description": "Someone's crying in a ride photo",
         "id": "c80182cd-8f86-4a2d-bb1d-27a541d2307f"
       },
@@ -253,7 +253,7 @@
       },
       {
         "difficulty": "m",
-        "summary": "?? show cancelled",
+        "summary": "Too Weathered",
         "description": "Show that we were going to see gets cancelled for weather",
         "id": "79181c3a-a029-4021-9c45-95f19a817140"
       }
@@ -267,13 +267,13 @@
       },
       {
         "difficulty": "m",
-        "summary": "?? flight delayed",
+        "summary": "Walmart at risk",
         "description": "Your flight gets delayed (> 20 mins)",
         "id": "a8f4360a-2ede-481c-9531-c6f40196359f"
       },
       {
         "difficulty": "h",
-        "summary": "?? miss rope drop",
+        "summary": "Dropped the ball not the rope",
         "description": "We miss rope drop",
         "id": "b6dd5fa1-28b1-4956-a60b-14ab2ee2c2ed"
       },
@@ -327,7 +327,7 @@
     [
       {
         "difficulty": "h",
-        "summary": "?? crying photo",
+        "summary": "Ride breakdown",
         "description": "Someone's crying in a ride photo",
         "id": "de4185b2-15ea-4d4d-a00e-d11f06696a50"
       },
@@ -339,7 +339,7 @@
       },
       {
         "difficulty": "m",
-        "summary": "?? security slowdown",
+        "summary": "Beep beep beep",
         "description": "Someone's stuff slows us down going through park security",
         "id": "c876106c-3ba9-4740-b685-cb793c07a595"
       },
@@ -501,7 +501,7 @@
       },
       {
         "difficulty": "m",
-        "summary": "?? security pat down",
+        "summary": "What's in my pocket",
         "description": "Someone gets a pat down at security",
         "id": "4f6eb38e-0dc6-4e68-8e4c-cc1f77620407"
       },
@@ -521,7 +521,7 @@
     [
       {
         "difficulty": "e",
-        "summary": "?? transport nap",
+        "summary": "Scheduled nap",
         "description": "Someone falls asleep on transport to/from the parks (no photo no proof)",
         "id": "1ace009b-9da0-4917-9c26-75c3e50c9862"
       },
@@ -533,7 +533,7 @@
       },
       {
         "difficulty": "h",
-        "summary": "?? crying photo",
+        "summary": "Ride breakdown",
         "description": "Someone's crying in a ride photo",
         "id": "bd30c26f-98da-4c32-8757-d7f8085c19cc"
       },
@@ -553,7 +553,7 @@
     [
       {
         "difficulty": "m",
-        "summary": "?? security slowdown",
+        "summary": "Beep beep beep",
         "description": "Someone's stuff slows us down going through park security",
         "id": "acec6888-e5bd-457e-b1f5-bf353d3726ab"
       },
@@ -597,7 +597,7 @@
       },
       {
         "difficulty": "h",
-        "summary": "?? forgot swimsuit",
+        "summary": "Forgot Swimsuit",
         "description": "Someone forgets their swimsuit",
         "id": "ccad8fd2-1e44-4563-b582-5730b5ce2bf0"
       },
@@ -641,7 +641,7 @@
       },
       {
         "difficulty": "h",
-        "summary": "?? shooter high score",
+        "summary": "New High Score",
         "description": "You're highest scorer on a shooter",
         "id": "2abfdece-75de-4557-afb3-b8b9c104624d"
       }
@@ -651,7 +651,7 @@
     [
       {
         "difficulty": "h",
-        "summary": "?? forgot swimsuit",
+        "summary": "Forgot Swimsuit",
         "description": "Someone forgets their swimsuit",
         "id": "e975fc39-01fd-4fc5-83b9-1d4c77e539b2"
       },
@@ -675,7 +675,7 @@
       },
       {
         "difficulty": "h",
-        "summary": "?? shooter high score",
+        "summary": "New High Score",
         "description": "You're highest scorer on a shooter",
         "id": "de2503cf-d751-4649-a168-632e3f4c652d"
       }
@@ -701,7 +701,7 @@
       },
       {
         "difficulty": "m",
-        "summary": "?? show cancelled",
+        "summary": "Too Weathered",
         "description": "Show that we were going to see gets cancelled for weather",
         "id": "839d401f-3348-4cbe-9f7a-ae180a3324f3"
       },
@@ -739,7 +739,7 @@
       },
       {
         "difficulty": "m",
-        "summary": "?? security slowdown",
+        "summary": "Beep beep beep",
         "description": "Someone's stuff slows us down going through park security",
         "id": "eb49fb5b-e0df-4d89-8d05-58ec8f69d81a"
       }
@@ -753,7 +753,7 @@
       },
       {
         "difficulty": "m",
-        "summary": "?? flight delayed",
+        "summary": "Walmart at risk",
         "description": "Your flight gets delayed (> 20 mins)",
         "id": "863b4f69-2279-4a33-9966-a75804b66d3f"
       },
@@ -813,7 +813,7 @@
     [
       {
         "difficulty": "h",
-        "summary": "?? forgot swimsuit",
+        "summary": "Forgot Swimsuit",
         "description": "Someone forgets their swimsuit",
         "id": "a228d188-da81-4a50-9bb3-766621e48aed"
       },
@@ -877,8 +877,8 @@
     [
       {
         "difficulty": "m",
-        "summary": "Nap time",
-        "description": "someone falls asleep during a show",
+        "summary": "Spontaneous nap",
+        "description": "Someone falls asleep during a show",
         "id": "38949242-2676-4a77-83e2-5f4e4277cc2c"
       },
       {
@@ -901,7 +901,7 @@
       },
       {
         "difficulty": "m",
-        "summary": "?? flight delayed",
+        "summary": "Walmart at risk",
         "description": "Your flight gets delayed (> 20 mins)",
         "id": "432041fe-6150-4802-be16-a0b7898965b5"
       }
@@ -921,7 +921,7 @@
       },
       {
         "difficulty": "h",
-        "summary": "?? miss rope drop",
+        "summary": "Dropped the ball not the rope",
         "description": "We miss rope drop",
         "id": "0a856319-e242-47a2-85de-1897e82fc652"
       },
@@ -987,7 +987,7 @@
       },
       {
         "difficulty": "m",
-        "summary": "?? security slowdown",
+        "summary": "Beep beep beep",
         "description": "Someone's stuff slows us down going through park security",
         "id": "6ff40b0e-b339-4838-97e3-fcbb844efcb6"
       },
@@ -1025,7 +1025,7 @@
       },
       {
         "difficulty": "m",
-        "summary": "?? ride breakdown queue",
+        "summary": "Should I stay or should I go",
         "description": "A ride breaks down while we're queuing for it",
         "id": "97451a91-07c4-467a-8791-0abc3bb309c2"
       },
@@ -1045,7 +1045,7 @@
       },
       {
         "difficulty": "h",
-        "summary": "?? miss rope drop",
+        "summary": "Dropped the ball not the rope",
         "description": "We miss rope drop",
         "id": "e56681d2-974c-409c-b775-7b71dcd9193d"
       },
@@ -1095,7 +1095,7 @@
       },
       {
         "difficulty": "e",
-        "summary": "?? transport nap",
+        "summary": "Scheduled nap",
         "description": "Someone falls asleep on transport to/from the parks (no photo no proof)",
         "id": "f5f2f5a0-41f0-44f3-9a00-5c0b6c9219c4"
       }
@@ -1103,7 +1103,7 @@
     [
       {
         "difficulty": "h",
-        "summary": "?? forgot jersey",
+        "summary": "Forgot Jersey",
         "description": "Someone forgets their Jersey",
         "id": "f144f041-21aa-4ece-a5dc-6816cafcec96"
       },
