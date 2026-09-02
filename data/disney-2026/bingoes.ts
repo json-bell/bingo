@@ -203,7 +203,7 @@ export const events: DisneyEvent[] = [
     guaranteed: true
   },
   {
-    summary: "?? security confiscated", // TODO
+    summary: "Mine, mine, mine", // TODO
     description: "Someone has something confiscated at security",
     difficulty: "h",
     variantGroup: VariantGroup.SECURITY_INCIDENT
@@ -274,8 +274,9 @@ export const events: DisneyEvent[] = [
     difficulty: "h"
   },
   {
-    summary: "?? open to close", // TODO
-    description: "We're in the park from open till close (3 days)",
+    summary: "What a way to make a living", // TODO
+    description:
+      "We're in the park from open till close (3 days, probably longer than 9 to 5) (3 days)",
     difficulty: "e"
   },
   {

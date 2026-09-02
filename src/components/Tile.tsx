@@ -68,7 +68,7 @@ export function Tile({ cell, person, tintsEnabled }: TileProps) {
           {summary.toUpperCase()}
         </h3>
         <p
-          className={`line-clamp-3 text-[10px] md:text-[0.9rem] mx-[2px] md:mx-[4px] ${checked ? "opacity-50" : ""}`}
+          className={`line-clamp-2 md:line-clamp-3 text-[10px] md:text-[0.9rem] mx-[2px] md:mx-[4px] ${checked ? "opacity-50" : ""}`}
         >
           {description}
         </p>
