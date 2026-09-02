@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { AppBar } from "../components/AppBar";
 import { PersonMenu } from "../components/PersonMenu";
 import { Grid } from "../components/Grid";
@@ -24,6 +24,7 @@ function readStoredZoomToFill(): boolean {
 
 export function TripPage() {
   const { slug } = useParams<{ slug: string }>();
+  const location = useLocation();
   const [trip, setTrip] = useState<LoadedTrip | null | undefined>(undefined); // undefined = loading, null = not found
   const [tintsEnabled, setTintsEnabled] = useState<boolean>(readStoredTintsEnabled);
   const [zoomToFill, setZoomToFill] = useState<boolean>(readStoredZoomToFill);
@@ -45,6 +46,23 @@ export function TripPage() {
       cancelled = true;
     };
   }, [slug]);
+
+  // A cold load straight to /<slug>#<person> (as opposed to clicking a
+  // #<person> link while already on an already-rendered trip page) can't
+  // rely on the browser's native one-shot scroll-to-fragment: this is a
+  // client-rendered SPA, so the <li id={person}> elements below don't exist
+  // in the DOM yet when the browser tries it, and most browsers don't retry
+  // once they later appear. Once `trip` has actually loaded (and this
+  // render has committed the real list to the DOM), do it ourselves.
+  // scrollIntoView honors each <li>'s scroll-mt-16 the same way native
+  // fragment navigation does, so this lands in exactly the same place a
+  // same-page click would -- no separate offset math to keep in sync.
+  useEffect(() => {
+    if (!trip) return;
+    const id = location.hash.slice(1);
+    if (!id) return;
+    document.getElementById(id)?.scrollIntoView({ block: "start" });
+  }, [trip, location.hash]);
 
   useEffect(() => {
     localStorage.setItem(TINTS_ENABLED_STORAGE_KEY, String(tintsEnabled));
@@ -103,7 +121,14 @@ export function TripPage() {
           <li
             key={people[index]}
             id={people[index]}
-            className={`relative min-w-0 max-w-full bg-surface list-none rounded-[1.5rem] text-center ${
+            className={`relative min-w-0 max-w-full bg-surface list-none rounded-[1.5rem] text-center scroll-mt-16 ${
+              // scroll-mt-16 matches AppBar.tsx's h-16 -- PersonMenu.tsx's
+              // jump links are plain <a href="#name">, and native
+              // anchor-scroll otherwise puts this <li>'s top at viewport
+              // y=0, right under the fixed AppBar, landing this card's own
+              // sticky (top-16) name header behind it instead of docked
+              // below it.
+              //
               // A flex item with no explicit width sizes to its own content
               // (flex-basis: auto) -- fine normally, since the fixed-px
               // Grid's own natural size IS the content. But zoom-to-fill's
