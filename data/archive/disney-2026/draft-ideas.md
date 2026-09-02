@@ -74,7 +74,7 @@ Make a meme about the trip/with a photo from the trip which someone laughs out l
 We miss rope drop
 Bad Smuggler: Someone's a terrible pilot on smugglers run
 We’re in the park from open till close (3 days)
-Y'all British?: Someone mentions that's we're British or says that they love our accent? (medium)
+Y'all British?: Someone mentions that we're British or says that they love our accent? (medium)
 Someone forgets their swimsuit (hard)
 Someone forgets their Jersey (hard)
 You find a verified Hidden Mickey

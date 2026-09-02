@@ -282,7 +282,7 @@ export const events: DisneyEvent[] = [
   {
     summary: "Y'all British?",
     description:
-      "Someone mentions that's we're British or says that they love our accent?",
+      "Someone mentions that we're British or says that they love our accent?",
     difficulty: "m"
   },
   {
