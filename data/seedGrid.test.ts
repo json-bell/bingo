@@ -70,4 +70,52 @@ describe("seedGrid", () => {
       .where(and(eq(checked.tripSlug, "test-slug"), eq(checked.gridVersion, 1)));
     expect(rows).toHaveLength(25);
   });
+
+  it("keeps two grid versions of the same trip fully isolated from each other", async () => {
+    // Same slug, two independent make-grid runs -- each mints its own fresh
+    // cell ids (getGrids's crypto.randomUUID() per cell), so version 1 and
+    // version 2 never share a cellId even though they share a tripSlug. This
+    // is what config/trips.json's currentVersion switch relies on: swapping
+    // which version is "live" reads/writes a disjoint set of rows, not a
+    // shared one that could leak checked state across a promotion/rollback.
+    const gridsV1 = getGrids({ data: { rows: buildFixtureRows() }, characters, people });
+    const gridsV2 = getGrids({ data: { rows: buildFixtureRows() }, characters, people });
+
+    await seedGrid("same-trip", 1, gridsV1, people);
+    await seedGrid("same-trip", 2, gridsV2, people);
+
+    const v1Rows = await db
+      .select()
+      .from(checked)
+      .where(and(eq(checked.tripSlug, "same-trip"), eq(checked.gridVersion, 1)));
+    const v2Rows = await db
+      .select()
+      .from(checked)
+      .where(and(eq(checked.tripSlug, "same-trip"), eq(checked.gridVersion, 2)));
+
+    expect(v1Rows).toHaveLength(people.length * 25);
+    expect(v2Rows).toHaveLength(people.length * 25);
+
+    const v1CellIds = new Set(gridsV1.flatMap((grid) => grid.flat().map((cell) => cell.id)));
+    const v2CellIds = new Set(gridsV2.flatMap((grid) => grid.flat().map((cell) => cell.id)));
+    expect(v1CellIds.size).toBe(v1Rows.length);
+    expect(v1Rows.every((r) => v1CellIds.has(r.cellId))).toBe(true);
+    expect(v2Rows.every((r) => v2CellIds.has(r.cellId))).toBe(true);
+    // No overlap: promoting/rolling back a version can never point at the
+    // other version's rows by accident.
+    for (const id of v1CellIds) expect(v2CellIds.has(id)).toBe(false);
+
+    // Flipping checked state on one version (simulating someone using the
+    // trip while it's "live" at that version) must not touch the other.
+    await db
+      .update(checked)
+      .set({ checked: true })
+      .where(and(eq(checked.tripSlug, "same-trip"), eq(checked.gridVersion, 1)));
+
+    const v2AfterV1Update = await db
+      .select()
+      .from(checked)
+      .where(and(eq(checked.tripSlug, "same-trip"), eq(checked.gridVersion, 2)));
+    expect(v2AfterV1Update.every((r) => r.checked === false)).toBe(true);
+  });
 });
