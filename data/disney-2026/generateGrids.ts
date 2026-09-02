@@ -10,12 +10,14 @@ import type { Person } from "./people";
 // merged into the shared BingoItem/GridCell types yet.
 
 // 600 handled most real runs but has been observed failing outright a
-// couple of times against real content -- 1200 for more margin. Note this
-// bounds retries of the *outer* cross-grid balance check (§9), not the
-// per-grid positioning loop (MAX_POSITIONING_ATTEMPTS below) -- if failures
-// persist even at 1200, that's a signal the balance rule/pool sizes need
+// couple of times against real content; 1200 wasn't enough margin either --
+// 3000 for more still. Note this bounds retries of the *outer* cross-grid
+// balance check (§9), not the per-grid positioning loop
+// (MAX_POSITIONING_ATTEMPTS below) -- rejection sampling here is cheap and
+// consistent, so there's little cost to a higher ceiling; if failures
+// persist even at 3000, that's a signal the balance rule/pool sizes need
 // attention, not that this number needs to keep climbing.
-const MAX_GENERATION_ATTEMPTS = 1200;
+const MAX_GENERATION_ATTEMPTS = 3000;
 // Empirically, with 3 guaranteed items spread one-per-tier (8 candidate
 // positions each), only ~17% of random combinations avoid a shared
 // row/column/diagonal -- 20 attempts (the original estimate) has a ~15%

@@ -319,8 +319,10 @@ to, and one test fixture's `eligiblePeople` restriction to a single person was g
 *impossible* to pass under the current strict rule before this existed (not just unlucky) —
 that's what surfaced the need for it.
 
-**Bounded at `MAX_GENERATION_ATTEMPTS`** (currently `600`, raised from an original estimate of
-5 as the ratio tightened). On failure: reject the entire generation and restart from scratch
+**Bounded at `MAX_GENERATION_ATTEMPTS`** (currently `3000`, raised twice from an original
+estimate of 5 as the ratio tightened -- 600, then 1200, then 3000; rejection sampling here is
+cheap and consistent, so there's little cost to a higher ceiling). On failure: reject the
+entire generation and restart from scratch
 with fresh randomness for all 7 grids — never hand-patch individual grids, for the same
 sample-bias reason as before. **Nothing is written or seeded until an attempt passes.**
 
