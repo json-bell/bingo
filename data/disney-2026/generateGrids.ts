@@ -9,7 +9,13 @@ import type { Person } from "./people";
 // data/disney-2026/bingoes.ts's header comment for why DisneyEvent isn't
 // merged into the shared BingoItem/GridCell types yet.
 
-const MAX_GENERATION_ATTEMPTS = 600;
+// 600 handled most real runs but has been observed failing outright a
+// couple of times against real content -- 1200 for more margin. Note this
+// bounds retries of the *outer* cross-grid balance check (§9), not the
+// per-grid positioning loop (MAX_POSITIONING_ATTEMPTS below) -- if failures
+// persist even at 1200, that's a signal the balance rule/pool sizes need
+// attention, not that this number needs to keep climbing.
+const MAX_GENERATION_ATTEMPTS = 1200;
 // Empirically, with 3 guaranteed items spread one-per-tier (8 candidate
 // positions each), only ~17% of random combinations avoid a shared
 // row/column/diagonal -- 20 attempts (the original estimate) has a ~15%
