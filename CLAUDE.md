@@ -75,7 +75,7 @@ are `.ts` files, not compiled ahead of time), hardcoded to the `europapark-2024`
 `data/europapark-2024/bingoes.csv`, writes a new auto-numbered `grids/europapark-2024/<n>.json`
 (same never-overwrite behavior). **Archived, not actively developed** — kept working because
 europapark-2024 was built on it, but no new trip should use the CSV/`characters.ts` pattern;
-see `csv-grid-pipeline-notes.md` for its real limitations and why disney-2026 moved off it.
+see `docs/csv-grid-pipeline-notes.md` for its real limitations and why disney-2026 moved off it.
 `data/createGrids.ts` itself is intentionally left as-is (not refactored to share code with
 the new pipeline) — see `docs/grid-content-pipeline.md` for why generalizing across the two
 was deliberately deferred.
@@ -83,10 +83,11 @@ was deliberately deferred.
 Both pipelines' promotion/rollback is the same: editing the live version number in
 `config/trips.json` — no file renaming or manual promotion step either way.
 
-Superseded CSV drafts go in `data/archive/<slug>/`, not `data/<slug>/` — keeps them
+Superseded content drafts go in `data/archive/<slug>/`, not `data/<slug>/` — keeps them
 accessible without digging through git history, without cluttering the directory the
-generator actually reads from. (This only applies to the archived CSV pipeline — disney-2026
-has no CSV drafts to archive.)
+generator actually reads from. For europapark-2024's archived CSV pipeline that's superseded
+`bingoes.csv` drafts; disney-2026's `data/archive/disney-2026/draft-ideas.md` is the original
+raw content list `bingoes.ts` was converted from and has since evolved well past.
 
 **Both `make-grid` commands are deliberately decoupled from seeding — neither ever touches
 any database.** Seeding is always a separate, explicit step: `npm run seed-grid -- <slug>

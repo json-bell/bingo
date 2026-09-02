@@ -1,26 +1,27 @@
 // disney-2026's raw event pool -- the TS-array replacement for the old
 // CSV+characters.ts pipeline (docs/grid-content-pipeline.md §1). Content
-// converted directly from draft-ideas.md (repo root). Anything not yet
-// finalized is a real placeholder value flagged with a trailing comment,
-// not left blank or null, so this file type-checks as-is and can be used to
-// unit-test makeGrid's pool-building logic before real content is ready
-// (docs/grid-content-pipeline.md §10):
+// originally converted from data/archive/disney-2026/draft-ideas.md, since
+// evolved a lot further (real difficulties, variantGroups, guaranteed
+// items). Anything not yet finalized is a real placeholder value flagged
+// with a trailing comment, not left blank or null, so this file
+// type-checks as-is and can be used to unit-test makeGrid's pool-building
+// logic before real content is ready (docs/grid-content-pipeline.md §10):
 //   - summary: "?? <word or two>", // TODO  -- needs a real short title
 //   - difficulty: "e", // PLACEHOLDER - CHANGE        -- not yet difficulty-tagged
-// A difficulty with no trailing comment was an explicit tag in draft-ideas.md
-// (e.g. "(hard)"), not a guess. Placeholder difficulties are spread roughly
-// evenly across e/m/h (not all defaulted to "e") so there's enough of each
-// to actually build a test grid (8 per difficulty, docs/grid-content-pipeline.md
-// §7) -- the specific e/m/h split per placeholder is arbitrary, not a real
-// judgment, same as the summary placeholders.
+// A difficulty with no trailing comment was an explicit tag in the original
+// draft (e.g. "(hard)"), not a guess. Placeholder difficulties are spread
+// roughly evenly across e/m/h (not all defaulted to "e") so there's enough
+// of each to actually build a test grid (8 per difficulty,
+// docs/grid-content-pipeline.md §7) -- the specific e/m/h split per
+// placeholder is arbitrary, not a real judgment, same as the summary
+// placeholders.
 //
-// NOT YET wired into createGrids.ts/getGrids.ts -- teaching makeGrid() to
-// consume guaranteed/eligiblePeople/variantGroup and to resolve
-// function-valued summary/description via SeedingInputs is separate,
-// not-yet-started work (temp-prompt.md item #2). DisneyEvent below is
-// deliberately its own type for now, not merged into types/trip.ts's
+// Consumed by data/disney-2026/generateGrids.ts, its own pipeline --
+// deliberately NOT wired into the old createGrids.ts/getGrids.ts
+// (europapark-2024's archived CSV pipeline). DisneyEvent below is
+// deliberately its own type, not merged into types/trip.ts's
 // BingoItem/GridCell, which getGrids.ts still consumes unchanged for
-// europapark-2024.
+// europapark-2024 -- see docs/grid-content-pipeline.md §2 for why.
 
 import type { Difficulty } from "../../types/trip";
 import type { Person } from "./people";

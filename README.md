@@ -22,7 +22,7 @@ command details.
 `npm run make-grid:europapark-2024` in place of step 1 above (same seed/promote steps, with
 `europapark-2024` as the slug). Not actively developed — kept working because the existing
 trip depends on it, but no new trip should follow this pattern; see
-`csv-grid-pipeline-notes.md` for its real limitations.
+`docs/csv-grid-pipeline-notes.md` for its real limitations.
 
 ## Adding a new trip
 
@@ -30,5 +30,5 @@ Follow disney-2026's shape (`data/disney-2026/`) — a hand-authored TS array of
 (`bingoes.ts`), typed against the trip's own `people.ts`/`seedingInputs.ts`/`variantGroups.ts`
 — not the archived CSV pattern. See `docs/grid-content-pipeline.md` for the full design.
 
-Superseded CSV drafts (europapark-2024 only) live in `data/archive/<slug>/` — kept for
-reference, not part of the build.
+Superseded content drafts live in `data/archive/<slug>/` — kept for reference, not part of the
+build (europapark-2024's old `bingoes.csv` drafts; disney-2026's original `draft-ideas.md`).
