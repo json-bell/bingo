@@ -1,19 +1,19 @@
 # Templated grid content & seeding design
 
-Why this exists: `temp-prompt.md` (repo root, session-scoped working doc) tracked the
-disney-2026 seeding investigation and design discussion across several sessions. That
-discussion is now decided. This doc is the durable record of what was decided — the new
-`BingoItem` shape, the placeholder/templating mechanism, the mutually-exclusive/eligibility/
-guaranteed-item rules, and the two rejection-sampling passes — so it survives independent of
-`temp-prompt.md`, which stays around only for tracking what's still *unimplemented* (see its
-own file for that). `csv-grid-pipeline-notes.md` (repo root) remains an accurate description
-of the **existing** europapark-2024 CSV pipeline, which is not being touched or migrated —
-this doc describes the **new**, TS-array-based pipeline that disney-2026 (and any future trip)
-uses instead.
+Why this exists: this is the durable record of the disney-2026 seeding design and how it maps
+to the real code — `data/disney-2026/generateGrids.ts` (plus `bingoes.ts`, `people.ts`,
+`variantGroups.ts`, `seedingInputs.ts`), merged to `main` — the `DisneyEvent` shape, the
+placeholder/templating mechanism, the mutually-exclusive/eligibility/guaranteed-item rules,
+and the two rejection-sampling passes. What's still genuinely unfinished (real content, the
+multi-slug exercise) is tracked in "Open work" below, not a separate working doc.
+`csv-grid-pipeline-notes.md` (same directory) remains an accurate description of the
+**existing** europapark-2024 CSV pipeline, which is not being touched or migrated — this doc
+describes the **new**, TS-array-based pipeline that disney-2026 (and any future trip) uses
+instead.
 
-Scope: architecture and data-structure decisions only. Nothing described here is implemented
-yet. disney-2026's actual event content (titles, difficulties) is also still being drafted —
-see "Handling work-in-progress content" below for how the design tolerates that.
+Scope: architecture, data-structure decisions, and how they're actually implemented.
+disney-2026's event content (titles, difficulties) is still partly being filled in — see
+"Handling work-in-progress content" below for how the design tolerates that.
 
 ---
 
@@ -41,25 +41,38 @@ production grids will be generated for it.
 
 ---
 
-## 2. `BingoItem` shape
+## 2. `DisneyEvent` — a separate type from the shared `BingoItem`
 
-`type` (the CSV's "Category" column) is dropped entirely — confirmed dead: parsed and carried
-through `BingoItem`/`GridCell` today but never read by `getGrids.ts`, `createGrids.ts`, or any
-component (`rg` for `.type` usage across `src/`/`data/` finds nothing beyond two literal
-assignments for the synthesized "free"/"challenge" cells).
+`type` (the CSV's "Category" column) is dropped entirely from the *shared* `types/trip.ts`
+`BingoItem`/`GridCell` — confirmed dead: parsed and carried through today but never read by
+`getGrids.ts`, `createGrids.ts`, or any component. This removal applies to both pipelines.
 
-New optional fields, all **inline on the item itself** (not in an external registry keyed by
-id — inline avoids the "does this externally-referenced key still exist" drift-checking
-problem entirely):
+The new fields below do **not** live on the shared `BingoItem`. They're on `DisneyEvent`
+(`data/disney-2026/bingoes.ts`), a deliberately separate type — disney-2026's raw event pool
+is authored against it, and `data/disney-2026/generateGrids.ts` resolves a `DisneyEvent` down
+to a plain `GridCell` (the same output shape europapark-2024 produces) once it's placed into a
+grid. Merging `DisneyEvent` into `types/trip.ts` was considered and deliberately deferred —
+see "Explicitly decided against" below.
+
+All new fields are **inline on the item itself** (not in an external registry keyed by id —
+inline avoids the "does this externally-referenced key still exist" drift-checking problem
+entirely):
 
 ```ts
-guaranteed?: boolean;        // force-included on every grid, see §6
-eligiblePeople?: Person[];   // restricts which grids' pools this item can be drawn into
-variantGroup?: VariantGroupId; // mutually-exclusive alternates, see §5
+// data/disney-2026/bingoes.ts
+export interface DisneyEvent {
+  summary: string | ((inputs: DisneySeedingInputs) => string);
+  description: string | ((inputs: DisneySeedingInputs) => string);
+  difficulty: Exclude<Difficulty, "f">;
+  guaranteed?: boolean;          // force-included on every grid, see §7
+  eligiblePeople?: Person[];     // restricts which grids' pools this item can be drawn into, see §6
+  variantGroup?: VariantGroupId; // mutually-exclusive alternates, see §5
+}
 ```
 
-`variantGroup` is typed against a shared const object, not a free string or a title-derived
-slug — group membership needs to be typo-proof and independent of title wording:
+`variantGroup` is typed against a shared const object (`data/disney-2026/variantGroups.ts`),
+not a free string or a title-derived slug — group membership needs to be typo-proof and
+independent of title wording:
 
 ```ts
 export const VariantGroup = {
@@ -71,10 +84,10 @@ export const VariantGroup = {
 export type VariantGroupId = (typeof VariantGroup)[keyof typeof VariantGroup];
 ```
 
-`summary` and `description` each become `string | ((inputs: SeedingInputs) => string)` —
+`summary` and `description` each become `string | ((inputs: DisneySeedingInputs) => string)` —
 independently: a row can template one field and leave the other a plain string. This replaces
-today's sentinel-string dispatch (`summary === "hug"` etc. in `getGrids.ts`) with real,
-per-item, typed functions — no growing `if` chain for each new one-off.
+europapark-2024's sentinel-string dispatch (`summary === "hug"` etc. in `getGrids.ts`) with
+real, per-item, typed functions — no growing `if` chain for each new one-off.
 
 ---
 
@@ -129,10 +142,16 @@ from a cross-grid process.
   the people-permutation is uniform, the pair occupying positions 1 and 7 (who share a song)
   is a uniform random pair over all 21 possibilities, and independently which song gets
   doubled is uniform since the song-permutation is independent and uniform.
-- Output (e.g. `data/disney-2026/personToSong.ts`) is a **committed, one-time artifact** —
-  guarded with a `--force` flag so an accidental second run can't silently overwrite the
-  already-decided, already-referenced assignment. Same failure class this repo's `make-grid`
-  already guards against for grid files (`getGrids()` never overwrites).
+- Output (`data/disney-2026/personToSong.ts`, real content committed) is a **committed,
+  one-time artifact** — guarded with a `--force` flag so an accidental second run can't
+  silently overwrite the already-decided, already-referenced assignment. Same failure class
+  this repo's `make-grid` already guards against for grid files (`getGrids()` never
+  overwrites).
+- The algorithm itself lives in `data/disney-2026/assignSongs.ts` as a pure function (people
+  list, songs list) → assignment, deliberately pulled out of
+  `scripts/generatePersonToSong.ts` so it's unit-testable (`assignSongs.test.ts`) without
+  touching the filesystem — the script itself is just that function plus the `--force`/file-
+  write wrapper.
 - Not regenerated per rejection-sampling attempt (§7/§8) — it's a fixed input held constant
   across every retry. Only the in-`makeGrid()` random draws (item selection, positioning) get
   fresh randomness per attempt.
@@ -147,31 +166,77 @@ from a cross-grid process.
 one security-incident variant per grid" — confirmed **per-grid**, not trip-wide (each of the 7
 grids independently may or may not get a breakdown event; if it does, only one variant).
 
-Mechanism, inside `makeGrid()`'s per-difficulty-tier pool building: shuffle each tier's
-candidate pool for this grid, then pop one at a time, validating each candidate against
-everything already appended to *this grid* (across all tiers, not just the current one)
-before accepting it — if an item with the same `variantGroup` is already present, discard and
-pop the next candidate instead. This is the same "can we add this item?" predicate used for
-eligibility (§6), just checking a different condition.
+**Actual mechanism** (`selectAllTiers()` in `generateGrids.ts`) — not an append-toward-8,
+validate-as-you-go loop (an earlier design considered that shape; abandoned because the three
+tiers deplete at different rates, which would need shared mutable state across three
+simultaneous per-tier loops just to know when to stop). Instead, one pass over the *full*
+shuffled pools, resolved *before* any tier is trimmed to 8:
+
+1. Filter each tier's pool down to what's eligible for this `gridOwner` (§6) — plain yes/no,
+   no ordering involved.
+2. Pull out `guaranteed` items first (§7) and mark their `variantGroup`s "seen" up front — a
+   guaranteed item can't itself have a `variantGroup` (enforced separately, see §7), but this
+   ordering still matters for a *non-guaranteed* duplicate of some other guaranteed item's
+   group.
+3. Shuffle each of the three remaining (non-guaranteed, eligible) pools independently — full
+   pools, not trimmed.
+4. Merge them into one priority-ordered sequence and walk it **once**: index ascending, and at
+   each index, hard before medium before easy (`h[0], m[0], e[0], h[1], m[1], e[1], ...`).
+   Whichever candidate is encountered first for a given `variantGroup` is kept; any later
+   duplicate — same-tier or cross-tier — is dropped. A group-less item is always kept. This is
+   a single deterministic pass, not a retry loop: it always terminates and never fails.
+5. Slice the first `8 - guaranteedCount` surviving candidates off each tier's now-deduplicated
+   list; combine with that tier's guaranteed items. Underflow throws exactly as below if a
+   tier can't reach 8.
+
+This priority order was a deliberate choice — the alternative (index-ascending, no tier
+priority) is equally simple, but hard-before-medium-before-easy was picked so ties resolve the
+same direction every time rather than needing a separate tiebreak rule.
+
+**A real bug this design replaced**: the first implementation ran this per tier independently,
+checking `variantGroup` exclusivity only against what that same tier had already selected —
+so a group split across two difficulties (disney-2026's real `FLIGHT_TIMING` and `MERCH`, one
+`e`-side member and one `m`-side member) was never actually enforced. Confirmed by regenerating
+and finding a real grid with both halves of `MERCH` present together. Fixed by moving to the
+single-merged-pass mechanism above, which checks across all three tiers by construction.
+Regression-tested (`generateGrids.test.ts`, "never draws two members of the same variantGroup
+across different difficulty tiers").
 
 ---
 
 ## 6. Person-eligibility restriction
 
 `eligiblePeople` narrows which grids' pools an item can be drawn into (e.g. "Stay hydrated"
-only for Maria/Ben/Jason/Ciara). Same shuffle-and-validate-on-pop loop as §5: before accepting
-a popped candidate, check `!item.eligiblePeople || item.eligiblePeople.includes(gridOwner)`;
-discard and continue popping if it fails.
+only for Maria/Ben/Jason/Ciara). Same mechanism as §5 — step 1's eligibility filter
+(`!item.eligiblePeople || item.eligiblePeople.includes(gridOwner)`) removes ineligible items
+from consideration before shuffling ever happens, so an ineligible item can never be selected
+at all, not just rarely.
 
 ---
 
 ## 7. Guaranteed-on-every-grid items
 
 `guaranteed: true` items are force-included on every single grid, not competing for a random
-slot. Mechanism: for each difficulty tier, pre-seed that tier's array with its guaranteed
-items *before* the shuffle-and-pop loop runs; the pop loop then only fills the tier's
-remaining slots (`8 - guaranteedCountInTier`) from the rest of that tier's (non-guaranteed)
-pool.
+slot. Mechanism: they're pulled out first, across all tiers, before any shuffling happens
+(§5 step 2) — this ordering matters, not just for correctness of the pool math, but because a
+guaranteed item needs to outrank *every* ordinary candidate regardless of shuffle timing.
+(A naive per-tier stable-sort-by-guaranteed doesn't guarantee this on its own: tiers have
+different guaranteed counts, so a tier with fewer guaranteed items reaches its first
+non-guaranteed candidate earlier in the merged walk than a tier with more guaranteed items
+reaches its later ones — resolving guaranteed items in one pass across all tiers first avoids
+that gap entirely.)
+
+Two hard, single-item data-authoring errors, both throw immediately (not silently
+skipped, not resolved by priority order):
+
+- **A guaranteed item can't have `eligiblePeople` excluding the current `gridOwner`.**
+  "Always included" and "restricted to some people" are contradictory the moment someone
+  outside that list is being generated for.
+- **A guaranteed item can't have a `variantGroup` at all**, regardless of whether anything
+  else actually shares that group. "Always included" and "one of a mutually-exclusive set"
+  are contradictory on the same item — this was simplified from an earlier design that only
+  threw when *two* guaranteed items collided on the same group; disallowing the combination
+  outright on a single item is a strictly simpler, single-item check with the same effect.
 
 Grid shape is unchanged: **8 items per difficulty tier (easy/medium/hard) + 1 free center =
 25 cells**, matching the existing fixed 5×5 `difficultyKey` layout. The free cell itself stays
@@ -210,43 +275,99 @@ guaranteed items for the layout to ever satisfy — not random bad luck). This l
 intentionally separate from, and doesn't consume the budget of, the outer per-generation retry
 in §9.
 
+disney-2026's real guaranteed-item shape ended up 2-in-one-tier + 1-in-another (not the
+original 1-per-tier estimate) — recomputed for that exact shape: ~16.1% success per attempt,
+still statistically zero failure risk at 100 attempts. In practice this varies a lot run to
+run (the "Positioned guaranteed items (attempt N/100)" log — see §9 — has shown anywhere from
+2 to 24 attempts across real runs), which is expected given that success rate, not a sign of a
+problem.
+
 ---
 
 ## 9. Cross-grid balance: full-generation rejection sampling
 
 Separate from §5–§8 (which govern a single grid's construction), this is a whole-trip check
-run after all 7 grids are fully built:
+run after all 7 grids are fully built. Differs from the original design in a few real ways,
+below — the shape (compute a distribution, decide pass/fail, retry-from-scratch on failure)
+held up; the specific rule and its ergonomics evolved a lot through actual use.
 
-- A shared, trip-agnostic step computes an item-appearance distribution across all 7 grids,
-  keyed by a stable per-item identifier (`titleToSlug(summary)` — e.g. "Still Got It" →
-  "still-got-it"; fine for this narrower purpose since nothing else cross-references it, unlike
-  `variantGroup` which needed the typo-proof shared-const treatment). Shape:
-  `{ easy: { [itemSlug]: number }, medium: {...}, hard: {...} }`.
-- A **trip-specific** `postGeneration.ts` (e.g. `data/disney-2026/postGeneration.ts`) consumes
-  that distribution and decides pass/fail against a manually-chosen balance rule — e.g. "at
-  least 70% of items appear at least twice across the 7 grids." The threshold/rule is
-  deliberately not generalized into shared code; it's a per-trip policy decision.
-- On failure: **reject the entire generation and restart from scratch** with fresh randomness
-  for all 7 grids — never hand-patch individual grids to fix a balance failure, since that
-  would bias the sample in a way the rejection-sampling approach is specifically meant to
-  avoid.
-- Bounded at **5 attempts**, with per-attempt logging (attempt number, pass/fail, which
-  criterion failed, roughly what stage it reached) to make a run of failures diagnosable.
-- **Nothing is written or seeded until an attempt passes** — `grids/<slug>/<n>.json` isn't
-  written and `seedGrid()` isn't called for a failed attempt; both only happen once for the
-  attempt that ultimately passes.
+**Distribution**: a flat `number[]` indexed by each event's position in the source `events`
+array (not a `titleToSlug`-keyed structure as originally sketched — index-based identity is
+simpler and works uniformly for both plain-string and function-valued `summary` events, which
+a title-derived slug can't do for the latter). `guaranteed` events are excluded from every
+diagnostic and from the balance decision itself — they always appear on all 7 grids by
+construction, so including them just pads the "appeared often" end with entries that were
+never actually subject to randomness.
+
+**The rule** (`checkBalance()`), currently: every non-guaranteed event must appear at least
+once at all (a hard, unconditional floor — zero appearances is an immediate fail regardless of
+the ratio below), *and* at least `BALANCE_MIN_APPEARANCE_RATIO` (currently `0.99`) of them must
+appear at least twice across the 7 grids. This is much stricter than the original "≥70% appear
+twice" sketch — tightened deliberately through real testing, not yet fully settled. One
+constraint worth knowing before tightening further: an `eligiblePeople`-restricted event's
+maximum possible appearances is capped by how many people it's eligible for (an event
+restricted to 1 person can never appear more than once, ever — no number of retries fixes
+that, since it isn't bad luck). Real content currently keeps every restriction at 3+ people
+specifically so this stays achievable.
+
+**`balanceMinAppearanceRatio` is a parameter of `getDisneyGrids()`**, defaulting to the module
+constant (so production/`scripts/generateGrids.ts` is unaffected by omitting it) — passing `0`
+disables balance checking entirely, including the zero-appearances floor. This is the escape
+hatch structural/mechanism tests need: a test asserting variantGroup exclusivity or
+positioning correctness shouldn't be coupled to whatever ratio production happens to be tuned
+to, and one test fixture's `eligiblePeople` restriction to a single person was genuinely
+*impossible* to pass under the current strict rule before this existed (not just unlucky) —
+that's what surfaced the need for it.
+
+**Bounded at `MAX_GENERATION_ATTEMPTS`** (currently `600`, raised from an original estimate of
+5 as the ratio tightened). On failure: reject the entire generation and restart from scratch
+with fresh randomness for all 7 grids — never hand-patch individual grids, for the same
+sample-bias reason as before. **Nothing is written or seeded until an attempt passes.**
+
+**Diagnostic logging** (all plain `console.log`, always on, not gated behind a flag — this is
+a manually-run dev/content tool, not a CI check):
+
+- `Generating <person>'s grid...` — one per person, per attempt.
+- `Collision in guaranteed item positioning, retrying...` and, once resolved,
+  `Positioned guaranteed items (attempt N/100)` if it took more than one try — nested under
+  the per-person line above, which is why these don't repeat the person's name themselves.
+- Per attempt, a `|`-bordered table of appearance-count histograms, one column per difficulty
+  (`e`/`m`/`h` — never merged into one table, since the tiers have very different pool sizes
+  and a merged table would make the smaller tier look artificially healthier), rows `0` to
+  `people.length`, `.` marking a zero cell. Cell content is 2 chars wide, 2 spaces padding
+  either side.
+- Underneath, `Appeared 0-1 times:` followed by one bulleted line per event at 0x or 1x,
+  naming it and its difficulty, sorted by count then by `e`/`m`/`h` — the actual triage list
+  for deciding what needs a difficulty change, a `guaranteed` bump, or a broader
+  `eligiblePeople` set.
+
+This logging is what real testing has been done against — e.g. a real run against actual
+content once genuinely failed after exhausting all 600 attempts in ~1.6s (failing that fast
+strongly suggests a structural pool-size issue — `M`'s pool being much larger than `e`/`h`,
+averaging well under 2 appearances per item across the fixed 56 total draws — rather than
+something more attempts would fix). Resolving that kind of finding is real content/tuning
+work, not something this doc prescribes an answer for.
 
 ---
 
 ## 10. Handling work-in-progress content
 
-Difficulty and title/description content for disney-2026 isn't finalized yet. The design
-tolerates this deliberately: `difficulty: Difficulty | null` and similar nullable typing for
-unfinished fields, initialized to `null`, filled in later (real data, or `null`-safe fake data
-flagged `// TODO`). Because grid construction reduces to "draw 8 per difficulty tier under the
-constraints in §5–§8, then place them," the pool-building/variant-group/eligibility/
-guaranteed/positioning logic can be unit-tested against typed mock `BingoItem` arrays entirely
-independent of whether real content is ready.
+Difficulty and title content for disney-2026 took a while to finalize (and some still isn't).
+Actually used, simpler than the original sketch: **real, valid placeholder values, flagged
+with a trailing comment, not `null` or nullable typing.** A not-yet-decided `summary` is a
+literal string like `"placeholder shirt number find"` tagged `// TODO`; a not-yet-decided
+`difficulty` is a real, valid tier (e.g. `"e"`) tagged `// PLACEHOLDER - CHANGE`, spread
+roughly evenly across `e`/`m`/`h` rather than defaulted to one tier — defaulting everything to
+`"e"` would starve the other tiers below the 8-per-grid floor and make the pipeline
+untestable. This needed no type loosening at all: `DisneyEvent`'s fields stay exactly as
+typed, `tsc -b` still catches a genuine mistake, and a human skimming the file for
+still-`// TODO`/`// PLACEHOLDER` comments is the actual review mechanism, not a type-level one.
+
+Because grid construction reduces to "draw 8 per difficulty tier under the constraints in
+§5–§8, then place them," the pool-building/variant-group/eligibility/guaranteed/positioning
+logic is unit-tested (`generateGrids.test.ts`) against typed mock `DisneyEvent` arrays entirely
+independent of real content — most of those tests pass `balanceMinAppearanceRatio: 0` (§9) so
+they're also independent of whatever balance rule production happens to be tuned to.
 
 ---
 
@@ -265,6 +386,49 @@ independent of whether real content is ready.
   occurrences, then rebalance Ben/Jason assignment for even split) — explicitly deferred.
   Uniform-per-cell sampling is good enough for v1; a two-name imbalance can be adjusted by
   hand if it matters.
-- **"Team" grid** (hand-authored, shared, group-wide grid alongside per-person ones) — 2nd
-  priority, explicitly parked until disney-2026 seeding lands. Still tracked in
-  `temp-prompt.md`, not part of this design.
+- **"Team" grid** — 2nd priority, explicitly parked until disney-2026 seeding lands, not part
+  of this design. One additional grid, hand-authored rather than drawn from the random pool at
+  all ("seeding isn't as relevant" for it). Holds shared bingo items (team/group-wide events,
+  as opposed to any one individual's), appearing **alongside the per-person grids, at the top**
+  of the trip page. Open questions, genuinely not decided:
+  - **Implementation shape**: whether "Team" becomes just another entry in the `people:
+    string[]` array (reusing `grids[i] ↔ people[i]` parallel-array rendering in
+    `TripPage.tsx`/`seedGrid.ts` for free, with "Team" as a synthetic person name) or needs a
+    structurally distinct field (e.g. a separate `teamGrid` on `LoadedTrip`/`TripConfig`,
+    rendered with its own special-cased `<li>` before the `grids.map(...)` loop) — explicitly
+    open either way, "whatever is easiest in the long term." If it does become a `people[]`
+    entry, it needs to sort/render first — no existing "pin to top" concept exists anywhere in
+    `TripPage.tsx`'s rendering today.
+  - **Sequencing**: the Team grid's hand-authored cells need to be added to the grid JSON
+    *after* generation but *before* seeding, specifically so they still get real `checked`
+    rows (tripSlug + gridVersion + cellId + person) and are trackable through the same
+    checked-state API as everyone else's cells. This part is actually **already solved** by
+    the make-grid/seed-grid decoupling (`CLAUDE.md`) — generation and seeding are two
+    separate, deliberate steps for every trip now, not just this one, so the gap this idea
+    needed already exists as the default. Splicing Team cells (new, unique `cellId`s) into a
+    written grid file before running `seed-grid` is confirmed safe: `checked` (`db/schema.ts`)
+    has no content columns at all, so a hand-edit followed by `seed-grid`'s
+    `onConflictDoNothing()` insert is unambiguously safe either way.
+
+---
+
+## Open work
+
+Absorbed from `temp-prompt.md` (deleted — its design content is above, this is what's still
+genuinely unfinished):
+
+- **Content**: most placeholder summaries/difficulties in `bingoes.ts` are filled in with real
+  values now (real shirt numbers, real songs, real difficulty tags for most events), but a
+  `// TODO`/`// PLACEHOLDER - CHANGE` grep over the file still finds genuine stragglers — that
+  grep is the actual up-to-date status, not this doc.
+- **The balance rule itself** (§9) is still being tuned against real content, not settled —
+  the last real test against actual content failed outright (exhausted all 600 attempts in
+  ~1.6s), which points at pool-size shape (`M` in particular) rather than the threshold number
+  itself, but neither has been resolved yet.
+- **Multi-slug, for real, has never been exercised.** This repo has only ever had one live
+  trip. Before disney-2026 actually goes live: two `grids/<slug>/` dirs, two
+  `config/trips.json` entries, `checked` rows for two slugs at once, `/` listing both, and the
+  service worker's per-slug `trip-data/` runtime caching all need to be confirmed working
+  simultaneously — not just assumed to work because the design was slug-agnostic.
+- **Seeding hasn't happened at all** — `grids/disney-2026/<n>.json` has never been seeded to
+  any database, local or production.
