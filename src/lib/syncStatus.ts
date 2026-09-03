@@ -42,13 +42,19 @@ export function isSyncFailed(status: SyncStatus): boolean {
   return status.lastFailureAt > status.lastSuccessAt;
 }
 
-// Comfortably above vite.config.ts's networkTimeoutSeconds (5s) -- a
-// response actually served fresh from the network never gets close to
-// this. A genuinely stale cache hit, on the other hand, is generated as
-// long ago as the last real gap in connectivity (minutes/hours/days), not
-// merely a few seconds -- so the exact cutoff isn't sensitive, it just
-// needs to sit safely above real network latency and below "obviously old".
-const STALE_THRESHOLD_MS = 30_000;
+// Above vite.config.ts's networkTimeoutSeconds (5s), with margin -- a live
+// response's generatedAt is stamped server-side after its DB query
+// resolves (api/trips/[slug]/checked.ts), so a slow/cold-started query
+// delays *when* the response arrives, not its age once it does; the actual
+// gap checked here is close to one-way network transit, comfortably under
+// 5s even on a bad connection. Kept above 5s anyway so this doesn't start
+// competing with that same timeout's own margin (clock skew between the
+// client and the server, mostly). A genuinely stale cache hit, on the
+// other hand, is generated as long ago as the last real gap in
+// connectivity (minutes/hours/days) -- this only narrows the window where
+// a reload shortly after a real sync can still look "fresh" while offline;
+// it doesn't (and can't, being time-based) close that window entirely.
+const STALE_THRESHOLD_MS = 10_000;
 
 // Whether a checked-state GET response is recent enough to have plausibly
 // come from a live network request, vs. a stale hit served by the service

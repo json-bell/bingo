@@ -22,9 +22,9 @@ describe("checkedQueue", () => {
       })
     );
 
-    enqueue("trip", { cellId: "a", checked: true, basisUpdatedAt: "2026-01-01T00:00:00.000Z", enqueuedAt: "1" });
-    enqueue("trip", { cellId: "b", checked: false, basisUpdatedAt: "2026-01-01T00:00:00.000Z", enqueuedAt: "1" });
-    enqueue("trip", { cellId: "c", checked: true, basisUpdatedAt: "2026-01-01T00:00:00.000Z", enqueuedAt: "1" });
+    enqueue("trip", { cellId: "a", checked: true, previousChecked: false, basisUpdatedAt: "2026-01-01T00:00:00.000Z", enqueuedAt: "1" });
+    enqueue("trip", { cellId: "b", checked: false, previousChecked: true, basisUpdatedAt: "2026-01-01T00:00:00.000Z", enqueuedAt: "1" });
+    enqueue("trip", { cellId: "c", checked: true, previousChecked: false, basisUpdatedAt: "2026-01-01T00:00:00.000Z", enqueuedAt: "1" });
 
     const applied: Record<string, boolean> = {};
     await drain("trip", (cellId, row) => {
@@ -48,7 +48,7 @@ describe("checkedQueue", () => {
       })
     );
 
-    enqueue("trip", { cellId: "a", checked: true, basisUpdatedAt: "2026-01-01T00:00:00.000Z", enqueuedAt: "1" });
+    enqueue("trip", { cellId: "a", checked: true, previousChecked: false, basisUpdatedAt: "2026-01-01T00:00:00.000Z", enqueuedAt: "1" });
     const drainPromise = drain("trip", () => {});
 
     // Wait for the PATCH to actually be in flight, then re-toggle the same
@@ -56,7 +56,7 @@ describe("checkedQueue", () => {
     await vi.waitFor(() => {
       if (!resolvePatch) throw new Error("PATCH not in flight yet");
     });
-    enqueue("trip", { cellId: "a", checked: false, basisUpdatedAt: "2026-01-01T00:00:00.000Z", enqueuedAt: "2" });
+    enqueue("trip", { cellId: "a", checked: false, previousChecked: true, basisUpdatedAt: "2026-01-01T00:00:00.000Z", enqueuedAt: "2" });
 
     resolvePatch?.();
     await drainPromise;
@@ -65,28 +65,28 @@ describe("checkedQueue", () => {
     // now holds "2" -- removeIfUnchanged must not delete it, or the
     // re-toggle would be silently lost.
     expect(readQueue("trip")).toEqual({
-      a: { cellId: "a", checked: false, basisUpdatedAt: "2026-01-01T00:00:00.000Z", enqueuedAt: "2" },
+      a: { cellId: "a", checked: false, previousChecked: true, basisUpdatedAt: "2026-01-01T00:00:00.000Z", enqueuedAt: "2" },
     });
   });
 
   it("removeQueuedWrite deletes only the targeted cell, unconditionally", () => {
-    enqueue("trip", { cellId: "a", checked: true, basisUpdatedAt: "2026-01-01T00:00:00.000Z", enqueuedAt: "1" });
-    enqueue("trip", { cellId: "b", checked: false, basisUpdatedAt: "2026-01-01T00:00:00.000Z", enqueuedAt: "1" });
+    enqueue("trip", { cellId: "a", checked: true, previousChecked: false, basisUpdatedAt: "2026-01-01T00:00:00.000Z", enqueuedAt: "1" });
+    enqueue("trip", { cellId: "b", checked: false, previousChecked: true, basisUpdatedAt: "2026-01-01T00:00:00.000Z", enqueuedAt: "1" });
 
     removeQueuedWrite("trip", "a");
 
     expect(readQueue("trip")).toEqual({
-      b: { cellId: "b", checked: false, basisUpdatedAt: "2026-01-01T00:00:00.000Z", enqueuedAt: "1" },
+      b: { cellId: "b", checked: false, previousChecked: true, basisUpdatedAt: "2026-01-01T00:00:00.000Z", enqueuedAt: "1" },
     });
   });
 
   it("removeQueuedWrite is a no-op for a cell id that isn't queued", () => {
-    enqueue("trip", { cellId: "a", checked: true, basisUpdatedAt: "2026-01-01T00:00:00.000Z", enqueuedAt: "1" });
+    enqueue("trip", { cellId: "a", checked: true, previousChecked: false, basisUpdatedAt: "2026-01-01T00:00:00.000Z", enqueuedAt: "1" });
 
     removeQueuedWrite("trip", "not-queued");
 
     expect(readQueue("trip")).toEqual({
-      a: { cellId: "a", checked: true, basisUpdatedAt: "2026-01-01T00:00:00.000Z", enqueuedAt: "1" },
+      a: { cellId: "a", checked: true, previousChecked: false, basisUpdatedAt: "2026-01-01T00:00:00.000Z", enqueuedAt: "1" },
     });
   });
 });
