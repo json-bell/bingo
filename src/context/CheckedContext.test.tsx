@@ -61,4 +61,40 @@ describe("CheckedContext: removing a queued write", () => {
     // it was carrying -- the cell should go back to server truth (false).
     expect(screen.getByTestId("checked")).toHaveTextContent("false");
   });
+
+  it("keeps the checked state once its write drains successfully -- clearing the queue must not revert it", async () => {
+    // Regression guard for the fix above: removeQueued now reverts `cells`
+    // when a write is dropped from the queue, but a *successful* drain also
+    // removes its entry from the queue (removeIfUnchanged in
+    // checkedQueue.ts) -- that path must keep the confirmed value via
+    // applyServerRow, not fall into the same revert-to-previous behavior.
+    const user = userEvent.setup();
+
+    server.use(
+      http.get("/api/trips/:slug/checked", () =>
+        HttpResponse.json({ slug: "trip", version: 1, cells: {}, generatedAt: new Date().toISOString() })
+      ),
+      http.patch("/api/checked", async ({ request }) => {
+        const body = (await request.json()) as { id: string; checked: boolean };
+        return HttpResponse.json({
+          id: body.id,
+          checked: body.checked,
+          updatedAt: "2026-01-01T00:01:00.000Z",
+        });
+      })
+    );
+
+    render(
+      <CheckedProvider tripSlug="trip" version={1}>
+        <Probe cellId="cell-1" />
+      </CheckedProvider>
+    );
+
+    await waitFor(() => expect(screen.getByTestId("checked")).toHaveTextContent("false"));
+
+    await user.click(screen.getByText("toggle"));
+    await waitFor(() => expect(screen.getByTestId("queued")).toHaveTextContent("0"));
+
+    expect(screen.getByTestId("checked")).toHaveTextContent("true");
+  });
 });
