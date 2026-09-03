@@ -6,3 +6,6 @@ node_modules/
 .env.local
 .env*.local
 .env*
+
+# Written by data/seedGridCli.test.ts as a disposable fixture slug; cleaned up after the run but don't want to accidentally include it.
+grids/__vitest-fixture-seed-cli__/
