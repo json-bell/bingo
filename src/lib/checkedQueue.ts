@@ -13,6 +13,11 @@ export interface QueuedWrite {
   cellId: string;
   checked: boolean;
   basisUpdatedAt: string; // what the client knew when the edit was made
+  previousChecked: boolean; // the value being edited away from -- what the
+  // cell should revert to if this write is removed from the queue instead
+  // of sent (CheckedContext.tsx's removeQueued), since the optimistic
+  // update already applied `checked` locally before this write ever hit
+  // the queue.
   enqueuedAt: string; // identity token -- see removeIfUnchanged below
 }
 

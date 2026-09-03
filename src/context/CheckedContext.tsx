@@ -74,9 +74,22 @@ export function CheckedProvider({ tripSlug, version, children }: CheckedProvider
     setQueuedWrites(writes);
   }, [tripSlug]);
 
+  // Dropping the queued write only stops it from being sent -- the cell's
+  // displayed state was already flipped optimistically by updateChecked
+  // before this write ever reached the queue, so without this it would
+  // keep showing that unsent value indefinitely (until an unrelated GET
+  // happened to overwrite it). Revert to whatever the write's own
+  // previousChecked/basisUpdatedAt say the cell was before this edit.
   const removeQueued = useCallback(
     (cellId: string) => {
+      const write = readQueue(tripSlug)[cellId];
       removeQueuedWrite(tripSlug, cellId);
+      if (write) {
+        setCells((current) => ({
+          ...current,
+          [cellId]: { checked: write.previousChecked, updatedAt: write.basisUpdatedAt },
+        }));
+      }
       syncQueuedCount();
     },
     [tripSlug, syncQueuedCount]
@@ -202,6 +215,7 @@ export function CheckedProvider({ tripSlug, version, children }: CheckedProvider
   }
 
   function updateChecked(cellId: string, value: boolean): void {
+    const previousChecked = cells[cellId]?.checked ?? false;
     const basisUpdatedAt = cells[cellId]?.updatedAt ?? new Date(0).toISOString();
     setCells((current) => ({
       ...current,
@@ -210,7 +224,9 @@ export function CheckedProvider({ tripSlug, version, children }: CheckedProvider
     // Trigger #1: attempt the whole queue immediately after enqueueing --
     // if it fails, everything just stays queued for triggers #2/#3.
     void withSendingIndicator(
-      saveChecked(tripSlug, cellId, value, basisUpdatedAt, applyServerRow).then(syncQueuedCount)
+      saveChecked(tripSlug, cellId, value, basisUpdatedAt, previousChecked, applyServerRow).then(
+        syncQueuedCount
+      )
     );
     syncQueuedCount();
   }

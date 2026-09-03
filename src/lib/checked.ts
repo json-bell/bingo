@@ -60,12 +60,14 @@ export async function saveChecked(
   cellId: string,
   value: boolean,
   basisUpdatedAt: string,
+  previousChecked: boolean,
   onServerRow: (cellId: string, row: CheckedCell) => void
 ): Promise<void> {
   enqueue(tripSlug, {
     cellId,
     checked: value,
     basisUpdatedAt,
+    previousChecked,
     enqueuedAt: new Date().toISOString(),
   });
   await drain(tripSlug, onServerRow);

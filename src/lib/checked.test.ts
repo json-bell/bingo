@@ -57,7 +57,7 @@ describe("checked", () => {
       );
 
       const received: Array<[string, unknown]> = [];
-      await saveChecked("europapark-2024", "cell-1", true, "2026-01-01T00:00:00.000Z", (cellId, row) => {
+      await saveChecked("europapark-2024", "cell-1", true, "2026-01-01T00:00:00.000Z", false, (cellId, row) => {
         received.push([cellId, row]);
       });
 
@@ -86,7 +86,7 @@ describe("checked", () => {
         })
       );
 
-      await saveChecked("europapark-2024", "cell-1", true, "2026-01-01T00:00:00.000Z", () => {});
+      await saveChecked("europapark-2024", "cell-1", true, "2026-01-01T00:00:00.000Z", false, () => {});
 
       expect(readQueue("europapark-2024")).toEqual({});
     });
