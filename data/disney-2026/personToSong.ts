@@ -4,11 +4,11 @@
 import type { Person } from "./people";
 
 export const personToSong: Record<Person, string> = {
-  "Sarah": "Song E",
-  "Jason": "Song C",
-  "James": "Song F",
-  "Ben": "Song B",
-  "Maria": "Song D",
-  "Ciara": "Song A",
-  "Thomas": "Song E"
+  "Ciara": "September",
+  "Thomas": "Conga",
+  "James": "Everybody Wants to Rule the World",
+  "Jason": "One Way or Another",
+  "Ben": "Disco Inferno",
+  "Sarah": "I Ran (So Far Away)",
+  "Maria": "September"
 };
