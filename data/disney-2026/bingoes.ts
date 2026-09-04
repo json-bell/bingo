@@ -41,7 +41,7 @@ export interface DisneyEvent {
 
 export const events: DisneyEvent[] = [
   {
-    summary: "Let me break it down for you",
+    summary: "Break it down for me",
     description: "A ride breaks down while we're on it",
     difficulty: "m",
     variantGroup: VariantGroup.RIDE_BREAKDOWN
@@ -139,7 +139,7 @@ export const events: DisneyEvent[] = [
     difficulty: "m"
   },
   {
-    summary: "Apes together strong",
+    summary: "Go Team",
     description: "Planned group photo pose goes successfully",
     difficulty: "e"
   },
@@ -274,9 +274,8 @@ export const events: DisneyEvent[] = [
     difficulty: "h"
   },
   {
-    summary: "What a way to make a living",
-    description:
-      "We're in the park from open till close (3 days, probably longer than 9 to 5) (3 days)",
+    summary: "9 to 5",
+    description: "We're in the park from open till close, 3 days",
     difficulty: "e"
   },
   {

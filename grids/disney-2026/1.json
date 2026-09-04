@@ -261,8 +261,8 @@
     [
       {
         "difficulty": "e",
-        "summary": "What a way to make a living",
-        "description": "We're in the park from open till close (3 days, probably longer than 9 to 5) (3 days)",
+        "summary": "9 to 5",
+        "description": "We're in the park from open till close, 3 days",
         "id": "4025b628-0f97-4edf-845d-afffbfde045d"
       },
       {
@@ -333,8 +333,8 @@
       },
       {
         "difficulty": "e",
-        "summary": "What a way to make a living",
-        "description": "We're in the park from open till close (3 days, probably longer than 9 to 5) (3 days)",
+        "summary": "9 to 5",
+        "description": "We're in the park from open till close, 3 days",
         "id": "44a57f8b-aa94-496a-beb3-ba83362e69b8"
       },
       {
@@ -689,7 +689,7 @@
       },
       {
         "difficulty": "m",
-        "summary": "Let me break it down for you",
+        "summary": "Break it down for me",
         "description": "A ride breaks down while we're on it",
         "id": "c5a6dc5c-4d14-4ee4-86cb-e897ed9d3eca"
       },
@@ -819,8 +819,8 @@
       },
       {
         "difficulty": "e",
-        "summary": "What a way to make a living",
-        "description": "We're in the park from open till close (3 days, probably longer than 9 to 5) (3 days)",
+        "summary": "9 to 5",
+        "description": "We're in the park from open till close, 3 days",
         "id": "f2cd92ac-a8ae-407b-a491-46c520b0eb7e"
       },
       {
@@ -863,7 +863,7 @@
       },
       {
         "difficulty": "m",
-        "summary": "Let me break it down for you",
+        "summary": "Break it down for me",
         "description": "A ride breaks down while we're on it",
         "id": "aebe171c-11ef-46f9-afeb-62a96a575206"
       },
@@ -981,8 +981,8 @@
       },
       {
         "difficulty": "e",
-        "summary": "What a way to make a living",
-        "description": "We're in the park from open till close (3 days, probably longer than 9 to 5) (3 days)",
+        "summary": "9 to 5",
+        "description": "We're in the park from open till close, 3 days",
         "id": "612fa7ab-45ff-4f80-b01d-36174557e7b9"
       },
       {
