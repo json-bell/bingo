@@ -65,7 +65,13 @@ export function Tile({ cell, person, tintsEnabled }: TileProps) {
         <h3
           className={`text-[12px] md:text-[1.17em] font-bold my-[2px] md:my-[5px] text-pretty ${checked ? "opacity-50" : ""}`}
         >
-          {summary.toUpperCase()}
+          {summary === "OUQC" ? (
+            <>
+              OU<sup>Q</sup>C
+            </>
+          ) : (
+            summary.toUpperCase()
+          )}
         </h3>
         <p
           className={`line-clamp-2 md:line-clamp-3 text-[10px] md:text-[0.9rem] mx-[2px] md:mx-[4px] ${checked ? "opacity-50" : ""}`}
@@ -81,7 +87,15 @@ export function Tile({ cell, person, tintsEnabled }: TileProps) {
         <p className="text-xl text-accent text-left">{person}</p>
         <hr className="mt-2 mb-4 border-ink-muted/20" />
         <div className="text-center">
-          <h3 className="text-xl font-bold">{summary.toUpperCase()}</h3>
+          <h3 className="text-xl font-bold">
+            {summary === "OUQC" ? (
+              <>
+                OU<sup>Q</sup>C
+              </>
+            ) : (
+              summary.toUpperCase()
+            )}
+          </h3>
           <p className="mt-2">{description}</p>
           <div className="mt-4 flex justify-center">
             <Switch

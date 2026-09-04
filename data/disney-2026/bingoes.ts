@@ -225,7 +225,7 @@ export const events: DisneyEvent[] = [
     difficulty: "h"
   },
   {
-    summary: "OU𐞥C",
+    summary: "OUQC",
     description: "Someone gets queue jumped",
     difficulty: "m"
   },
