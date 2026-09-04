@@ -9,5 +9,5 @@ export const shirtNumbers: Record<Person, string> = {
   Jason: "54",
   Maria: "38",
   Sarah: "30",
-  Thomas: "99"
+  Thomas: "13"
 };
