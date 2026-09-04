@@ -19,14 +19,16 @@ function readStoredTintsEnabled(): boolean {
 }
 
 function readStoredZoomToFill(): boolean {
-  return localStorage.getItem(ZOOM_TO_FILL_STORAGE_KEY) === "true";
+  return localStorage.getItem(ZOOM_TO_FILL_STORAGE_KEY) !== "false";
 }
 
 export function TripPage() {
   const { slug } = useParams<{ slug: string }>();
   const location = useLocation();
   const [trip, setTrip] = useState<LoadedTrip | null | undefined>(undefined); // undefined = loading, null = not found
-  const [tintsEnabled, setTintsEnabled] = useState<boolean>(readStoredTintsEnabled);
+  const [tintsEnabled, setTintsEnabled] = useState<boolean>(
+    readStoredTintsEnabled
+  );
   const [zoomToFill, setZoomToFill] = useState<boolean>(readStoredZoomToFill);
   const menuRef = useRef<HTMLDialogElement>(null);
   const syncInfoRef = useRef<HTMLDialogElement>(null);
@@ -107,7 +109,12 @@ export function TripPage() {
         onOpenSyncInfo={() => syncInfoRef.current?.showModal()}
         dialogRef={menuRef}
       />
-      <SyncInfoModal cellLookup={cellLookup} people={people} dbStatus={dbStatus} dialogRef={syncInfoRef} />
+      <SyncInfoModal
+        cellLookup={cellLookup}
+        people={people}
+        dbStatus={dbStatus}
+        dialogRef={syncInfoRef}
+      />
       {/* pb-[4.25rem]: QueueStatus is `fixed bottom-4` (1rem gap) and floats
           over whatever's beneath it -- without this, scrolling to the
           actual bottom of the content leaves the toast sitting on top of
@@ -147,7 +154,9 @@ export function TripPage() {
                 free instead of tracking it with an IntersectionObserver. */}
             <div className="sticky top-16 z-10 bg-background">
               <div className="bg-surface rounded-t-[1.5rem] px-2 md:px-8 py-2 md:py-3 border-b border-ink-muted/20">
-                <h2 className="text-2xl font-bold">{people[index]}&apos;s grid</h2>
+                <h2 className="text-2xl font-bold">
+                  {people[index]}&apos;s grid
+                </h2>
               </div>
             </div>
             <div
@@ -195,7 +204,11 @@ export function TripPage() {
                   />
                 </div>
               ) : (
-                <Grid grid={grid} person={people[index]} tintsEnabled={tintsEnabled} />
+                <Grid
+                  grid={grid}
+                  person={people[index]}
+                  tintsEnabled={tintsEnabled}
+                />
               )}
             </div>
           </li>
