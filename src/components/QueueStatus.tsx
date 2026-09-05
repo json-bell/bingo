@@ -14,7 +14,7 @@ interface QueueStatusProps {
 }
 
 export function QueueStatus({ onOpenSyncInfo }: QueueStatusProps) {
-  const { queuedCount, isSending, lastSyncedAt, syncFailed } = useChecked();
+  const { queuedCount, isSending, lastSyncedAt, syncFailed, isInitialLoading } = useChecked();
   const previousCount = useRef(queuedCount);
   const [showSuccess, setShowSuccess] = useState(false);
   const [fading, setFading] = useState(false);
@@ -40,6 +40,18 @@ export function QueueStatus({ onOpenSyncInfo }: QueueStatusProps) {
       clearTimeout(removeTimeout);
     };
   }, [queuedCount]);
+
+  // Before anything else: the initial checked-state GET hasn't settled yet,
+  // so queuedCount === 0 here doesn't mean "synced" -- it's indistinguishable
+  // from "not loaded yet" without this flag (see CheckedContext.tsx).
+  if (isInitialLoading) {
+    return (
+      <div className="fixed bottom-4 right-4 z-50 flex items-center gap-2 rounded-full bg-surface text-ink px-4 py-2 text-sm font-semibold shadow-lg">
+        <span aria-hidden="true">⏳</span>
+        Loading…
+      </div>
+    );
+  }
 
   // Also require queuedCount === 0 here, not just showSuccess: if a new
   // write gets queued while the flash is still showing (before its own

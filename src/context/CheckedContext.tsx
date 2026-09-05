@@ -46,6 +46,13 @@ interface CheckedContextValue {
   // then failed. See src/lib/syncStatus.ts.
   lastSyncedAt?: string;
   syncFailed: boolean;
+  // True until the initial checked-state GET (the mount effect below) has
+  // settled, success or failure -- lets QueueStatus show a "Loading…" pill
+  // instead of going silent, which would otherwise be indistinguishable
+  // from "loaded, and nothing happens to be checked yet" (cells starts as
+  // `{}` either way). Resets to true if tripSlug/version changes, since
+  // that re-runs the mount effect against a different trip.
+  isInitialLoading: boolean;
 }
 
 const CheckedContext = createContext<CheckedContextValue | null>(null);
@@ -63,6 +70,7 @@ export function CheckedProvider({ tripSlug, version, children }: CheckedProvider
   const [isSending, setIsSending] = useState(false);
   const [lastSyncedAt, setLastSyncedAt] = useState<string | undefined>(undefined);
   const [syncFailed, setSyncFailed] = useState(false);
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
   // Set once a GET has ever succeeded this page-load; gates the online-event
   // retry below so a healthy load doesn't start re-fetching on every
   // reconnect -- only a load that never succeeded gets retried.
@@ -176,9 +184,11 @@ export function CheckedProvider({ tripSlug, version, children }: CheckedProvider
 
   useEffect(() => {
     let cancelled = false;
+    setIsInitialLoading(true);
     loadAndMerge().then((result) => {
       if (cancelled) return;
       applyLoadResult(result);
+      setIsInitialLoading(false);
       runDrain(); // trigger #2: on mount, drain whatever's left over regardless of GET outcome
     });
     return () => {
@@ -242,6 +252,7 @@ export function CheckedProvider({ tripSlug, version, children }: CheckedProvider
         isSending,
         lastSyncedAt,
         syncFailed,
+        isInitialLoading,
       }}
     >
       {children}

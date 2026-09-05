@@ -14,7 +14,8 @@ function mockContext(
   queuedCount: number,
   isSending: boolean,
   syncFailed = false,
-  lastSyncedAt?: string
+  lastSyncedAt?: string,
+  isInitialLoading = false
 ) {
   mockedUseChecked.mockReturnValue({
     isChecked: () => false,
@@ -25,6 +26,7 @@ function mockContext(
     isSending,
     syncFailed,
     lastSyncedAt,
+    isInitialLoading,
   });
 }
 
@@ -43,6 +45,22 @@ describe("QueueStatus", () => {
     mockContext(0, false);
     const { container } = render(<QueueStatus onOpenSyncInfo={noop} />);
     expect(container).toBeEmptyDOMElement();
+  });
+
+  it("shows a 'Loading…' pill while the initial checked-state GET is still in flight", () => {
+    mockContext(0, false, false, undefined, true);
+    render(<QueueStatus onOpenSyncInfo={noop} />);
+    expect(screen.getByText("Loading…")).toBeInTheDocument();
+  });
+
+  it("prefers the loading pill over the failed-GET pill when both are true", () => {
+    // isInitialLoading only ever coincides with a failure once the initial
+    // GET has actually settled, but the loading state should still win if
+    // a stale syncFailed from a previous mount happened to be true.
+    mockContext(0, false, true, "2026-08-30T12:24:00.000Z", true);
+    render(<QueueStatus onOpenSyncInfo={noop} />);
+    expect(screen.getByText("Loading…")).toBeInTheDocument();
+    expect(screen.queryByText(/Last connected/)).not.toBeInTheDocument();
   });
 
   it("shows '{N} updates sending…' while a drain this context started is still sending", () => {
